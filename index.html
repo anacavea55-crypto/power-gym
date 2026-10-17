@@ -3,565 +3,379 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PitchFlow | Executive Authority & Power Gym</title>
+  <title>PitchFlow | Executive Authority Suite</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-400 selection:text-slate-950">
 
-  <!-- Header Sobrio -->
-  <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
+  <!-- Header con Navegación de los 3 Módulos Principales -->
+  <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-50 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
     <div class="flex items-center gap-3">
-      <div class="h-9 w-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-bold text-lg">P</div>
-      <span class="text-xl font-bold tracking-tight text-white">PitchFlow</span>
-      <span class="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-slate-400 font-medium">Executive Suite</span>
+      <div class="h-9 w-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-bold text-lg shadow-sm">P</div>
+      <div>
+        <span class="text-xl font-bold tracking-tight text-white">PitchFlow</span>
+        <span class="hidden sm:inline-block text-xs px-2.5 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-amber-400 font-medium ml-2">Executive Edition</span>
+      </div>
     </div>
-    <nav class="flex items-center gap-2">
-      <button onclick="switchTab('gym')" id="tab-gym" class="px-4 py-2 text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all shadow-sm">Gimnasio de Poder</button>
-      <button onclick="switchTab('rewriter')" id="tab-rewriter" class="px-4 py-2 text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all">Reescritura de Autoridad</button>
+    
+    <!-- Pestañas de Navegación -->
+    <nav class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
+      <button onclick="switchTab('gym')" id="tab-gym" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all">Gimnasio (45)</button>
+      <button onclick="switchTab('rewriter')" id="tab-rewriter" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all">Reescritor</button>
+      <button onclick="switchTab('vault')" id="tab-vault" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-1.5">
+        Bóveda <span id="vault-count-badge" class="px-1.5 py-0.2 rounded-full bg-slate-800 text-amber-400 text-xs">0</span>
+      </button>
+      <button onclick="openProfileModal()" title="Editar Perfil" class="p-1.5 text-slate-400 hover:text-amber-400 transition-all">⚙️</button>
     </nav>
   </header>
 
-  <!-- Contenedor Principal -->
-  <main class="flex-1 max-w-4xl w-full mx-auto p-6 md:p-10">
+  <!-- Banner de Perfil Activo (Módulo 1) -->
+  <div class="bg-slate-900/40 border-b border-slate-800/60 px-6 py-2.5 text-xs text-slate-400 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+      <span id="profile-display-name">Profesional: No configurado</span>
+      <span class="text-slate-600">|</span>
+      <span id="profile-display-role">Rol: General</span>
+    </div>
+    <button onclick="openProfileModal()" class="text-amber-400 hover:underline">Configurar mi perfil</button>
+  </div>
+
+  <!-- Contenedor Central -->
+  <main class="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-6 md:p-10 space-y-6">
 
     <!-- SECCIÓN 1: GIMNASIO DE PODER (Módulo 4) -->
     <div id="view-gym" class="space-y-6">
       
-      <!-- Barra Superior de Progreso & Racha -->
-      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
+      <!-- Panel de Racha y Rango -->
+      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4 shadow-lg">
         <div>
-          <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Rango Corporativo</span>
-          <h2 id="gym-rank" class="text-lg font-bold text-white">Contributor (Nivel B1)</h2>
+          <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Rango Ejecutivo</span>
+          <h2 id="gym-rank" class="text-lg font-bold text-white">Contributor (Nivel A2/B1)</h2>
         </div>
         <div class="flex items-center gap-6">
           <div class="text-right">
-            <span class="text-xs text-slate-400">Racha Ejecutiva</span>
-            <p class="text-lg font-bold text-white flex items-center gap-1.5 justify-end">⚡ <span id="gym-streak">1</span> día</p>
+            <span class="text-xs text-slate-400">Racha</span>
+            <p class="text-lg font-bold text-white flex items-center gap-1 justify-end">⚡ <span id="gym-streak">1</span> d</p>
           </div>
           <div class="text-right">
-            <span class="text-xs text-slate-400">Progreso del Banco</span>
+            <span class="text-xs text-slate-400">Completados</span>
             <p id="gym-counter" class="text-lg font-bold text-amber-400">1 / 45</p>
           </div>
         </div>
       </div>
 
-      <!-- Tarjeta del Ejercicio Activo -->
+      <!-- Tarjeta del Ejercicio -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
-        
         <div class="space-y-2 border-b border-slate-800/80 pb-5">
           <div class="flex items-center gap-2">
-            <span id="q-category" class="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-full">Poner Límites</span>
+            <span id="q-category" class="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-full"></span>
           </div>
-          <p id="q-situation" class="text-slate-300 text-sm leading-relaxed font-medium">Un cliente o director pide adelantar una entrega crítica sin margen de tiempo.</p>
+          <p id="q-situation" class="text-slate-300 text-sm leading-relaxed font-medium"></p>
         </div>
 
-        <!-- Frase Incompleta -->
-        <div class="py-4">
+        <div class="py-2">
           <p class="text-xs uppercase tracking-wider font-semibold text-slate-400 mb-2">Intervención en Reunión:</p>
-          <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 text-lg md:text-xl font-medium text-slate-200 leading-relaxed">
+          <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 text-base sm:text-lg font-medium text-slate-200 leading-relaxed">
             <span id="q-before"></span>
             <span id="q-slot" class="inline-block px-3 py-1 mx-1 border-2 border-dashed border-amber-400/60 rounded-lg text-amber-300 bg-amber-400/5 font-semibold transition-all">[ Selecciona tu postura ]</span>
             <span id="q-after"></span>
           </div>
         </div>
 
-        <!-- Banco de Opciones -->
         <div class="space-y-3">
           <p class="text-xs uppercase tracking-wider font-semibold text-slate-400">Elige la opción ejecutiva:</p>
-          <div id="q-options" class="grid grid-cols-1 gap-2.5">
-            <!-- Botones inyectados por JS -->
-          </div>
+          <div id="q-options" class="grid grid-cols-1 gap-2.5"></div>
         </div>
 
-        <!-- Tarjeta de Feedback (Oculta al inicio) -->
         <div id="q-feedback" class="hidden rounded-xl p-5 border transition-all text-sm leading-relaxed">
           <div id="feedback-badge" class="font-bold text-xs uppercase tracking-wider mb-1.5"></div>
           <p id="feedback-text" class="text-slate-200"></p>
         </div>
 
-        <!-- Botón Siguiente -->
-        <div class="pt-2 flex justify-end">
-          <button id="btn-next" onclick="nextQuestion()" class="hidden px-6 py-2.5 rounded-xl font-semibold bg-white text-slate-950 hover:bg-slate-200 transition-all text-sm">
+        <div class="pt-2 flex items-center justify-between">
+          <button id="btn-save-gym" onclick="saveCurrentGymToVault()" class="hidden px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-amber-300 hover:bg-slate-700 transition-all border border-slate-700">
+            ★ Guardar en mi Bóveda
+          </button>
+          <button id="btn-next" onclick="nextQuestion()" class="hidden px-6 py-2.5 rounded-xl font-semibold bg-white text-slate-950 hover:bg-slate-200 transition-all text-sm cursor-pointer shadow-md ml-auto">
             Siguiente Ejercicio →
           </button>
         </div>
-
       </div>
     </div>
 
     <!-- SECCIÓN 2: REESCRITURA DE AUTORIDAD (Módulos 2 y 3) -->
     <div id="view-rewriter" class="hidden space-y-6">
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
         <div>
           <h2 class="text-xl font-bold text-white mb-1">Estructurador Estratégico</h2>
-          <p class="text-sm text-slate-400">Ingresa tu idea en borrador y calíbrala con la fórmula ejecutiva: Hecho → Impacto → Dirección.</p>
+          <p class="text-sm text-slate-400">Selecciona el escenario, calibra tu frase en inglés y blindá tu postura preservando tu contexto exacto.</p>
         </div>
 
-        <!-- Selector de Escenario -->
+        <!-- Módulo 2: Selector de Escenario & Plantillas -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Escenario</label>
-            <select id="rw-scenario" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
-              <option value="Entrevista Laboral">Entrevista Laboral</option>
-              <option value="Reunión de Estatus">Reunión de Estatus / Demora</option>
-              <option value="Negociación de Tarifas">Negociación de Tarifas / Recursos</option>
-              <option value="Poner Límites">Poner Límites / Decir No</option>
-              <option value="Pregunta Imprevista">Pregunta Imprevista</option>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Escenario de Comunicación</label>
+            <select id="rw-scenario" onchange="updateScenarioPrompts()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
+              <option value="entrevista">Entrevista Laboral / Carrera</option>
+              <option value="decision">Decisión Estratégica / Dirección</option>
+              <option value="reunion">Presentación / Reunión de Estatus</option>
+              <option value="pitch">Elevator Pitch / Venta de Valor</option>
+              <option value="negociacion">Negociación de Tarifas / Recursos</option>
             </select>
           </div>
           <div>
-            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Objetivo de la intervención</label>
-            <input id="rw-goal" type="text" placeholder="Ej: Defender que la entrega pasa al martes sin pedir perdón" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
+            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Preguntas o Retos Típicos</label>
+            <select id="rw-preset-prompt" onchange="applyPresetPrompt()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
+              <!-- Inyectado dinámicamente -->
+            </select>
           </div>
         </div>
 
-        <!-- Entrada del Usuario -->
+        <!-- Módulo 3: Entrada del Borrador -->
         <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Tu borrador (en inglés actual o mezclado con español)</label>
-          <textarea id="rw-input" rows="4" placeholder="Ej: Sorry, we have a big problem with the server and I think we cannot finish today. Maybe tomorrow." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-200 focus:outline-none focus:border-amber-400"></textarea>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Tu borrador actual (inglés o mixto):</label>
+          <textarea id="rw-input" rows="4" placeholder="Ej: I think we can change the supplier because we have a big problem with delivery." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-200 focus:outline-none focus:border-amber-400"></textarea>
         </div>
 
-        <button onclick="processRewriter()" class="w-full py-3.5 rounded-xl font-semibold bg-amber-400 text-slate-950 hover:bg-amber-300 transition-all text-sm shadow-md">
+        <button onclick="processRewriter()" class="w-full py-3.5 rounded-xl font-semibold bg-amber-400 text-slate-950 hover:bg-amber-300 transition-all text-sm shadow-md cursor-pointer">
           Calibrar Frase de Autoridad
         </button>
 
-        <!-- Resultado -->
+        <!-- Resultado Calibrado -->
         <div id="rw-result" class="hidden space-y-4 pt-4 border-t border-slate-800">
           <div>
             <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Versión Ejecutiva (Inglés):</span>
-            <div class="mt-2 bg-slate-950 border border-slate-800 rounded-xl p-4 text-base font-semibold text-white flex justify-between items-center">
+            <div class="mt-2 bg-slate-950 border border-slate-800 rounded-xl p-4 text-base font-semibold text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <span id="rw-output-text"></span>
-              <button onclick="copyOutput()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700">Copiar</button>
+              <div class="flex items-center gap-2 self-end sm:self-auto shrink-0">
+                <button onclick="copyOutput()" id="btn-copy" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700">Copiar</button>
+                <button onclick="saveRewriterToVault()" id="btn-save-rewriter" class="text-xs bg-amber-400/10 hover:bg-amber-400/20 text-amber-400 border border-amber-400/30 px-3 py-1.5 rounded-lg">★ Guardar en Bóveda</button>
+              </div>
             </div>
           </div>
           <div class="bg-amber-400/5 border border-amber-400/20 rounded-xl p-4 text-sm text-slate-300">
-            <span class="text-xs font-bold uppercase tracking-wider text-amber-400 block mb-1">💡 Análisis de Postura:</span>
-            <p id="rw-output-analysis"></p>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-400 block mb-1">💡 Análisis de Postura & Eliminación de Fugas:</span>
+            <div id="rw-output-analysis" class="space-y-1"></div>
           </div>
         </div>
 
       </div>
     </div>
 
+    <!-- SECCIÓN 3: BÓVEDA PERSONAL / MY VAULT (Módulo 5) -->
+    <div id="view-vault" class="hidden space-y-6">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-5">
+          <div>
+            <h2 class="text-xl font-bold text-white mb-1">Bóveda de Frases de Poder (My Vault)</h2>
+            <p class="text-sm text-slate-400">Tu repertorio personal acumulado para reuniones, entrevistas y negociaciones.</p>
+          </div>
+          <button onclick="clearVault()" class="text-xs text-rose-400 hover:underline">Vaciar bóveda</button>
+        </div>
+
+        <!-- Filtros de la Bóveda -->
+        <div class="flex flex-wrap gap-2" id="vault-filters">
+          <button onclick="filterVault('all')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-amber-400 text-slate-950">Todos</button>
+          <button onclick="filterVault('Entrevista')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">Entrevista</button>
+          <button onclick="filterVault('Decisión')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">Decisión</button>
+          <button onclick="filterVault('Reunión')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">Reunión</button>
+          <button onclick="filterVault('Negociación')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">Negociación</button>
+          <button onclick="filterVault('Límites')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">Límites</button>
+        </div>
+
+        <!-- Lista de Frases Guardadas -->
+        <div id="vault-list" class="space-y-3">
+          <!-- Renderizado por JS -->
+        </div>
+      </div>
+    </div>
+
   </main>
 
+  <!-- MODAL: PERFIL DE USUARIO (Módulo 1) -->
+  <div id="profile-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 max-w-md w-full space-y-5 shadow-2xl">
+      <div>
+        <h3 class="text-lg font-bold text-white">Tu Perfil Ejecutivo</h3>
+        <p class="text-xs text-slate-400 mt-1">PitchFlow adapta los ejercicios y la memoria según tu contexto profesional.</p>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Nombre o Apodo</label>
+          <input id="user-name" type="text" placeholder="Ej: Ana" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Rol / Industria</label>
+          <input id="user-role" type="text" placeholder="Ej: Tech Lead, Marketing Strategist, Supply Chain" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Nivel Actual</label>
+          <select id="user-level" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
+            <option value="A2">A2 (Entiendo bastante, me cuesta arrancar a hablar)</option>
+            <option value="B1" selected>B1 (Comunico ideas pero uso muletillas o pido perdón)</option>
+            <option value="B2">B2 (Fluido pero busco mayor jerarquía y presencia)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2">
+        <button onclick="closeProfileModal()" class="px-4 py-2 text-xs text-slate-400 hover:text-white">Cancelar</button>
+        <button onclick="saveProfile()" class="px-5 py-2 text-xs font-semibold bg-amber-400 text-slate-950 rounded-xl hover:bg-amber-300 transition-all">Guardar Datos</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // BASE DE DATOS DE EJERCICIOS (1 al 45)
+    // PRESETS DE ESCENARIOS (Módulo 2)
+    const SCENARIO_PRESETS = {
+      entrevista: [
+        { label: "Tell me about yourself (Presentación de impacto)", prompt: "Over the past years, I have focused on... and I think I can help your team." },
+        { label: "What is your greatest weakness? (Debilidad sin disculpas)", prompt: "Sorry, I am sometimes too perfectionist and I think it is bad." },
+        { label: "What are your salary expectations? (Defensa de rango)", prompt: "I hope you can pay around 90k, but maybe we can negotiate if it is too high." }
+      ],
+      decision: [
+        { label: "Definir camino técnico o de negocio", prompt: "I think we should change the supplier because we have a big problem with delivery." },
+        { label: "Acelerar decisión trabada por debates", prompt: "Maybe we could vote or wait to see what happens next week." }
+      ],
+      reunion: [
+        { label: "Reportar cuello de botella o demora", prompt: "Sorry, we have a big problem with the release and we will try to finish tomorrow." },
+        { label: "Retomar el foco de la llamada", prompt: "Sorry to interrupt, but maybe we are losing time with this topic." }
+      ],
+      pitch: [
+        { label: "Elevator Pitch / Qué aporte ofrecés", prompt: "I work doing marketing and I try to help clients grow their business." },
+        { label: "Diferenciación frente a competidores", prompt: "We are cheaper than others and we try very hard to do a good job." }
+      ],
+      negociacion: [
+        { label: "Defender tarifa ante objeción de precio", prompt: "Our price is high because we have many costs, sorry about that." },
+        { label: "Frenar tareas fuera de alcance (Scope Creep)", prompt: "We cannot do this new feature now, sorry, it is impossible for us." }
+      ]
+    };
+
+    // BANCO COMPLETO DE 45 EJERCICIOS (Módulo 4)
     const EXERCISES = [
-      {
-        id: 1, categoria: "Poner Límites",
-        situacion: "Un cliente o director pide adelantar una entrega crítica sin margen de tiempo.",
-        frase: "To maintain operational quality, ______ integrate this into our next milestone.",
-        opciones: ["we can definitely", "I think maybe we will try to", "we cannot"],
-        correcta: "we can definitely",
-        feedback_acierto: "Al usar 'we can definitely integrate this into our next milestone', no te disculpas ni cierras la puerta; marcas un límite profesional protegiendo la calidad y diriges la conversación al siguiente ciclo.",
-        feedback_error: "Decir 'will try to' transmite que no tienes el control del proceso técnico y habilita a que te sigan presionando."
-      },
-      {
-        id: 2, categoria: "Reporte de Crisis",
-        situacion: "Hay un retraso en la operación y tienes que informarlo en la llamada de equipo.",
-        frase: "______ a technical bottleneck in the pipeline. Here is our mitigation plan.",
-        opciones: ["We have identified", "Sorry, but we have a big problem with", "It seems like there is"],
-        correcta: "We have identified",
-        feedback_acierto: "'We have identified' demuestra diagnóstico profesional y dominio de la situación. Pasas de pedir perdón por una falla a liderar el plan de contingencia.",
-        feedback_error: "Comenzar con 'Sorry, but we have a big problem' genera alarma innecesaria y te posiciona como el responsable culpable del imprevisto."
-      },
-      {
-        id: 3, categoria: "Toma de Decisiones",
-        situacion: "En una reunión técnica, tienes que definir cuál es el camino a seguir.",
-        frase: "Based on the performance metrics, ______ migrating to the new infrastructure today.",
-        opciones: ["I recommend", "maybe we could think about", "I guess it is better"],
-        correcta: "I recommend",
-        feedback_acierto: "'I recommend' respaldado por datos ('Based on the performance metrics') es la fórmula exacta del liderazgo técnico. Fijas postura clara.",
-        feedback_error: "'Maybe we could think about' diluye tu criterio y le da pie a perfiles con menos experiencia a descartar tu idea."
-      },
-      {
-        id: 4, categoria: "Control de Conversación",
-        situacion: "Te hacen una consulta compleja en plena llamada y necesitas 10 segundos para procesar sin dudar.",
-        frase: "______ Let me pull up the exact data so we can address the root cause.",
-        opciones: ["That is a strategic point.", "I don't know, sorry.", "Wait, my English is bad."],
-        correcta: "That is a strategic point.",
-        feedback_acierto: "Calificar la intervención ajena ('That is a strategic point') te da control inmediato de la conversación, compra tiempo y te permite buscar datos con aplomo.",
-        feedback_error: "Decir 'I don't know' o justificarte con el idioma te deja de inmediato en posición de subordinación."
-      },
-      {
-        id: 5, categoria: "Negociación",
-        situacion: "Te ofrecen un presupuesto por debajo de la complejidad del trabajo.",
-        frase: "To deliver the expected business outcome, ______ an allocation of three senior specialists.",
-        opciones: ["this scope requires", "I would like to ask if possible", "maybe we will need"],
-        correcta: "this scope requires",
-        feedback_acierto: "'This scope requires' despersonaliza la petición: es el proyecto técnico exigiendo los recursos que corresponden para tener éxito.",
-        feedback_error: "'I would like to ask if possible' suena a pedir favores en lugar de presupuestar con criterio profesional."
-      },
-      {
-        id: 6, categoria: "Posicionamiento",
-        situacion: "Entrevista laboral o presentación de consultoría ante un comité directivo.",
-        frase: "My focus is not just execution; ______ optimize your operational margins from quarter one.",
-        opciones: ["I am positioned to", "I will try my best to", "I hope I can"],
-        correcta: "I am positioned to",
-        feedback_acierto: "'I am positioned to optimize' habla desde la certeza y la contribución de valor al negocio, diferenciándote de quienes solo ofrecen trabajar duro.",
-        feedback_error: "'I hope I can' o 'I will try' transmiten dudas sobre tu propia capacidad de entrega."
-      },
-      {
-        id: 7, categoria: "Gestión de Cronograma",
-        situacion: "Una variable externa retrasa la fecha de entrega y debes comunicarlo sin generar desconfianza.",
-        frase: "Due to external dependencies, ______ deliver the final report by Friday afternoon.",
-        opciones: ["we are scheduled to", "we hope we can", "we will see if we"],
-        correcta: "we are scheduled to",
-        feedback_acierto: "'We are scheduled to' transmite control y reprogramación estructurada, no una promesa improvisada.",
-        feedback_error: "'We hope we can' denota que dependes de la suerte en lugar de gestionar activamente el cronograma."
-      },
-      {
-        id: 8, categoria: "Manejo de Desacuerdos",
-        situacion: "En una llamada, un colega propone un método ineficiente para el proyecto.",
-        frase: "______ alternative pathways that optimize our execution budget.",
-        opciones: ["The data points to", "I feel you are wrong about", "Maybe it's just my opinion, but"],
-        correcta: "The data points to",
-        feedback_acierto: "'The data points to' saca la emoción del debate y apoya tu argumento en hechos verificables, cuidando las relaciones laborales.",
-        feedback_error: "'It's just my opinion' debilita tu criterio antes de que termines de formular tu argumento."
-      },
-      {
-        id: 9, categoria: "Facilitación",
-        situacion: "La llamada se fue por las ramas con temas secundarios y debes retomar el objetivo.",
-        frase: "To respect everyone's agenda, ______ the core deliverable.",
-        opciones: ["let's realign on", "excuse me, can you stop and look at", "sorry to interrupt, but maybe"],
-        correcta: "let's realign on",
-        feedback_acierto: "'Let's realign on' lidera la reunión con elegancia ejecutiva, justificando el corte por el valor del tiempo de todos.",
-        feedback_error: "Pedir disculpas por reenfocar una reunión te hace ver como un intruso en lugar de un facilitador profesional."
-      },
-      {
-        id: 10, categoria: "Poner Límites",
-        situacion: "El cliente añade requerimientos nuevos sin ampliar el presupuesto acordado.",
-        frase: "This new requirement falls outside the current agreement; ______ scope an amendment.",
-        opciones: ["we can definitely", "we don't really want to", "I am afraid we can't"],
-        correcta: "we can definitely",
-        feedback_acierto: "Unir 'we can definitely' con 'scope an amendment' convierte un conflicto de límites en una oportunidad comercial clara.",
-        feedback_error: "'I am afraid' te coloca en posición de debilidad antes de plantear la realidad del contrato."
-      },
-      {
-        id: 11, categoria: "Gestión del Tiempo",
-        situacion: "Te invitan a una reunión sin agenda clara que interrumpe tu entrega operativa.",
-        frase: "To keep focus on critical deliverables, ______ updates via email today.",
-        opciones: ["I will provide", "I am too busy to attend, sorry for", "I don't think I can come to"],
-        correcta: "I will provide",
-        feedback_acierto: "'I will provide updates via email' protege tu tiempo y ofrece una alternativa de valor sin pedir perdón.",
-        feedback_error: "Decir que estás 'demasiado ocupado' suena a desorganización; liderar de forma asincrónica proyecta alta eficiencia."
-      },
-      {
-        id: 12, categoria: "Negociación",
-        situacion: "Cuestionan tus números diciendo que hay alternativas más baratas en el mercado.",
-        frase: "Our fee structure ______ our proven track record in risk mitigation.",
-        opciones: ["directly reflects", "is expensive because", "can be reduced if you"],
-        correcta: "directly reflects",
-        feedback_acierto: "'Directly reflects' ancla tu precio al valor y la seguridad que aportas, eliminando el debate sobre costos operativos.",
-        feedback_error: "Descontar de inmediato o justificar que eres 'caro' destruye tu margen y tu jerarquía técnica."
-      },
-      {
-        id: 13, categoria: "Gestión de Recursos",
-        situacion: "Necesitas dos ingenieros más para cumplir con el objetivo del trimestre.",
-        frase: "To safeguard our delivery target, ______ adding two dedicated resources.",
-        opciones: ["I recommend", "I was wondering if maybe we could", "please, we really need"],
-        correcta: "I recommend",
-        feedback_acierto: "'I recommend adding' formula la necesidad como una decisión estratégica respaldada por el objetivo de entrega.",
-        feedback_error: "'I was wondering if maybe' invita al interlocutor a rechazar la propuesta sin analizarla."
-      },
-      {
-        id: 14, categoria: "Poner Límites",
-        situacion: "La dirección pide recortar dos semanas sin recortar funciones ni alcance.",
-        frase: "Compressing the timeline ______ reducing the scope or increasing head count.",
-        opciones: ["requires either", "is impossible, sorry", "makes me feel worried about"],
-        correcta: "requires either",
-        feedback_acierto: "'Requires either' plantea un dilema de gestión objetivo: si buscan velocidad, deben elegir qué variable ajustar.",
-        feedback_error: "Responder 'is impossible' genera fricción; responder con 'makes me feel' resta peso técnico al argumento."
-      },
-      {
-        id: 15, categoria: "Liderazgo Operativo",
-        situacion: "La falta de aprobación de un superior tiene frenado al equipo de trabajo.",
-        frase: "To avoid deployment bottlenecks, ______ confirmation on the architecture by noon.",
-        opciones: ["we require", "just checking if you have time for", "please don't forget to give"],
-        correcta: "we require",
-        feedback_acierto: "'We require confirmation' marca la necesidad del proyecto con firmeza y fija un plazo claro.",
-        feedback_error: "'Just checking' disminuye la urgencia real y te muestra dependiente e inseguro."
-      },
-      {
-        id: 16, categoria: "Negociación",
-        situacion: "Te presentan una propuesta que no convence y exigen una respuesta inmediata.",
-        frase: "______ this proposal internally and return with our counter-framework tomorrow.",
-        opciones: ["We will evaluate", "I don't know what to say about", "Give me time because my English is"],
-        correcta: "We will evaluate",
-        feedback_acierto: "'We will evaluate' demuestra que no actúas bajo presión externa y que tienes un proceso de decisión sólido.",
-        feedback_error: "Titubear o admitir parálisis te deja en desventaja directa en la mesa de negociación."
-      },
-      {
-        id: 17, categoria: "Manejo de Conflictos",
-        situacion: "En una llamada elevan el tono o hacen comentarios despectivos sobre un error técnico.",
-        frase: "______ solving the system discrepancy efficiently.",
-        opciones: ["Let's keep our focus on", "Don't talk to me like that, sorry", "I think you are being unfair with"],
-        correcta: "Let's keep our focus on",
-        feedback_acierto: "'Let's keep our focus on' desactiva el conflicto personal y redirige la conversación a la solución técnica.",
-        feedback_error: "Entrar en discusiones emocionales o quejas destruye la jerarquía técnica en entornos corporativos."
-      },
-      {
-        id: 18, categoria: "Cierre de Acuerdos",
-        situacion: "Ambas partes están conformes de palabra y necesitas dejarlo asentado por escrito.",
-        frase: "To ensure full alignment, ______ summarize the agreed action items in writing.",
-        opciones: ["I will", "maybe I can try to", "let me know if you want me to"],
-        correcta: "I will",
-        feedback_acierto: "'I will summarize' toma la iniciativa y el control del registro de compromisos, asegurando que nada se desvirtúe.",
-        feedback_error: "'Maybe I can try' deja en el aire una tarea que requiere precisión inmediata."
-      },
-      {
-        id: 19, categoria: "Entrevista - Presentación de Valor",
-        situacion: "Te preguntan 'Tell me about yourself' y debes enfocarte en impacto de negocio, no en tu biografía.",
-        frase: "Over the past eight years, ______ scaling distributed systems that reduce operational latency.",
-        opciones: ["I have specialized in", "I was just working on", "I think I know about"],
-        correcta: "I have specialized in",
-        feedback_acierto: "'I have specialized in' define autoridad de nicho y trayectoria deliberada desde la primera frase.",
-        feedback_error: "'I was just working on' minimiza tu experiencia y reduce tu carrera a una tarea operativa sin peso."
-      },
-      {
-        id: 20, categoria: "Entrevista - Hablar de Debilidades",
-        situacion: "Te preguntan por tu mayor debilidad sin caer en clichés ni pedir disculpas.",
-        frase: "I tend to scrutinize granular details; therefore, ______ automated checkpoints to maintain team velocity.",
-        opciones: ["I implement", "I try to change that because", "sorry, I know that is bad so"],
-        correcta: "I implement",
-        feedback_acierto: "'I implement' transforma una debilidad en un proceso activo de gestión y autoliderazgo.",
-        feedback_error: "Pedir perdón o decir 'I know that is bad' te infantiliza ante el entrevistador."
-      },
-      {
-        id: 21, categoria: "Entrevista - Expectativas Salariales",
-        situacion: "Te preguntan por tu aspiración económica y debes fijar un rango sin titubeos.",
-        frase: "Based on market benchmarks for this leadership level, ______ within the 95k to 110k bracket.",
-        opciones: ["my expectations align", "maybe I would like to get", "I hope you can give me"],
-        correcta: "my expectations align",
-        feedback_acierto: "'My expectations align' despersonaliza la cifra y la ata a estándares objetivos de mercado.",
-        feedback_error: "'I hope you can give me' o 'maybe I would like' suena a pedir una concesión en lugar de negociar una tarifa técnica."
-      },
-      {
-        id: 22, categoria: "Entrevista - Motivo de Cambio Laboral",
-        situacion: "Te consultan por qué dejás tu posición actual sin hablar mal de la empresa previa.",
-        frase: "My current role reached a natural ceiling; ______ larger scale infrastructure challenges.",
-        opciones: ["I am targeting", "I hate my previous boss and", "I just want to leave because"],
-        correcta: "I am targeting",
-        feedback_acierto: "'I am targeting' muestra ambición estratégica y dirección profesional sin quejas del pasado.",
-        feedback_error: "Mencionar quejas personales o decir 'I just want to leave' enciende alarmas en recursos humanos."
-      },
-      {
-        id: 23, categoria: "Entrevista - Gestión de Crisis Pasada",
-        situacion: "Te piden describir un proyecto que fracasó o enfrentó un bloqueo crítico.",
-        frase: "When the third-party API crashed, ______ an immediate fallback protocol that secured 98% of transactions.",
-        opciones: ["I orchestrated", "I panicked a little bit, but", "it wasn't my fault because"],
-        correcta: "I orchestrated",
-        feedback_acierto: "'I orchestrated' destaca tu capacidad de reacción ejecutiva y liderazgo ante la contingencia.",
-        feedback_error: "Decir 'it wasn't my fault' te muestra a la defensiva e incapaz de asumir la resolución del problema."
-      },
-      {
-        id: 24, categoria: "Liderazgo - Delegación Clara",
-        situacion: "Asignas un entregable clave a un miembro del equipo fijando responsabilidad puntual.",
-        frase: "Please ______ ownership of the cloud migration report by Thursday 3 PM.",
-        opciones: ["assume full", "try if you can have", "see if maybe you can take"],
-        correcta: "assume full",
-        feedback_acierto: "'Assume full ownership' transfiere autoridad y responsabilidad sin ambigüedades ni micro-gestión.",
-        feedback_error: "'Try if you can' habilita excusas y diluye la rendición de cuentas operativa."
-      },
-      {
-        id: 25, categoria: "Liderazgo - Frenar Especulaciones",
-        situacion: "El equipo debate rumores o suposiciones sin base técnica durante una llamada.",
-        frase: "Rather than speculating, ______ validate the telemetry logs before making assumptions.",
-        opciones: ["let's strictly", "maybe we could see if", "I don't know, but we might"],
-        correcta: "let's strictly",
-        feedback_acierto: "'Let's strictly validate' ancla al equipo en hechos verificables y corta la pérdida de tiempo.",
-        feedback_error: "'Maybe we could see if' no tiene la fuerza necesaria para reencauzar una discusión improductiva."
-      },
-      {
-        id: 26, categoria: "Intervención - Validar y Corregir",
-        situacion: "Un par propone una idea que omitió un riesgo legal o de seguridad crítico.",
-        frase: "While that approach accelerates speed, ______ critical vulnerabilities in data compliance.",
-        opciones: ["it introduces", "I think it's kind of bad because", "sorry to say this, but"],
-        correcta: "it introduces",
-        feedback_acierto: "'It introduces' señala el riesgo técnico con objetividad pura, separando el problema de la persona.",
-        feedback_error: "Pedir disculpas o usar términos vagos como 'kind of bad' debilita tu advertencia técnica."
-      },
-      {
-        id: 27, categoria: "Gestión de Expectativas",
-        situacion: "Un stakeholder consulta si una funcionalidad compleja puede estar lista 'para mañana'.",
-        frase: "Quality testing cannot be bypassed; ______ the feature for Monday's staging environment.",
-        opciones: ["we will release", "maybe we can see tomorrow", "I will try to work tonight and"],
-        correcta: "we will release",
-        feedback_acierto: "'We will release' fija una fecha viable y firme, protegiendo los estándares de entrega.",
-        feedback_error: "Ofrecerte a 'trabajar toda la noche' degrada tu posicionamiento y sienta un precedente peligroso de explotación."
-      },
-      {
-        id: 28, categoria: "Comunicación Asincrónica",
-        situacion: "Cierras un correo técnico donde se requieren decisiones antes de continuar.",
-        frase: "To proceed without blocking the sprint, ______ your input by end of day.",
-        opciones: ["we look forward to", "please reply if you have five minutes", "sorry to bother you, but"],
-        correcta: "we look forward to",
-        feedback_acierto: "'We look forward to' transmite profesionalismo y expectativa ejecutiva de respuesta.",
-        feedback_error: "'Sorry to bother you' rebaja tu mensaje de trabajo al nivel de una molestia insignificante."
-      },
-      {
-        id: 29, categoria: "Reunión de Estatus - Resumen Ejecutivo",
-        situacion: "Inicias tu turno de palabra en la call general y debes sintetizar el avance en una frase.",
-        frase: "Over the past cycle, ______ 92% of our sprint goals ahead of schedule.",
-        opciones: ["our team secured", "we kind of reached", "I think we did some things like"],
-        correcta: "our team secured",
-        feedback_acierto: "'Our team secured' comunica logro y solidez con métricas concretas que demuestran liderazgo.",
-        feedback_error: "'We kind of reached' destruye el mérito del trabajo realizado mediante dudas innecesarias."
-      },
-      {
-        id: 30, categoria: "Control de Conversación - Redirigir Preguntas",
-        situacion: "Te hacen una pregunta sobre un área ajena a tu responsabilidad técnica.",
-        frase: "That falls under infrastructure governance; ______ connect with David for exact specifications.",
-        opciones: ["I recommend you", "I have no idea, sorry", "not my problem, you can"],
-        correcta: "I recommend you",
-        feedback_acierto: "'I recommend you connect with' orienta al interlocutor con cortesía ejecutiva sin asumir cargas que no te corresponden.",
-        feedback_error: "Decir 'I have no idea' proyecta ignorancia; decir 'not my problem' genera fricción innecesaria."
-      },
-      {
-        id: 31, categoria: "Negociación - Rechazar Descuentos",
-        situacion: "Un cliente presiona diciendo que el presupuesto excede lo que pensaba invertir.",
-        frase: "To preserve the technical rigor of this architecture, ______ negotiate below this baseline.",
-        opciones: ["we cannot", "we are so sorry that we can't", "maybe we could ask if"],
-        correcta: "we cannot",
-        feedback_acierto: "'We cannot negotiate below this baseline' fija un límite firme y sobrio sustentado en la calidad técnica.",
-        feedback_error: "Pedir 'perdón' por sostener tu tarifa profesional destruye la credibilidad del servicio."
-      },
-      {
-        id: 32, categoria: "Gestión de Crisis - Error Interno",
-        situacion: "Un bug creado por tu equipo llegó a producción y debes dar la cara.",
-        frase: "We have contained the patch; ______ our root-cause analysis and preventive safeguards.",
-        opciones: ["here is", "sorry, we made a terrible mistake and", "please don't get mad, here is"],
-        correcta: "here is",
-        feedback_acierto: "'Here is our root-cause analysis' muestra madurez corporativa: contuviste el problema y presentas la solución preventiva.",
-        feedback_error: "Dramatizar con 'terrible mistake' o pedir 'don't get mad' agrava la percepción de incompetencia."
-      },
-      {
-        id: 33, categoria: "Poner Límites - Comunicación Fuera de Hora",
-        situacion: "Te escriben un viernes a la noche pidiendo cambios no urgentes.",
-        frase: "Received. ______ review this first thing Monday morning during our planning session.",
-        opciones: ["I will", "sorry I am not working now, maybe", "I will try to open my laptop if"],
-        correcta: "I will",
-        feedback_acierto: "'Received. I will review this Monday' acusa recibo, fija el límite con serenidad y descarta urgencias ficticias.",
-        feedback_error: "Dar justificaciones personales sobre tu vida privada debilita el límite profesional."
-      },
-      {
-        id: 34, categoria: "Toma de Decisiones - Priorización",
-        situacion: "Hay demasiadas iniciativas abiertas y debes forzar al equipo a elegir una prioridad.",
-        frase: "To maximize impact this sprint, ______ allocating 80% of our capacity to the payment gateway.",
-        opciones: ["we are", "maybe it's a good idea if we are", "I wonder if we should be"],
-        correcta: "we are",
-        feedback_acierto: "'We are allocating' expresa una decisión ya tomada y en curso, reduciendo debates interminables.",
-        feedback_error: "'I wonder if we should' abre a votación algo que requiere criterio de dirección ejecutiva."
-      },
-      {
-        id: 35, categoria: "Entrevista - Preguntas al Entrevistador",
-        situacion: "Al final de la entrevista te dicen 'Do you have any questions for us?' y quieres evaluar su madurez técnica.",
-        frase: "How does your leadership team ______ technical debt against commercial feature delivery?",
-        opciones: ["prioritize", "deal with the bad", "try to fix"],
-        correcta: "prioritize",
-        feedback_acierto: "'How does your leadership team prioritize technical debt' te coloca al nivel de un evaluador estratégico y no de un postulante pasivo.",
-        feedback_error: "Preguntar 'how do you deal with the bad things' carece de vocabulario de negocio."
-      },
-      {
-        id: 36, categoria: "Facilitación - Cortar Monólogos",
-        situacion: "Un participante lleva diez minutos repitiendo lo mismo sin llegar a un punto concreto.",
-        frase: "Understood. ______ transform that feedback into an actionable requirement.",
-        opciones: ["Let's", "Sorry for cutting you off, but", "Can you please stop talking so"],
-        correcta: "Let's",
-        feedback_acierto: "'Understood. Let's transform that into an actionable requirement' corta la repetición con elegancia y la convierte en trabajo útil.",
-        feedback_error: "Disculparte por moderar una reunión debilita tu autoridad como facilitador."
-      },
-      {
-        id: 37, categoria: "Negociación - Términos de Pago",
-        situacion: "Estableces las condiciones de desembolso antes de iniciar la consultoría.",
-        frase: "Project onboarding initiates ______ the initial invoice clearance.",
-        opciones: ["upon", "if maybe you can pay", "when you have time for"],
-        correcta: "upon",
-        feedback_acierto: "'Initiates upon the initial invoice clearance' establece una regla de negocio objetiva sin sonar agresivo ni inseguro.",
-        feedback_error: "'If maybe you can pay' suena a favor optativo en lugar de una condición contractual básica."
-      },
-      {
-        id: 38, categoria: "Posicionamiento - Defender Criterio Técnico",
-        situacion: "Un gerente no técnico quiere aplicar una solución rápida que dañará la base de datos.",
-        frase: "While that shortcut offers immediate visibility, ______ architectural stability over the next two quarters.",
-        opciones: ["it compromises", "I don't think it's very nice for", "it makes me feel sad about"],
-        correcta: "it compromises",
-        feedback_acierto: "'It compromises architectural stability' habla en términos de riesgo financiero y operativo a futuro.",
-        feedback_error: "Usar argumentos emotivos ('makes me feel') permite que el interlocutor los desestime con facilidad."
-      },
-      {
-        id: 39, categoria: "Liderazgo - Reconocimiento y Visibilidad",
-        situacion: "Presentas los resultados de un proyecto destacando la labor del equipo ante directores.",
-        frase: "This milestone was achieved because ______ our operational frameworks with zero deviations.",
-        opciones: ["the engineering team executed", "they worked very hard, poor guys, and", "we got lucky that"],
-        correcta: "the engineering team executed",
-        feedback_acierto: "'The team executed our frameworks with zero deviations' premia el método y la disciplina profesional.",
-        feedback_error: "Atribuir el éxito a 'la suerte' o victimizar al equipo ('poor guys') resta seriedad al logro."
-      },
-      {
-        id: 40, categoria: "Control de Conversación - Aclarar Supuestos",
-        situacion: "Te dan una instrucción vaga o contradictoria y necesitas confirmación por escrito.",
-        frase: "To ensure exact compliance, ______ this requirement before committing resources.",
-        opciones: ["let's document", "I am confused, sorry, can you", "I didn't understand your English, so"],
-        correcta: "let's document",
-        feedback_acierto: "'Let's document this requirement' protege la operación exigiendo claridad formal sin culpar a nadie.",
-        feedback_error: "Culpar a tu comprensión ('I am confused' / 'didn't understand your English') regala tu estatus innecesariamente."
-      },
-      {
-        id: 41, categoria: "Gestión de Recursos - Pedir Presupuesto de Herramientas",
-        situacion: "Necesitas adquirir licencias de software para acelerar la entrega del equipo.",
-        frase: "Acquiring these licenses ______ manual deployment hours by 40% immediately.",
-        opciones: ["reduces", "might maybe help a little to lower", "is something I wish we had to reduce"],
-        correcta: "reduces",
-        feedback_acierto: "'Reduces manual deployment hours by 40%' presenta la compra como un retorno de inversión indiscutible.",
-        feedback_error: "Decir 'might maybe help a little' hace parecer la herramienta como un gasto prescindible."
-      },
-      {
-        id: 42, categoria: "Manejo de Desacuerdos - Alternativas Viables",
-        situacion: "Debes frenar una propuesta inviable ofreciendo una alternativa realista al instante.",
-        frase: "Deploying on Friday introduces unacceptable risk; ______ our deployment window for Tuesday at 6 AM.",
-        opciones: ["we have secured", "I suggest we pray and see if", "we can try if you really want, but"],
-        correcta: "we have secured",
-        feedback_acierto: "'Deploying introduces unacceptable risk; we have secured Tuesday' frena el error y aporta la solución ya coordinada.",
-        feedback_error: "'We can try if you really want' cede ante la presión operativa sabiendo que el sistema fallará."
-      },
-      {
-        id: 43, categoria: "Posicionamiento - Autonomía y Supervisión",
-        situacion: "Un cliente quiere micro-gestionar cada paso de tu consultoría técnica.",
-        frase: "To deliver peak efficiency, ______ milestone reviews every Friday in place of daily syncs.",
-        opciones: ["we establish", "please don't watch me every day, sorry", "maybe you can trust us to do"],
-        correcta: "we establish",
-        feedback_acierto: "'We establish milestone reviews' estructura la metodología de trabajo protegiendo el tiempo de ejecución.",
-        feedback_error: "Pedir 'please trust us' denota inseguridad y suele generar todavía más micro-gestión."
-      },
-      {
-        id: 44, categoria: "Cierre de Negociación - Próximos Pasos",
-        situacion: "Finaliza una reunión con un cliente potencial y debes marcar el siguiente hito con firmeza.",
-        frase: "Following this alignment, ______ the final statement of work by 5 PM tomorrow.",
-        opciones: ["I will deliver", "I hope I can send you", "maybe someone from my team will try to write"],
-        correcta: "I will deliver",
-        feedback_acierto: "'I will deliver the statement of work' asume el control del cierre comercial con fecha y hora puntual.",
-        feedback_error: "'I hope I can send' deja una sensación de duda e informalidad al momento de cerrar una venta."
-      },
-      {
-        id: 45, categoria: "Liderazgo - Cierre de Sprint con Autoridad",
-        situacion: "Cierras la reunión trimestral consolidando la posición del equipo de cara al próximo ciclo.",
-        frase: "Having stabilized core infrastructure, ______ scaling capacity to absorb peak fourth-quarter traffic.",
-        opciones: ["our strategic priority is", "we will try to see if we can do", "I guess maybe next we should look at"],
-        correcta: "our strategic priority is",
-        feedback_acierto: "'Our strategic priority is' define foco, visión y liderazgo ejecutivo para todo el equipo.",
-        feedback_error: "'I guess maybe next' diluye el plan de acción en especulaciones sin rumbo."
-      }
+      { id: 1, categoria: "Poner Límites", situacion: "Un cliente o director pide adelantar una entrega crítica sin margen de tiempo.", frase: "To maintain operational quality, ______ integrate this into our next milestone.", opciones: ["we can definitely", "I think maybe we will try to", "we cannot"], correcta: "we can definitely", feedback_acierto: "Al usar 'we can definitely integrate this into our next milestone', no te disculpas ni cierras la puerta; marcas un límite profesional protegiendo la calidad y diriges la conversación al siguiente ciclo.", feedback_error: "Decir 'will try to' transmite que no tienes el control del proceso técnico y habilita a que te sigan presionando." },
+      { id: 2, categoria: "Reporte de Crisis", situacion: "Hay un retraso en la operación y tienes que informarlo en la llamada de equipo.", frase: "______ a technical bottleneck in the pipeline. Here is our mitigation plan.", opciones: ["We have identified", "Sorry, but we have a big problem with", "It seems like there is"], correcta: "We have identified", feedback_acierto: "'We have identified' demuestra diagnóstico profesional y dominio de la situación. Pasas de pedir perdón por una falla a liderar el plan de contingencia.", feedback_error: "Comenzar con 'Sorry, but we have a big problem' genera alarma innecesaria y te posiciona como el responsable culpable del imprevisto." },
+      { id: 3, categoria: "Toma de Decisiones", situacion: "En una reunión técnica, tienes que definir cuál es el camino a seguir.", frase: "Based on the performance metrics, ______ migrating to the new infrastructure today.", opciones: ["I recommend", "maybe we could think about", "I guess it is better"], correcta: "I recommend", feedback_acierto: "'I recommend' respaldado por datos ('Based on the performance metrics') es la fórmula exacta del liderazgo técnico. Fijas postura clara.", feedback_error: "'Maybe we could think about' diluye tu criterio y le da pie a perfiles con menos experiencia a descartar tu idea." },
+      { id: 4, categoria: "Control de Conversación", situacion: "Te hacen una consulta compleja en plena llamada y necesitas 10 segundos para procesar sin dudar.", frase: "______ Let me pull up the exact data so we can address the root cause.", opciones: ["That is a strategic point.", "I don't know, sorry.", "Wait, my English is bad."], correcta: "That is a strategic point.", feedback_acierto: "Calificar la intervención ajena ('That is a strategic point') te da control inmediato de la conversación, compra tiempo y te permite buscar datos con aplomo.", feedback_error: "Decir 'I don't know' o justificarte con el idioma te deja de inmediato en posición de subordinación." },
+      { id: 5, categoria: "Negociación", situacion: "Te ofrecen un presupuesto por debajo de la complejidad del trabajo.", frase: "To deliver the expected business outcome, ______ an allocation of three senior specialists.", opciones: ["this scope requires", "I would like to ask if possible", "maybe we will need"], correcta: "this scope requires", feedback_acierto: "'This scope requires' despersonaliza la petición: es el proyecto técnico exigiendo los recursos que corresponden para tener éxito.", feedback_error: "'I would like to ask if possible' suena a pedir favores en lugar de presupuestar con criterio profesional." },
+      { id: 6, categoria: "Posicionamiento", situacion: "Entrevista laboral o presentación de consultoría ante un comité directivo.", frase: "My focus is not just execution; ______ optimize your operational margins from quarter one.", opciones: ["I am positioned to", "I will try my best to", "I hope I can"], correcta: "I am positioned to", feedback_acierto: "'I am positioned to optimize' habla desde la certeza y la contribución de valor al negocio, diferenciándote de quienes solo ofrecen trabajar duro.", feedback_error: "'I hope I can' o 'I will try' transmiten dudas sobre tu propia capacidad de entrega." },
+      { id: 7, categoria: "Gestión de Cronograma", situacion: "Una variable externa retrasa la fecha de entrega y debes comunicarlo sin generar desconfianza.", frase: "Due to external dependencies, ______ deliver the final report by Friday afternoon.", opciones: ["we are scheduled to", "we hope we can", "we will see if we"], correcta: "we are scheduled to", feedback_acierto: "'We are scheduled to' transmite control y reprogramación estructurada, no una promesa improvisada.", feedback_error: "'We hope we can' denota que dependes de la suerte en lugar de gestionar activamente el cronograma." },
+      { id: 8, categoria: "Manejo de Desacuerdos", situacion: "En una llamada, un colega propone un método ineficiente para el proyecto.", frase: "______ alternative pathways that optimize our execution budget.", opciones: ["The data points to", "I feel you are wrong about", "Maybe it's just my opinion, but"], correcta: "The data points to", feedback_acierto: "'The data points to' saca la emoción del debate y apoya tu argumento en hechos verificables, cuidando las relaciones laborales.", feedback_error: "'It's just my opinion' debilita tu criterio antes de que termines de formular tu argumento." },
+      { id: 9, categoria: "Facilitación", situacion: "La llamada se fue por las ramas con temas secundarios y debes retomar el objetivo.", frase: "To respect everyone's agenda, ______ the core deliverable.", opciones: ["let's realign on", "excuse me, can you stop and look at", "sorry to interrupt, but maybe"], correcta: "let's realign on", feedback_acierto: "'Let's realign on' lidera la reunión con elegancia ejecutiva, justificando el corte por el valor del tiempo de todos.", feedback_error: "Pedir disculpas por reenfocar una reunión te hace ver como un intruso en lugar de un facilitador profesional." },
+      { id: 10, categoria: "Poner Límites", situacion: "El cliente añade requerimientos nuevos sin ampliar el presupuesto acordado.", frase: "This new requirement falls outside the current agreement; ______ scope an amendment.", opciones: ["we can definitely", "we don't really want to", "I am afraid we can't"], correcta: "we can definitely", feedback_acierto: "Unir 'we can definitely' con 'scope an amendment' convierte un conflicto de límites en una oportunidad comercial clara.", feedback_error: "'I am afraid' te coloca en posición de debilidad antes de plantear la realidad del contrato." },
+      { id: 11, categoria: "Gestión del Tiempo", situacion: "Te invitan a una reunión sin agenda clara que interrumpe tu entrega operativa.", frase: "To keep focus on critical deliverables, ______ updates via email today.", opciones: ["I will provide", "I am too busy to attend, sorry for", "I don't think I can come to"], correcta: "I will provide", feedback_acierto: "'I will provide updates via email' protege tu tiempo y ofrece una alternativa de valor sin pedir perdón.", feedback_error: "Decir que estás 'demasiado ocupado' suena a desorganización; liderar de forma asincrónica proyecta alta eficiencia." },
+      { id: 12, categoria: "Negociación", situacion: "Cuestionan tus números diciendo que hay alternativas más baratas en el mercado.", frase: "Our fee structure ______ our proven track record in risk mitigation.", opciones: ["directly reflects", "is expensive because", "can be reduced if you"], correcta: "directly reflects", feedback_acierto: "'Directly reflects' ancla tu precio al valor y la seguridad que aportas, eliminando el debate sobre costos operativos.", feedback_error: "Descontar de inmediato o justificar que eres 'caro' destruye tu margen y tu jerarquía técnica." },
+      { id: 13, categoria: "Gestión de Recursos", situacion: "Necesitas dos ingenieros más para cumplir con el objetivo del trimestre.", frase: "To safeguard our delivery target, ______ adding two dedicated resources.", opciones: ["I recommend", "I was wondering if maybe we could", "please, we really need"], correcta: "I recommend", feedback_acierto: "'I recommend adding' formula la necesidad como una decisión estratégica respaldada por el objetivo de entrega.", feedback_error: "'I was wondering if maybe' invita al interlocutor a rechazar la propuesta sin analizarla." },
+      { id: 14, categoria: "Poner Límites", situacion: "La dirección pide recortar dos semanas sin recortar funciones ni alcance.", frase: "Compressing the timeline ______ reducing the scope or increasing head count.", opciones: ["requires either", "is impossible, sorry", "makes me feel worried about"], correcta: "requires either", feedback_acierto: "'Requires either' plantea un dilema de gestión objetivo: si buscan velocidad, deben elegir qué variable ajustar.", feedback_error: "Responder 'is impossible' genera fricción; responder con 'makes me feel' resta peso técnico al argumento." },
+      { id: 15, categoria: "Liderazgo Operativo", situacion: "La falta de aprobación de un superior tiene frenado al equipo de trabajo.", frase: "To avoid deployment bottlenecks, ______ confirmation on the architecture by noon.", opciones: ["we require", "just checking if you have time for", "please don't forget to give"], correcta: "we require", feedback_acierto: "'We require confirmation' marca la necesidad del proyecto con firmeza y fija un plazo claro.", feedback_error: "'Just checking' disminuye la urgencia real y te muestra dependiente e inseguro." },
+      { id: 16, categoria: "Negociación", situacion: "Te presentan una propuesta que no convence y exigen una respuesta inmediata.", frase: "______ this proposal internally and return with our counter-framework tomorrow.", opciones: ["We will evaluate", "I don't know what to say about", "Give me time because my English is"], correcta: "We will evaluate", feedback_acierto: "'We will evaluate' demuestra que no actúas bajo presión externa y que tienes un proceso de decisión sólido.", feedback_error: "Titubear o admitir parálisis te deja en desventaja directa en la mesa de negociación." },
+      { id: 17, categoria: "Manejo de Conflictos", situacion: "En una llamada elevan el tono o hacen comentarios despectivos sobre un error técnico.", frase: "______ solving the system discrepancy efficiently.", opciones: ["Let's keep our focus on", "Don't talk to me like that, sorry", "I think you are being unfair with"], correcta: "Let's keep our focus on", feedback_acierto: "'Let's keep our focus on' desactiva el conflicto personal y redirige la conversación a la solución técnica.", feedback_error: "Entrar en discusiones emocionales o quejas destruye la jerarquía técnica en entornos corporativos." },
+      { id: 18, categoria: "Cierre de Acuerdos", situacion: "Ambas partes están conformes de palabra y necesitas dejarlo asentado por escrito.", frase: "To ensure full alignment, ______ summarize the agreed action items in writing.", opciones: ["I will", "maybe I can try to", "let me know if you want me to"], correcta: "I will", feedback_acierto: "'I will summarize' toma la iniciativa y el control del registro de compromisos, asegurando que nada se desvirtúe.", feedback_error: "'Maybe I can try' deja en el aire una tarea que requiere precisión inmediata." },
+      { id: 19, categoria: "Entrevista - Presentación de Valor", situacion: "Te preguntan 'Tell me about yourself' y debes enfocarte en impacto de negocio, no en tu biografía.", frase: "Over the past eight years, ______ scaling distributed systems that reduce operational latency.", opciones: ["I have specialized in", "I was just working on", "I think I know about"], correcta: "I have specialized in", feedback_acierto: "'I have specialized in' define autoridad de nicho y trayectoria deliberada desde la primera frase.", feedback_error: "'I was just working on' minimiza tu experiencia y reduce tu carrera a una tarea operativa sin peso." },
+      { id: 20, categoria: "Entrevista - Hablar de Debilidades", situacion: "Te preguntan por tu mayor debilidad sin caer en clichés ni pedir disculpas.", frase: "I tend to scrutinize granular details; therefore, ______ automated checkpoints to maintain team velocity.", opciones: ["I implement", "I try to change that because", "sorry, I know that is bad so"], correcta: "I implement", feedback_acierto: "'I implement' transforma una debilidad en un proceso activo de gestión y autoliderazgo.", feedback_error: "Pedir perdón o decir 'I know that is bad' te infantiliza ante el entrevistador." },
+      { id: 21, categoria: "Entrevista - Expectativas Salariales", situacion: "Te preguntan por tu aspiración económica y debes fijar un rango sin titubeos.", frase: "Based on market benchmarks for this leadership level, ______ within the 95k to 110k bracket.", opciones: ["my expectations align", "maybe I would like to get", "I hope you can give me"], correcta: "my expectations align", feedback_acierto: "'My expectations align' despersonaliza la cifra y la ata a estándares objetivos de mercado.", feedback_error: "'I hope you can give me' o 'maybe I would like' suena a pedir una concesión en lugar de negociar una tarifa técnica." },
+      { id: 22, categoria: "Entrevista - Motivo de Cambio Laboral", situacion: "Te consultan por qué dejás tu posición actual sin hablar mal de la empresa previa.", frase: "My current role reached a natural ceiling; ______ larger scale infrastructure challenges.", opciones: ["I am targeting", "I hate my previous boss and", "I just want to leave because"], correcta: "I am targeting", feedback_acierto: "'I am targeting' muestra ambición estratégica y dirección profesional sin quejas del pasado.", feedback_error: "Mencionar quejas personales o decir 'I just want to leave' enciende alarmas en recursos humanos." },
+      { id: 23, categoria: "Entrevista - Gestión de Crisis Pasada", situacion: "Te piden describir un proyecto que fracasó o enfrentó un bloqueo crítico.", frase: "When the third-party API crashed, ______ an immediate fallback protocol that secured 98% of transactions.", opciones: ["I orchestrated", "I panicked a little bit, but", "it wasn't my fault because"], correcta: "I orchestrated", feedback_acierto: "'I orchestrated' destaca tu capacidad de reacción ejecutiva y liderazgo ante la contingencia.", feedback_error: "Decir 'it wasn't my fault' te muestra a la defensiva e incapaz de asumir la resolución del problema." },
+      { id: 24, categoria: "Liderazgo - Delegación Clara", situacion: "Asignas un entregable clave a un miembro del equipo fijando responsabilidad puntual.", frase: "Please ______ ownership of the cloud migration report by Thursday 3 PM.", opciones: ["assume full", "try if you can have", "see if maybe you can take"], correcta: "assume full", feedback_acierto: "'Assume full ownership' transfiere autoridad y responsabilidad sin ambigüedades ni micro-gestión.", feedback_error: "'Try if you can' habilita excusas y diluye la rendición de cuentas operativa." },
+      { id: 25, categoria: "Liderazgo - Frenar Especulaciones", situacion: "El equipo debate rumores o suposiciones sin base técnica durante una llamada.", frase: "Rather than speculating, ______ validate the telemetry logs before making assumptions.", opciones: ["let's strictly", "maybe we could see if", "I don't know, but we might"], correcta: "let's strictly", feedback_acierto: "'Let's strictly validate' ancla al equipo en hechos verificables y corta la pérdida de tiempo.", feedback_error: "'Maybe we could see if' no tiene la fuerza necesaria para reencauzar una discusión improductiva." },
+      { id: 26, categoria: "Intervención - Validar y Corregir", situacion: "Un par propone una idea que omitió un riesgo legal o de seguridad crítico.", frase: "While that approach accelerates speed, ______ critical vulnerabilities in data compliance.", opciones: ["it introduces", "I think it's kind of bad because", "sorry to say this, but"], correcta: "it introduces", feedback_acierto: "'It introduces' señala el riesgo técnico con objetividad pura, separando el problema de la persona.", feedback_error: "Pedir disculpas o usar términos vagos como 'kind of bad' debilita tu advertencia técnica." },
+      { id: 27, categoria: "Gestión de Expectativas", situacion: "Un stakeholder consulta si una funcionalidad compleja puede estar lista 'para mañana'.", frase: "Quality testing cannot be bypassed; ______ the feature for Monday's staging environment.", opciones: ["we will release", "maybe we can see tomorrow", "I will try to work tonight and"], correcta: "we will release", feedback_acierto: "'We will release' fija una fecha viable y firme, protegiendo los estándares de entrega.", feedback_error: "Ofrecerte a 'trabajar toda la noche' degrada tu posicionamiento y sienta un precedente peligroso de explotación." },
+      { id: 28, categoria: "Comunicación Asincrónica", situacion: "Cierras un correo técnico donde se requieren decisiones antes de continuar.", frase: "To proceed without blocking the sprint, ______ your input by end of day.", opciones: ["we look forward to", "please reply if you have five minutes", "sorry to bother you, but"], correcta: "we look forward to", feedback_acierto: "'We look forward to' transmite profesionalismo y expectativa ejecutiva de respuesta.", feedback_error: "'Sorry to bother you' rebaja tu mensaje de trabajo al nivel de una molestia insignificante." },
+      { id: 29, categoria: "Reunión de Estatus - Resumen Ejecutivo", situacion: "Inicias tu turno de palabra en la call general y debes sintetizar el avance en una frase.", frase: "Over the past cycle, ______ 92% of our sprint goals ahead of schedule.", opciones: ["our team secured", "we kind of reached", "I think we did some things like"], correcta: "our team secured", feedback_acierto: "'Our team secured' comunica logro y solidez con métricas concretas que demuestran liderazgo.", feedback_error: "'We kind of reached' destruye el mérito del trabajo realizado mediante dudas innecesarias." },
+      { id: 30, categoria: "Control de Conversación - Redirigir Preguntas", situacion: "Te hacen una pregunta sobre un área ajena a tu responsabilidad técnica.", frase: "That falls under infrastructure governance; ______ connect with David for exact specifications.", opciones: ["I recommend you", "I have no idea, sorry", "not my problem, you can"], correcta: "I recommend you", feedback_acierto: "'I recommend you connect with' orienta al interlocutor con cortesía ejecutiva sin asumir cargas que no te corresponden.", feedback_error: "Decir 'I have no idea' proyecta ignorancia; decir 'not my problem' genera fricción innecesaria." },
+      { id: 31, categoria: "Negociación - Rechazar Descuentos", situacion: "Un cliente presiona diciendo que el presupuesto excede lo que pensaba invertir.", frase: "To preserve the technical rigor of this architecture, ______ negotiate below this baseline.", opciones: ["we cannot", "we are so sorry that we can't", "maybe we could ask if"], correcta: "we cannot", feedback_acierto: "'We cannot negotiate below this baseline' fija un límite firme y sobrio sustentado en la calidad técnica.", feedback_error: "Pedir 'perdón' por sostener tu tarifa profesional destruye la credibilidad del servicio." },
+      { id: 32, categoria: "Gestión de Crisis - Error Interno", situacion: "Un bug creado por tu equipo llegó a producción y debes dar la cara.", frase: "We have contained the patch; ______ our root-cause analysis and preventive safeguards.", opciones: ["here is", "sorry, we made a terrible mistake and", "please don't get mad, here is"], correcta: "here is", feedback_acierto: "'Here is our root-cause analysis' muestra madurez corporativa: contuviste el problema y presentas la solución preventiva.", feedback_error: "Dramatizar con 'terrible mistake' o pedir 'don't get mad' agrava la percepción de incompetencia." },
+      { id: 33, categoria: "Poner Límites - Comunicación Fuera de Hora", situacion: "Te escriben un viernes a la noche pidiendo cambios no urgentes.", frase: "Received. ______ review this first thing Monday morning during our planning session.", opciones: ["I will", "sorry I am not working now, maybe", "I will try to open my laptop if"], correcta: "I will", feedback_acierto: "'Received. I will review this Monday' acusa recibo, fija el límite con serenidad y descarta urgencias ficticias.", feedback_error: "Dar justificaciones personales sobre tu vida privada debilita el límite profesional." },
+      { id: 34, categoria: "Toma de Decisiones - Priorización", situacion: "Hay demasiadas iniciativas abiertas y debes forzar al equipo a elegir una prioridad.", frase: "To maximize impact this sprint, ______ allocating 80% of our capacity to the payment gateway.", opciones: ["we are", "maybe it's a good idea if we are", "I wonder if we should be"], correcta: "we are", feedback_acierto: "'We are allocating' expresa una decisión ya tomada y en curso, reduciendo debates interminables.", feedback_error: "'I wonder if we should' abre a votación algo que requiere criterio de dirección ejecutiva." },
+      { id: 35, categoria: "Entrevista - Preguntas al Entrevistador", situacion: "Al final de la entrevista te dicen 'Do you have any questions for us?' y quieres evaluar su madurez técnica.", frase: "How does your leadership team ______ technical debt against commercial feature delivery?", opciones: ["prioritize", "deal with the bad", "try to fix"], correcta: "prioritize", feedback_acierto: "'How does your leadership team prioritize technical debt' te coloca al nivel de un evaluador estratégico y no de un postulante pasivo.", feedback_error: "Preguntar 'how do you deal with the bad things' carece de vocabulario de negocio." },
+      { id: 36, categoria: "Facilitación - Cortar Monólogos", situacion: "Un participante lleva diez minutos repitiendo lo mismo sin llegar a un punto concreto.", frase: "Understood. ______ transform that feedback into an actionable requirement.", opciones: ["Let's", "Sorry for cutting you off, but", "Can you please stop talking so"], correcta: "Let's", feedback_acierto: "'Understood. Let's transform that into an actionable requirement' corta la repetición con elegancia y la convierte en trabajo útil.", feedback_error: "Disculparte por moderar una reunión debilita tu autoridad como facilitador." },
+      { id: 37, categoria: "Negociación - Términos de Pago", situacion: "Estableces las condiciones de desembolso antes de iniciar la consultoría.", frase: "Project onboarding initiates ______ the initial invoice clearance.", opciones: ["upon", "if maybe you can pay", "when you have time for"], correcta: "upon", feedback_acierto: "'Initiates upon the initial invoice clearance' establece una regla de negocio objetiva sin sonar agresivo ni inseguro.", feedback_error: "'If maybe you can pay' suena a favor optativo en lugar de una condición contractual básica." },
+      { id: 38, categoria: "Posicionamiento - Defender Criterio Técnico", situacion: "Un gerente no técnico quiere aplicar una solución rápida que dañará la base de datos.", frase: "While that shortcut offers immediate visibility, ______ architectural stability over the next two quarters.", opciones: ["it compromises", "I don't think it's very nice for", "it makes me feel sad about"], correcta: "it compromises", feedback_acierto: "'It compromises architectural stability' habla en términos de riesgo financiero y operativo a futuro.", feedback_error: "Usar argumentos emotivos ('makes me feel') permite que el interlocutor los desestime con facilidad." },
+      { id: 39, categoria: "Liderazgo - Reconocimiento y Visibilidad", situacion: "Presentas los resultados de un proyecto destacando la labor del equipo ante directores.", frase: "This milestone was achieved because ______ our operational frameworks with zero deviations.", opciones: ["the engineering team executed", "they worked very hard, poor guys, and", "we got lucky that"], correcta: "the engineering team executed", feedback_acierto: "'The team executed our frameworks with zero deviations' premia el método y la disciplina profesional.", feedback_error: "Atribuir el éxito a 'la suerte' o victimizar al equipo ('poor guys') resta seriedad al logro." },
+      { id: 40, categoria: "Control de Conversación - Aclarar Supuestos", situacion: "Te dan una instrucción vaga o contradictoria y necesitas confirmación por escrito.", frase: "To ensure exact compliance, ______ this requirement before committing resources.", opciones: ["let's document", "I am confused, sorry, can you", "I didn't understand your English, so"], correcta: "let's document", feedback_acierto: "'Let's document this requirement' protege la operación exigiendo claridad formal sin culpar a nadie.", feedback_error: "Culpar a tu comprensión ('I am confused' / 'didn't understand your English') regala tu estatus innecesariamente." },
+      { id: 41, categoria: "Gestión de Recursos - Pedir Presupuesto de Herramientas", situacion: "Necesitas adquirir licencias de software para acelerar la entrega del equipo.", frase: "Acquiring these licenses ______ manual deployment hours by 40% immediately.", opciones: ["reduces", "might maybe help a little to lower", "is something I wish we had to reduce"], correcta: "reduces", feedback_acierto: "'Reduces manual deployment hours by 40%' presenta la compra como un retorno de inversión indiscutible.", feedback_error: "Decir 'might maybe help a little' hace parecer la herramienta como un gasto prescindible." },
+      { id: 42, categoria: "Manejo de Desacuerdos - Alternativas Viables", situacion: "Debes frenar una propuesta inviable ofreciendo una alternativa realista al instante.", frase: "Deploying on Friday introduces unacceptable risk; ______ our deployment window for Tuesday at 6 AM.", opciones: ["we have secured", "I suggest we pray and see if", "we can try if you really want, but"], correcta: "we have secured", feedback_acierto: "'Deploying introduces unacceptable risk; we have secured Tuesday' frena el error y aporta la solución ya coordinada.", feedback_error: "'We can try if you really want' cede ante la presión operativa sabiendo que el sistema fallará." },
+      { id: 43, categoria: "Posicionamiento - Autonomía y Supervisión", situacion: "Un cliente quiere micro-gestionar cada paso de tu consultoría técnica.", frase: "To deliver peak efficiency, ______ milestone reviews every Friday in place of daily syncs.", opciones: ["we establish", "please don't watch me every day, sorry", "maybe you can trust us to do"], correcta: "we establish", feedback_acierto: "'We establish milestone reviews' estructura la metodología de trabajo protegiendo el tiempo de ejecución.", feedback_error: "Pedir 'please trust us' denota inseguridad y suele generar todavía más micro-gestión." },
+      { id: 44, categoria: "Cierre de Negociación - Próximos Pasos", situacion: "Finaliza una reunión con un cliente potencial y debes marcar el siguiente hito con firmeza.", frase: "Following this alignment, ______ the final statement of work by 5 PM tomorrow.", opciones: ["I will deliver", "I hope I can send you", "maybe someone from my team will try to write"], correcta: "I will deliver", feedback_acierto: "'I will deliver the statement of work' asume el control del cierre comercial con fecha y hora puntual.", feedback_error: "'I hope I can send' deja una sensación de duda e informalidad al momento de cerrar una venta." },
+      { id: 45, categoria: "Liderazgo - Cierre de Sprint con Autoridad", situacion: "Cierras la reunión trimestral consolidando la posición del equipo de cara al próximo ciclo.", frase: "Having stabilized core infrastructure, ______ scaling capacity to absorb peak fourth-quarter traffic.", opciones: ["our strategic priority is", "we will try to see if we can do", "I guess maybe next we should look at"], correcta: "our strategic priority is", feedback_acierto: "'Our strategic priority is' define foco, visión y liderazgo ejecutivo para todo el equipo.", feedback_error: "'I guess maybe next' diluye el plan de acción en especulaciones sin rumbo." }
     ];
 
     let currentIdx = 0;
     let answered = false;
 
+    // INICIALIZACIÓN DE LA APLICACIÓN
+    document.addEventListener("DOMContentLoaded", () => {
+      loadProfile();
+      updateScenarioPrompts();
+      renderQuestion();
+      loadVault();
+    });
+
+    // MÓDULO 1: GESTIÓN DE PERFIL CON PERSISTENCIA
+    function loadProfile() {
+      const saved = localStorage.getItem('pitchflow_profile');
+      if (saved) {
+        const p = JSON.parse(saved);
+        document.getElementById('profile-display-name').textContent = `Profesional: ${p.name || 'Ana'}`;
+        document.getElementById('profile-display-role').textContent = `Rol: ${p.role || 'Senior'}`;
+        document.getElementById('gym-rank').textContent = `Nivel: ${p.level || 'B1'} Leader`;
+      }
+    }
+
+    function openProfileModal() {
+      const saved = localStorage.getItem('pitchflow_profile');
+      if (saved) {
+        const p = JSON.parse(saved);
+        document.getElementById('user-name').value = p.name || '';
+        document.getElementById('user-role').value = p.role || '';
+        document.getElementById('user-level').value = p.level || 'B1';
+      }
+      document.getElementById('profile-modal').classList.remove('hidden');
+    }
+
+    function closeProfileModal() {
+      document.getElementById('profile-modal').classList.add('hidden');
+    }
+
+    function saveProfile() {
+      const profile = {
+        name: document.getElementById('user-name').value.trim() || 'Ana',
+        role: document.getElementById('user-role').value.trim() || 'Senior Professional',
+        level: document.getElementById('user-level').value
+      };
+      localStorage.setItem('pitchflow_profile', JSON.stringify(profile));
+      loadProfile();
+      closeProfileModal();
+    }
+
+    // MÓDULO 2: ESCENARIOS Y PRESETS
+    function updateScenarioPrompts() {
+      const scenario = document.getElementById('rw-scenario').value;
+      const select = document.getElementById('rw-preset-prompt');
+      select.innerHTML = '';
+
+      const presets = SCENARIO_PRESETS[scenario] || [];
+      presets.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.prompt;
+        opt.textContent = p.label;
+        select.appendChild(opt);
+      });
+
+      applyPresetPrompt();
+    }
+
+    function applyPresetPrompt() {
+      const promptVal = document.getElementById('rw-preset-prompt').value;
+      document.getElementById('rw-input').value = promptVal;
+    }
+
+    // MÓDULO 4: GIMNASIO DE PODER
     function renderQuestion() {
       answered = false;
       const q = EXERCISES[currentIdx];
@@ -579,18 +393,18 @@
       const container = document.getElementById('q-options');
       container.innerHTML = '';
 
-      // Opciones barajadas
       const shuffled = [...q.opciones].sort(() => Math.random() - 0.5);
       shuffled.forEach(opt => {
         const btn = document.createElement('button');
         btn.textContent = opt;
-        btn.className = 'w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950/70 hover:border-amber-400/50 hover:bg-slate-900 text-slate-200 font-medium text-sm transition-all';
+        btn.className = 'w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950/70 hover:border-amber-400/50 hover:bg-slate-900 text-slate-200 font-medium text-sm transition-all cursor-pointer';
         btn.onclick = () => selectOption(opt, btn);
         container.appendChild(btn);
       });
 
       document.getElementById('q-feedback').className = 'hidden';
       document.getElementById('btn-next').className = 'hidden';
+      document.getElementById('btn-save-gym').className = 'hidden';
     }
 
     function selectOption(opt, btn) {
@@ -601,6 +415,7 @@
       const badge = document.getElementById('feedback-badge');
       const text = document.getElementById('feedback-text');
       const nextBtn = document.getElementById('btn-next');
+      const saveBtn = document.getElementById('btn-save-gym');
 
       slot.textContent = opt;
 
@@ -614,7 +429,8 @@
         badge.className = 'font-bold text-xs uppercase tracking-wider text-emerald-400 mb-1';
         text.textContent = q.feedback_acierto;
         
-        nextBtn.className = 'px-6 py-2.5 rounded-xl font-semibold bg-white text-slate-950 hover:bg-slate-200 transition-all text-sm cursor-pointer shadow-md';
+        nextBtn.className = 'px-6 py-2.5 rounded-xl font-semibold bg-white text-slate-950 hover:bg-slate-200 transition-all text-sm cursor-pointer shadow-md ml-auto';
+        saveBtn.className = 'px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-amber-300 hover:bg-slate-700 transition-all border border-slate-700 cursor-pointer';
       } else {
         slot.className = 'inline-block px-3 py-1 mx-1 border border-rose-500/50 rounded-lg text-rose-400 bg-rose-500/10 font-semibold';
         btn.className = 'w-full text-left p-3.5 rounded-xl border border-rose-500/50 bg-rose-500/10 text-rose-300 text-sm font-medium';
@@ -631,42 +447,231 @@
       renderQuestion();
     }
 
-    function switchTab(tab) {
-      if (tab === 'gym') {
-        document.getElementById('view-gym').classList.remove('hidden');
-        document.getElementById('view-rewriter').classList.add('hidden');
-        document.getElementById('tab-gym').className = 'px-4 py-2 text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all';
-        document.getElementById('tab-rewriter').className = 'px-4 py-2 text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all';
-      } else {
-        document.getElementById('view-gym').classList.add('hidden');
-        document.getElementById('view-rewriter').classList.remove('hidden');
-        document.getElementById('tab-rewriter').className = 'px-4 py-2 text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all';
-        document.getElementById('tab-gym').className = 'px-4 py-2 text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all';
-      }
-    }
-
+    // MÓDULO 3: MOTOR DE REESCRITURA QUIRÚRGICO
     function processRewriter() {
-      const input = document.getElementById('rw-input').value.trim();
-      if (!input) return;
+      const rawInput = document.getElementById('rw-input').value.trim();
+      if (!rawInput) {
+        alert('Por favor escribe o selecciona un borrador para calibrar.');
+        return;
+      }
 
-      const resultBox = document.getElementById('rw-result');
-      const outText = document.getElementById('rw-output-text');
-      const outAnalysis = document.getElementById('rw-output-analysis');
+      let text = rawInput;
+      let detectedWeakness = [];
+      let explanation = [];
 
-      // Calibrador táctico integrado
-      outText.textContent = "We have identified an operational bottleneck in the server pipeline; our revised release is scheduled for tomorrow at 10 AM.";
-      outAnalysis.textContent = "Se eliminó 'Sorry' y la justificación emotiva. Se reemplazó por la fórmula Hecho ('operational bottleneck') + Acción/Plazo ('revised release scheduled'). El estatus técnico permanece blindado.";
-      resultBox.classList.remove('hidden');
+      // 1. Limpieza de disculpas iniciales
+      if (/^(sorry|perd[oó]n|disculp[aá]|i am sorry|so sorry)[,\.\s]*/i.test(text)) {
+        text = text.replace(/^(sorry|perd[oó]n|disculp[aá]|i am sorry|so sorry)[,\.\s]*/i, '');
+        detectedWeakness.push("disculpa innecesaria ('sorry')");
+        explanation.push("• Se eliminó el pedido de disculpas inicial para blindar la jerarquía.");
+      }
+
+      // 2. Reglas sintácticas que conservan el vocabulario del usuario
+      const rules = [
+        {
+          regex: /\b(i think we can|i think we could|i think we should)\b/gi,
+          replace: "I recommend we",
+          name: "'I think we can/should'",
+          fix: "• Reemplazado por 'I recommend we' para transformar timidez en liderazgo técnico."
+        },
+        {
+          regex: /\b(i think that|i think)\b/gi,
+          replace: "The data indicates",
+          name: "'I think'",
+          fix: "• Sustituido 'I think' por 'The data indicates' para fundamentar el punto con criterio objetivo."
+        },
+        {
+          regex: /\b(we will try to|we can try to|i will try to)\b/gi,
+          replace: "we are scheduled to",
+          name: "'try to'",
+          fix: "• Cambiado 'try to' por 'are scheduled to': en el mundo corporativo no se intenta, se planifica."
+        },
+        {
+          regex: /\b(maybe we can|maybe we could)\b/gi,
+          replace: "we are positioned to",
+          name: "'maybe we can'",
+          fix: "• Reemplazado por 'we are positioned to' para comunicar certeza operativa."
+        },
+        {
+          regex: /\b(we cannot|i cannot|we can't|i can't)\b/gi,
+          replace: "to preserve quality standards, we establish",
+          name: "'we cannot'",
+          fix: "• Se transformó una negativa cerrada en un límite constructivo centrado en calidad."
+        },
+        {
+          regex: /\b(we have a big problem with|there is a big problem with|a big problem)\b/gi,
+          replace: "an operational bottleneck in",
+          name: "'big problem'",
+          fix: "• Se sustituyó el dramatismo de 'big problem' por el término de negocio 'operational bottleneck'."
+        },
+        {
+          regex: /\b(i don't know|i have no idea)\b/gi,
+          replace: "let me verify the exact specifications for",
+          name: "'I don't know'",
+          fix: "• Sustituido por búsqueda activa de datos para no regalar estatus."
+        }
+      ];
+
+      rules.forEach(rule => {
+        if (rule.regex.test(text)) {
+          text = text.replace(rule.regex, rule.replace);
+          detectedWeakness.push(rule.name);
+          explanation.push(rule.fix);
+        }
+      });
+
+      text = text.charAt(0).toUpperCase() + text.slice(1);
+
+      if (detectedWeakness.length === 0) {
+        text = "Based on our current operational priorities, " + text.charAt(0).toLowerCase() + text.slice(1);
+        explanation.push("• Tu mensaje base ya era claro; se añadió anclaje formal ('Based on operational priorities') para maximizar su autoridad.");
+      }
+
+      document.getElementById('rw-output-text').textContent = text;
+      
+      const analysisHtml = `
+        <span class="text-amber-400 font-bold block mb-1">Fugas eliminadas: ${detectedWeakness.length > 0 ? detectedWeakness.join(", ") : "Ninguna (frase limpia)"}</span>
+        <div class="space-y-1">${explanation.map(item => `<div>${item}</div>`).join("")}</div>
+      `;
+      document.getElementById('rw-output-analysis').innerHTML = analysisHtml;
+      document.getElementById('rw-result').classList.remove('hidden');
     }
 
     function copyOutput() {
       const text = document.getElementById('rw-output-text').textContent;
       navigator.clipboard.writeText(text);
-      alert('Frase copiada al portapapeles');
+      const btn = document.getElementById('btn-copy');
+      btn.textContent = '¡Copiado!';
+      btn.className = 'text-xs bg-emerald-600 text-white px-3 py-1.5 rounded-lg shrink-0';
+      setTimeout(() => {
+        btn.textContent = 'Copiar';
+        btn.className = 'text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 shrink-0';
+      }, 2000);
     }
 
-    // Inicializar app
-    renderQuestion();
+    // MÓDULO 5: BÓVEDA PERSONAL (MY VAULT)
+    function getVaultData() {
+      return JSON.parse(localStorage.getItem('pitchflow_vault') || '[]');
+    }
+
+    function saveVaultData(data) {
+      localStorage.setItem('pitchflow_vault', JSON.stringify(data));
+      loadVault();
+    }
+
+    function saveRewriterToVault() {
+      const text = document.getElementById('rw-output-text').textContent;
+      const scenario = document.getElementById('rw-scenario');
+      const categoryName = scenario.options[scenario.selectedIndex].text.split('/')[0].trim();
+
+      const vault = getVaultData();
+      if (!vault.some(item => item.phrase === text)) {
+        vault.unshift({
+          id: Date.now(),
+          category: categoryName,
+          phrase: text,
+          date: new Date().toLocaleDateString()
+        });
+        saveVaultData(vault);
+        alert('Frase guardada en tu Bóveda Personal.');
+      } else {
+        alert('Esta frase ya está en tu Bóveda.');
+      }
+    }
+
+    function saveCurrentGymToVault() {
+      const q = EXERCISES[currentIdx];
+      const fullPhrase = q.frase.replace('______', q.correcta);
+
+      const vault = getVaultData();
+      if (!vault.some(item => item.phrase === fullPhrase)) {
+        vault.unshift({
+          id: Date.now(),
+          category: q.categoria,
+          phrase: fullPhrase,
+          date: new Date().toLocaleDateString()
+        });
+        saveVaultData(vault);
+        alert('¡Ejercicio guardado en tu Bóveda!');
+      } else {
+        alert('Este ejercicio ya fue guardado en tu Bóveda.');
+      }
+    }
+
+    function loadVault(filter = 'all') {
+      const vault = getVaultData();
+      document.getElementById('vault-count-badge').textContent = vault.length;
+
+      const container = document.getElementById('vault-list');
+      container.innerHTML = '';
+
+      const filtered = filter === 'all' 
+        ? vault 
+        : vault.filter(item => item.category.toLowerCase().includes(filter.toLowerCase()));
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-10 text-slate-500 border border-dashed border-slate-800 rounded-xl">
+            Tu bóveda está vacía. Guarda frases desde el Reescritor o aciertos del Gimnasio.
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3';
+        card.innerHTML = `
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded">${item.category}</span>
+            <p class="text-sm font-semibold text-white mt-1.5">${item.phrase}</p>
+          </div>
+          <div class="flex items-center gap-2 self-end sm:self-auto shrink-0">
+            <button onclick="navigator.clipboard.writeText('${item.phrase}'); alert('Copiado');" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded border border-slate-700">Copiar</button>
+            <button onclick="deleteVaultItem(${item.id})" class="text-xs text-rose-400 hover:text-rose-300 p-1">✕</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function deleteVaultItem(id) {
+      const vault = getVaultData().filter(item => item.id !== id);
+      saveVaultData(vault);
+    }
+
+    function clearVault() {
+      if (confirm('¿Deseas vaciar todas las frases guardadas en tu Bóveda?')) {
+        saveVaultData([]);
+      }
+    }
+
+    function filterVault(cat) {
+      loadVault(cat);
+    }
+
+    // NAVEGACIÓN ENTRE PESTAÑAS
+    function switchTab(tab) {
+      document.getElementById('view-gym').classList.add('hidden');
+      document.getElementById('view-rewriter').classList.add('hidden');
+      document.getElementById('view-vault').classList.add('hidden');
+
+      document.getElementById('tab-gym').className = 'px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all';
+      document.getElementById('tab-rewriter').className = 'px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all';
+      document.getElementById('tab-vault').className = 'px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-1.5';
+
+      if (tab === 'gym') {
+        document.getElementById('view-gym').classList.remove('hidden');
+        document.getElementById('tab-gym').className = 'px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all';
+      } else if (tab === 'rewriter') {
+        document.getElementById('view-rewriter').classList.remove('hidden');
+        document.getElementById('tab-rewriter').className = 'px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all';
+      } else {
+        document.getElementById('view-vault').classList.remove('hidden');
+        document.getElementById('tab-vault').className = 'px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all flex items-center gap-1.5';
+        loadVault();
+      }
+    }
   </script>
 </body>
 </html>
