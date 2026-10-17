@@ -12,7 +12,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-400 selection:text-slate-950">
 
-  <!-- Header con Navegación de los 3 Módulos Principales -->
+  <!-- Header -->
   <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-50 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
     <div class="flex items-center gap-3">
       <div class="h-9 w-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-bold text-lg shadow-sm">P</div>
@@ -22,7 +22,6 @@
       </div>
     </div>
     
-    <!-- Pestañas de Navegación -->
     <nav class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
       <button onclick="switchTab('gym')" id="tab-gym" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all">Gimnasio (45)</button>
       <button onclick="switchTab('rewriter')" id="tab-rewriter" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all">Reescritor</button>
@@ -33,7 +32,7 @@
     </nav>
   </header>
 
-  <!-- Banner de Perfil Activo (Módulo 1) -->
+  <!-- Banner de Perfil Activo -->
   <div class="bg-slate-900/40 border-b border-slate-800/60 px-6 py-2.5 text-xs text-slate-400 flex items-center justify-between">
     <div class="flex items-center gap-2">
       <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
@@ -47,10 +46,8 @@
   <!-- Contenedor Central -->
   <main class="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-6 md:p-10 space-y-6">
 
-    <!-- SECCIÓN 1: GIMNASIO DE PODER (Módulo 4) -->
+    <!-- SECCIÓN 1: GIMNASIO DE PODER -->
     <div id="view-gym" class="space-y-6">
-      
-      <!-- Panel de Racha y Rango -->
       <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4 shadow-lg">
         <div>
           <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Rango Ejecutivo</span>
@@ -68,7 +65,6 @@
         </div>
       </div>
 
-      <!-- Tarjeta del Ejercicio -->
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
         <div class="space-y-2 border-b border-slate-800/80 pb-5">
           <div class="flex items-center gap-2">
@@ -107,7 +103,7 @@
       </div>
     </div>
 
-    <!-- SECCIÓN 2: REESCRITURA DE AUTORIDAD (Módulos 2 y 3) -->
+    <!-- SECCIÓN 2: REESCRITURA DE AUTORIDAD -->
     <div id="view-rewriter" class="hidden space-y-6">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
         <div>
@@ -115,7 +111,6 @@
           <p class="text-sm text-slate-400">Selecciona el escenario, calibra tu frase en inglés y blindá tu postura preservando tu contexto exacto.</p>
         </div>
 
-        <!-- Módulo 2: Selector de Escenario & Plantillas -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Escenario de Comunicación</label>
@@ -130,12 +125,10 @@
           <div>
             <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Preguntas o Retos Típicos</label>
             <select id="rw-preset-prompt" onchange="applyPresetPrompt()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
-              <!-- Inyectado dinámicamente -->
             </select>
           </div>
         </div>
 
-        <!-- Módulo 3: Entrada del Borrador -->
         <div>
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Tu borrador actual (inglés o mixto):</label>
           <textarea id="rw-input" rows="4" placeholder="Ej: I think we can change the supplier because we have a big problem with delivery." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-200 focus:outline-none focus:border-amber-400"></textarea>
@@ -145,7 +138,6 @@
           Calibrar Frase de Autoridad
         </button>
 
-        <!-- Resultado Calibrado -->
         <div id="rw-result" class="hidden space-y-4 pt-4 border-t border-slate-800">
           <div>
             <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Versión Ejecutiva (Inglés):</span>
@@ -166,7 +158,7 @@
       </div>
     </div>
 
-    <!-- SECCIÓN 3: BÓVEDA PERSONAL / MY VAULT (Módulo 5) -->
+    <!-- SECCIÓN 3: BÓVEDA PERSONAL / MY VAULT -->
     <div id="view-vault" class="hidden space-y-6">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-5">
@@ -177,7 +169,6 @@
           <button onclick="clearVault()" class="text-xs text-rose-400 hover:underline">Vaciar bóveda</button>
         </div>
 
-        <!-- Filtros de la Bóveda -->
         <div class="flex flex-wrap gap-2" id="vault-filters">
           <button onclick="filterVault('all')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-amber-400 text-slate-950">Todos</button>
           <button onclick="filterVault('Entrevista')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">Entrevista</button>
@@ -187,16 +178,13 @@
           <button onclick="filterVault('Límites')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">Límites</button>
         </div>
 
-        <!-- Lista de Frases Guardadas -->
-        <div id="vault-list" class="space-y-3">
-          <!-- Renderizado por JS -->
-        </div>
+        <div id="vault-list" class="space-y-3"></div>
       </div>
     </div>
 
   </main>
 
-  <!-- MODAL: PERFIL DE USUARIO (Módulo 1) -->
+  <!-- MODAL DE PERFIL -->
   <div id="profile-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 max-w-md w-full space-y-5 shadow-2xl">
       <div>
@@ -231,15 +219,14 @@
   </div>
 
   <script>
-    // PRESETS DE ESCENARIOS (Módulo 2)
     const SCENARIO_PRESETS = {
       entrevista: [
-        { label: "Tell me about yourself (Presentación de impacto)", prompt: "Over the past years, I have focused on... and I think I can help your team." },
+        { label: "Tell me about yourself (Presentación de impacto)", prompt: "Over the past years, I have focused on leading operations and I think I can help your team." },
         { label: "What is your greatest weakness? (Debilidad sin disculpas)", prompt: "Sorry, I am sometimes too perfectionist and I think it is bad." },
         { label: "What are your salary expectations? (Defensa de rango)", prompt: "I hope you can pay around 90k, but maybe we can negotiate if it is too high." }
       ],
       decision: [
-        { label: "Definir camino técnico o de negocio", prompt: "I think we should change the supplier because we have a big problem with delivery." },
+        { label: "Definir camino técnico o de negocio", prompt: "I think we can change the vendor because we have a big problem with delivery." },
         { label: "Acelerar decisión trabada por debates", prompt: "Maybe we could vote or wait to see what happens next week." }
       ],
       reunion: [
@@ -256,7 +243,6 @@
       ]
     };
 
-    // BANCO COMPLETO DE 45 EJERCICIOS (Módulo 4)
     const EXERCISES = [
       { id: 1, categoria: "Poner Límites", situacion: "Un cliente o director pide adelantar una entrega crítica sin margen de tiempo.", frase: "To maintain operational quality, ______ integrate this into our next milestone.", opciones: ["we can definitely", "I think maybe we will try to", "we cannot"], correcta: "we can definitely", feedback_acierto: "Al usar 'we can definitely integrate this into our next milestone', no te disculpas ni cierras la puerta; marcas un límite profesional protegiendo la calidad y diriges la conversación al siguiente ciclo.", feedback_error: "Decir 'will try to' transmite que no tienes el control del proceso técnico y habilita a que te sigan presionando." },
       { id: 2, categoria: "Reporte de Crisis", situacion: "Hay un retraso en la operación y tienes que informarlo en la llamada de equipo.", frase: "______ a technical bottleneck in the pipeline. Here is our mitigation plan.", opciones: ["We have identified", "Sorry, but we have a big problem with", "It seems like there is"], correcta: "We have identified", feedback_acierto: "'We have identified' demuestra diagnóstico profesional y dominio de la situación. Pasas de pedir perdón por una falla a liderar el plan de contingencia.", feedback_error: "Comenzar con 'Sorry, but we have a big problem' genera alarma innecesaria y te posiciona como el responsable culpable del imprevisto." },
@@ -308,7 +294,6 @@
     let currentIdx = 0;
     let answered = false;
 
-    // INICIALIZACIÓN DE LA APLICACIÓN
     document.addEventListener("DOMContentLoaded", () => {
       loadProfile();
       updateScenarioPrompts();
@@ -316,7 +301,6 @@
       loadVault();
     });
 
-    // MÓDULO 1: GESTIÓN DE PERFIL CON PERSISTENCIA
     function loadProfile() {
       const saved = localStorage.getItem('pitchflow_profile');
       if (saved) {
@@ -353,7 +337,6 @@
       closeProfileModal();
     }
 
-    // MÓDULO 2: ESCENARIOS Y PRESETS
     function updateScenarioPrompts() {
       const scenario = document.getElementById('rw-scenario').value;
       const select = document.getElementById('rw-preset-prompt');
@@ -375,7 +358,6 @@
       document.getElementById('rw-input').value = promptVal;
     }
 
-    // MÓDULO 4: GIMNASIO DE PODER
     function renderQuestion() {
       answered = false;
       const q = EXERCISES[currentIdx];
@@ -447,7 +429,7 @@
       renderQuestion();
     }
 
-    // MÓDULO 3: MOTOR DE REESCRITURA QUIRÚRGICO
+    // MOTOR DE REESCRITURA QUIRÚRGICO (CON CONECTORES GRAMATICALES AJUSTADOS)
     function processRewriter() {
       const rawInput = document.getElementById('rw-input').value.trim();
       if (!rawInput) {
@@ -463,16 +445,16 @@
       if (/^(sorry|perd[oó]n|disculp[aá]|i am sorry|so sorry)[,\.\s]*/i.test(text)) {
         text = text.replace(/^(sorry|perd[oó]n|disculp[aá]|i am sorry|so sorry)[,\.\s]*/i, '');
         detectedWeakness.push("disculpa innecesaria ('sorry')");
-        explanation.push("• Se eliminó el pedido de disculpas inicial para blindar la jerarquía.");
+        explanation.push("• Se eliminó el pedido de disculpas inicial para blindar la postura ejecutiva.");
       }
 
-      // 2. Reglas sintácticas que conservan el vocabulario del usuario
+      // 2. Reglas sintácticas con conectores gramaticales precisos
       const rules = [
         {
           regex: /\b(i think we can|i think we could|i think we should)\b/gi,
           replace: "I recommend we",
           name: "'I think we can/should'",
-          fix: "• Reemplazado por 'I recommend we' para transformar timidez en liderazgo técnico."
+          fix: "• Reemplazado por 'I recommend we' para transformar timidez en recomendación de liderazgo."
         },
         {
           regex: /\b(i think that|i think)\b/gi,
@@ -481,28 +463,34 @@
           fix: "• Sustituido 'I think' por 'The data indicates' para fundamentar el punto con criterio objetivo."
         },
         {
+          regex: /\bbecause\s+(we have a big problem with|there is a big problem with|a big problem)\b/gi,
+          replace: "due to an operational bottleneck in",
+          name: "'because a big problem'",
+          fix: "• Sustituido por 'due to an operational bottleneck in' garantizando conector formal y causa raíz objetiva."
+        },
+        {
+          regex: /\b(we have a big problem with|there is a big problem with|a big problem)\b/gi,
+          replace: "an operational bottleneck in",
+          name: "'big problem'",
+          fix: "• Sustituido el dramatismo de 'big problem' por el término corporativo 'operational bottleneck'."
+        },
+        {
           regex: /\b(we will try to|we can try to|i will try to)\b/gi,
           replace: "we are scheduled to",
           name: "'try to'",
-          fix: "• Cambiado 'try to' por 'are scheduled to': en el mundo corporativo no se intenta, se planifica."
+          fix: "• Cambiado 'try to' por 'are scheduled to': en negocios no se intenta, se calendariza y se ejecuta."
         },
         {
           regex: /\b(maybe we can|maybe we could)\b/gi,
           replace: "we are positioned to",
           name: "'maybe we can'",
-          fix: "• Reemplazado por 'we are positioned to' para comunicar certeza operativa."
+          fix: "• Reemplazado por 'we are positioned to' para comunicar certeza y capacidad resolutiva."
         },
         {
           regex: /\b(we cannot|i cannot|we can't|i can't)\b/gi,
           replace: "to preserve quality standards, we establish",
           name: "'we cannot'",
           fix: "• Se transformó una negativa cerrada en un límite constructivo centrado en calidad."
-        },
-        {
-          regex: /\b(we have a big problem with|there is a big problem with|a big problem)\b/gi,
-          replace: "an operational bottleneck in",
-          name: "'big problem'",
-          fix: "• Se sustituyó el dramatismo de 'big problem' por el término de negocio 'operational bottleneck'."
         },
         {
           regex: /\b(i don't know|i have no idea)\b/gi,
@@ -524,7 +512,7 @@
 
       if (detectedWeakness.length === 0) {
         text = "Based on our current operational priorities, " + text.charAt(0).toLowerCase() + text.slice(1);
-        explanation.push("• Tu mensaje base ya era claro; se añadió anclaje formal ('Based on operational priorities') para maximizar su autoridad.");
+        explanation.push("• Tu mensaje base ya era claro; se añadió anclaje formal ('Based on operational priorities') para maximizar su peso.");
       }
 
       document.getElementById('rw-output-text').textContent = text;
@@ -549,7 +537,6 @@
       }, 2000);
     }
 
-    // MÓDULO 5: BÓVEDA PERSONAL (MY VAULT)
     function getVaultData() {
       return JSON.parse(localStorage.getItem('pitchflow_vault') || '[]');
     }
@@ -650,7 +637,6 @@
       loadVault(cat);
     }
 
-    // NAVEGACIÓN ENTRE PESTAÑAS
     function switchTab(tab) {
       document.getElementById('view-gym').classList.add('hidden');
       document.getElementById('view-rewriter').classList.add('hidden');
