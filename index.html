@@ -24,7 +24,7 @@
     
     <nav class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
       <button onclick="switchTab('gym')" id="tab-gym" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all">Gimnasio (45)</button>
-      <button onclick="switchTab('rewriter')" id="tab-rewriter" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all">Reescritor</button>
+      <button onclick="switchTab('rewriter')" id="tab-rewriter" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all">Reescritor IA</button>
       <button onclick="switchTab('vault')" id="tab-vault" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-1.5">
         Bóveda <span id="vault-count-badge" class="px-1.5 py-0.2 rounded-full bg-slate-800 text-amber-400 text-xs">0</span>
       </button>
@@ -51,7 +51,7 @@
       <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4 shadow-lg">
         <div>
           <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Rango Ejecutivo</span>
-          <h2 id="gym-rank" class="text-lg font-bold text-white">Contributor (Nivel A2/B1)</h2>
+          <h2 id="gym-rank" class="text-lg font-bold text-white">Strategic Leader (Nivel A2/B1)</h2>
         </div>
         <div class="flex items-center gap-6">
           <div class="text-right">
@@ -103,12 +103,13 @@
       </div>
     </div>
 
-    <!-- SECCIÓN 2: REESCRITURA DE AUTORIDAD -->
+    <!-- SECCIÓN 2: REESCRITURA DE AUTORIDAD VÍA WORKER -->
     <div id="view-rewriter" class="hidden space-y-6">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
+        
         <div>
           <h2 class="text-xl font-bold text-white mb-1">Estructurador Estratégico</h2>
-          <p class="text-sm text-slate-400">Selecciona el escenario, calibra tu frase en inglés y blindá tu postura preservando tu contexto exacto.</p>
+          <p class="text-sm text-slate-400">Escribe cualquier frase real. La IA detectará fugas de estatus y la blindará manteniendo tu contexto de negocio exacto.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -130,12 +131,12 @@
         </div>
 
         <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Tu borrador actual (inglés o mixto):</label>
-          <textarea id="rw-input" rows="4" placeholder="Ej: I think we can change the supplier because we have a big problem with delivery." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-200 focus:outline-none focus:border-amber-400"></textarea>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Tu borrador actual (cualquier frase en inglés o spanglish):</label>
+          <textarea id="rw-input" rows="4" placeholder="Escribe aquí tu frase tal cual la dirías..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-200 focus:outline-none focus:border-amber-400"></textarea>
         </div>
 
-        <button onclick="processRewriter()" class="w-full py-3.5 rounded-xl font-semibold bg-amber-400 text-slate-950 hover:bg-amber-300 transition-all text-sm shadow-md cursor-pointer">
-          Calibrar Frase de Autoridad
+        <button id="btn-process" onclick="processRewriter()" class="w-full py-3.5 rounded-xl font-semibold bg-amber-400 text-slate-950 hover:bg-amber-300 transition-all text-sm shadow-md cursor-pointer flex items-center justify-center gap-2">
+          <span>Calibrar Frase de Autoridad con IA</span>
         </button>
 
         <div id="rw-result" class="hidden space-y-4 pt-4 border-t border-slate-800">
@@ -158,7 +159,7 @@
       </div>
     </div>
 
-    <!-- SECCIÓN 3: BÓVEDA PERSONAL / MY VAULT -->
+    <!-- SECCIÓN 3: BÓVEDA PERSONAL -->
     <div id="view-vault" class="hidden space-y-6">
       <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-5">
@@ -199,14 +200,14 @@
         </div>
         <div>
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Rol / Industria</label>
-          <input id="user-role" type="text" placeholder="Ej: Tech Lead, Marketing Strategist, Supply Chain" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
+          <input id="user-role" type="text" placeholder="Ej: Tech Lead, Operations Manager, Consultant" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
         </div>
         <div>
           <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Nivel Actual</label>
           <select id="user-level" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
-            <option value="A2">A2 (Entiendo bastante, me cuesta arrancar a hablar)</option>
-            <option value="B1" selected>B1 (Comunico ideas pero uso muletillas o pido perdón)</option>
-            <option value="B2">B2 (Fluido pero busco mayor jerarquía y presencia)</option>
+            <option value="A2">A2 (Comprendo contexto técnico pero dudo al intervenir)</option>
+            <option value="B1" selected>B1 (Comunico pero caigo en muletillas o disculpas)</option>
+            <option value="B2">B2 (Fluido pero busco mayor autoridad y síntesis)</option>
           </select>
         </div>
       </div>
@@ -219,26 +220,28 @@
   </div>
 
   <script>
+    const WORKER_URL = "https://pitchflow-api.anacavea55.workers.dev";
+
     const SCENARIO_PRESETS = {
       entrevista: [
-        { label: "Tell me about yourself (Presentación de impacto)", prompt: "Over the past years, I have focused on leading operations and I think I can help your team." },
-        { label: "What is your greatest weakness? (Debilidad sin disculpas)", prompt: "Sorry, I am sometimes too perfectionist and I think it is bad." },
-        { label: "What are your salary expectations? (Defensa de rango)", prompt: "I hope you can pay around 90k, but maybe we can negotiate if it is too high." }
+        { label: "Tell me about yourself (Presentación de impacto)", prompt: "In the past years, I am focused on handling tasks and I think I can help your team." },
+        { label: "What is your greatest weakness? (Debilidad sin disculpas)", prompt: "Sorry, I am sometimes too focused on details and I think that is bad." },
+        { label: "Salary expectations (Defensa de rango)", prompt: "I hope you can give me around 95k, but maybe we can negotiate if you want." }
       ],
       decision: [
         { label: "Definir camino técnico o de negocio", prompt: "I think we can change the vendor because we have a big problem with delivery." },
-        { label: "Acelerar decisión trabada por debates", prompt: "Maybe we could vote or wait to see what happens next week." }
+        { label: "Acelerar decisión trabada por debates", prompt: "Maybe we could wait and see what other people think." }
       ],
       reunion: [
         { label: "Reportar cuello de botella o demora", prompt: "Sorry, we have a big problem with the release and we will try to finish tomorrow." },
         { label: "Retomar el foco de la llamada", prompt: "Sorry to interrupt, but maybe we are losing time with this topic." }
       ],
       pitch: [
-        { label: "Elevator Pitch / Qué aporte ofrecés", prompt: "I work doing marketing and I try to help clients grow their business." },
-        { label: "Diferenciación frente a competidores", prompt: "We are cheaper than others and we try very hard to do a good job." }
+        { label: "Elevator Pitch / Qué aporte ofrecés", prompt: "I work doing marketing and I try to help companies get more clients." },
+        { label: "Diferenciación de valor", prompt: "We are cheaper than others and we try very hard to do good work." }
       ],
       negociacion: [
-        { label: "Defender tarifa ante objeción de precio", prompt: "Our price is high because we have many costs, sorry about that." },
+        { label: "Defender tarifa ante objeción de precio", prompt: "Our fee is high because we have many costs, sorry about that." },
         { label: "Frenar tareas fuera de alcance (Scope Creep)", prompt: "We cannot do this new feature now, sorry, it is impossible for us." }
       ]
     };
@@ -429,78 +432,88 @@
       renderQuestion();
     }
 
-    // MOTOR DE REESCRITURA QUIRÚRGICO (CON CONECTORES GRAMATICALES AJUSTADOS)
-    function processRewriter() {
+    // PROCESAMIENTO VÍA CLOUDFLARE WORKER
+    async function processRewriter() {
       const rawInput = document.getElementById('rw-input').value.trim();
       if (!rawInput) {
         alert('Por favor escribe o selecciona un borrador para calibrar.');
         return;
       }
 
+      const scenario = document.getElementById('rw-scenario').value;
+      const btn = document.getElementById('btn-process');
+
+      btn.innerHTML = `<span class="animate-spin inline-block">⏳</span> <span>Calibrando con IA...</span>`;
+      btn.disabled = true;
+
+      try {
+        const response = await fetch(WORKER_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: rawInput, scenario: scenario })
+        });
+
+        if (!response.ok) {
+          throw new Error("El Worker reportó un error al procesar.");
+        }
+
+        const parsed = await response.json();
+
+        document.getElementById('rw-output-text').textContent = parsed.version_ejecutiva;
+        document.getElementById('rw-output-analysis').innerHTML = `
+          <span class="text-amber-400 font-bold block mb-1">Fugas eliminadas: ${parsed.fugas_detectadas}</span>
+          <div>${parsed.analisis.replace(/\n/g, '<br>')}</div>
+        `;
+        document.getElementById('rw-result').classList.remove('hidden');
+
+      } catch (err) {
+        alert("Aviso: " + err.message + ". Ejecutando calibración con motor de reglas local.");
+        runFallbackRewriter(rawInput, scenario);
+      } finally {
+        btn.innerHTML = `<span>Calibrar Frase de Autoridad con IA</span>`;
+        btn.disabled = false;
+      }
+    }
+
+    // MOTOR DE RESPALDO LOCAL
+    function runFallbackRewriter(rawInput, scenario) {
       let text = rawInput;
       let detectedWeakness = [];
       let explanation = [];
 
-      // 1. Limpieza de disculpas iniciales
       if (/^(sorry|perd[oó]n|disculp[aá]|i am sorry|so sorry)[,\.\s]*/i.test(text)) {
         text = text.replace(/^(sorry|perd[oó]n|disculp[aá]|i am sorry|so sorry)[,\.\s]*/i, '');
         detectedWeakness.push("disculpa innecesaria ('sorry')");
-        explanation.push("• Se eliminó el pedido de disculpas inicial para blindar la postura ejecutiva.");
+        explanation.push("• Se eliminó el pedido de disculpas inicial.");
       }
 
-      // 2. Reglas sintácticas con conectores gramaticales precisos
-      const rules = [
-        {
-          regex: /\b(i think we can|i think we could|i think we should)\b/gi,
-          replace: "I recommend we",
-          name: "'I think we can/should'",
-          fix: "• Reemplazado por 'I recommend we' para transformar timidez en recomendación de liderazgo."
-        },
-        {
-          regex: /\b(i think that|i think)\b/gi,
-          replace: "The data indicates",
-          name: "'I think'",
-          fix: "• Sustituido 'I think' por 'The data indicates' para fundamentar el punto con criterio objetivo."
-        },
-        {
-          regex: /\bbecause\s+(we have a big problem with|there is a big problem with|a big problem)\b/gi,
-          replace: "due to an operational bottleneck in",
-          name: "'because a big problem'",
-          fix: "• Sustituido por 'due to an operational bottleneck in' garantizando conector formal y causa raíz objetiva."
-        },
-        {
-          regex: /\b(we have a big problem with|there is a big problem with|a big problem)\b/gi,
-          replace: "an operational bottleneck in",
-          name: "'big problem'",
-          fix: "• Sustituido el dramatismo de 'big problem' por el término corporativo 'operational bottleneck'."
-        },
-        {
-          regex: /\b(we will try to|we can try to|i will try to)\b/gi,
-          replace: "we are scheduled to",
-          name: "'try to'",
-          fix: "• Cambiado 'try to' por 'are scheduled to': en negocios no se intenta, se calendariza y se ejecuta."
-        },
-        {
-          regex: /\b(maybe we can|maybe we could)\b/gi,
-          replace: "we are positioned to",
-          name: "'maybe we can'",
-          fix: "• Reemplazado por 'we are positioned to' para comunicar certeza y capacidad resolutiva."
-        },
-        {
-          regex: /\b(we cannot|i cannot|we can't|i can't)\b/gi,
-          replace: "to preserve quality standards, we establish",
-          name: "'we cannot'",
-          fix: "• Se transformó una negativa cerrada en un límite constructivo centrado en calidad."
-        },
-        {
-          regex: /\b(i don't know|i have no idea)\b/gi,
-          replace: "let me verify the exact specifications for",
-          name: "'I don't know'",
-          fix: "• Sustituido por búsqueda activa de datos para no regalar estatus."
+      if (scenario === 'entrevista') {
+        if (/\b(in the past years|in recent years|in the last years)\b/i.test(text)) {
+          text = text.replace(/\b(in the past years|in recent years|in the last years)[,\s]*(i am focused on|i focused on|i have been focused on)?\b/gi, "Over the past years, I have specialized in");
+          detectedWeakness.push("narración pasiva de trayectoria");
+          explanation.push("• Se sustituyó por 'Over the past years, I have specialized in' para proyectar autoridad de nicho.");
         }
+        if (/\b(handling tasks|doing tasks|working on tasks|doing daily work)\b/i.test(text)) {
+          text = text.replace(/\b(handling tasks|doing tasks|working on tasks|doing daily work)\b/gi, "optimizing key operations");
+          detectedWeakness.push("lenguaje operativo básico ('handling tasks')");
+          explanation.push("• Se reemplazó por 'optimizing key operations' para pasar de ejecutor a estratega.");
+        }
+        if (/\b(and\s+)?(i think i can help your team|i think i can help you|i think i can help)\b/gi.test(text)) {
+          text = text.replace(/\b(and\s+)?(i think i can help your team|i think i can help you|i think i can help)\b/gi, ", and I am positioned to drive measurable value for your team");
+          detectedWeakness.push("postura tentativa ('I think I can help')");
+          explanation.push("• Sustituido por 'I am positioned to drive measurable value' (retorno de inversión).");
+        }
+      }
+
+      const generalRules = [
+        { regex: /\bbecause\s+(we have a big problem with|there is a big problem with|a big problem)\b/gi, replace: "due to an operational bottleneck in", name: "'because a big problem'", fix: "• Sustituido por 'due to an operational bottleneck in'." },
+        { regex: /\b(we have a big problem with|there is a big problem with|a big problem)\b/gi, replace: "an operational bottleneck in", name: "'big problem'", fix: "• Sustituido por 'operational bottleneck'." },
+        { regex: /\b(i think we can|i think we could|i think we should)\b/gi, replace: "I recommend we", name: "'I think we can/should'", fix: "• Reemplazado por 'I recommend we'." },
+        { regex: /\b(we will try to|we can try to|i will try to)\b/gi, replace: "we are scheduled to", name: "'try to'", fix: "• Cambiado por 'we are scheduled to'." },
+        { regex: /\b(maybe we can|maybe we could)\b/gi, replace: "we are positioned to", name: "'maybe we can'", fix: "• Reemplazado por 'we are positioned to'." }
       ];
 
-      rules.forEach(rule => {
+      generalRules.forEach(rule => {
         if (rule.regex.test(text)) {
           text = text.replace(rule.regex, rule.replace);
           detectedWeakness.push(rule.name);
@@ -508,20 +521,14 @@
         }
       });
 
+      text = text.replace(/\s+/g, ' ').trim();
       text = text.charAt(0).toUpperCase() + text.slice(1);
 
-      if (detectedWeakness.length === 0) {
-        text = "Based on our current operational priorities, " + text.charAt(0).toLowerCase() + text.slice(1);
-        explanation.push("• Tu mensaje base ya era claro; se añadió anclaje formal ('Based on operational priorities') para maximizar su peso.");
-      }
-
       document.getElementById('rw-output-text').textContent = text;
-      
-      const analysisHtml = `
-        <span class="text-amber-400 font-bold block mb-1">Fugas eliminadas: ${detectedWeakness.length > 0 ? detectedWeakness.join(", ") : "Ninguna (frase limpia)"}</span>
+      document.getElementById('rw-output-analysis').innerHTML = `
+        <span class="text-amber-400 font-bold block mb-1">Fugas eliminadas: ${detectedWeakness.length > 0 ? detectedWeakness.join(", ") : "Ninguna"}</span>
         <div class="space-y-1">${explanation.map(item => `<div>${item}</div>`).join("")}</div>
       `;
-      document.getElementById('rw-output-analysis').innerHTML = analysisHtml;
       document.getElementById('rw-result').classList.remove('hidden');
     }
 
