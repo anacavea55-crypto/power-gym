@@ -228,7 +228,7 @@
         <div class="text-left">
           <label class="block text-xs uppercase tracking-wider font-semibold text-slate-400 mb-1.5">Correo de Miembro</label>
           <input type="email" id="authEmailInput" placeholder="tu_correo@ejemplo.com" required autocomplete="email" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-sm text-slate-200 focus:outline-none focus:border-amber-400 transition-all" />
-          <p id="authErrorMsg" class="hidden text-rose-400 text-xs mt-1.5">Ingrese un correo electrónico válido.</p>
+          <p id="authErrorMsg" class="hidden text-rose-400 text-xs mt-1.5"></p>
         </div>
         <button type="submit" class="w-full py-3.5 rounded-xl font-bold bg-amber-400 text-slate-950 hover:bg-amber-300 transition-all text-sm shadow-md cursor-pointer">
           Acceder al Entorno
@@ -275,7 +275,7 @@
   <script>
     const WORKER_URL = "https://pitchflow-api.anacavea55.workers.dev";
 
-    // --- GESTIÓN DE ACCESO Y MEMBRESÍA ---
+    // --- GESTIÓN DE ACCESO Y MEMBRESÍA CON LISTA BLANCA ---
     function checkAuthStatus() {
       const userEmail = localStorage.getItem('pitchflow_user_email');
       const authModal = document.getElementById('authModal');
@@ -292,20 +292,46 @@
       }
     }
 
-    function handleAuthSubmit(e) {
+    async function handleAuthSubmit(e) {
       e.preventDefault();
       const emailInput = document.getElementById('authEmailInput');
       const errorMsg = document.getElementById('authErrorMsg');
+      const submitBtn = e.target.querySelector('button[type="submit"]');
       const email = emailInput.value.trim().toLowerCase();
-      
+
       if (!email || !email.includes('@') || !email.includes('.')) {
+        errorMsg.textContent = "Ingrese un correo electrónico válido.";
         errorMsg.classList.remove('hidden');
         return;
       }
-      
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Verificando membresía...";
       errorMsg.classList.add('hidden');
-      localStorage.setItem('pitchflow_user_email', email);
-      checkAuthStatus();
+
+      try {
+        const response = await fetch(WORKER_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "verify_member", email: email })
+        });
+
+        const result = await response.json();
+
+        if (result.authorized) {
+          localStorage.setItem('pitchflow_user_email', email);
+          checkAuthStatus();
+        } else {
+          errorMsg.textContent = "Este correo no figura como miembro activo de TalkFlow Academy. Si ya tienes acceso, contacta a soporte.";
+          errorMsg.classList.remove('hidden');
+        }
+      } catch (err) {
+        errorMsg.textContent = "Error de conexión al validar membresía. Intenta nuevamente.";
+        errorMsg.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Acceder al Entorno";
+      }
     }
 
     function logoutUser() {
