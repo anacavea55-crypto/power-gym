@@ -8,12 +8,35 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    
+    /* Modal de Acceso Ejecutivo */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.94);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 1rem;
+    }
+    .auth-card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 1rem;
+      padding: 2.25rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      text-align: center;
+    }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-400 selection:text-slate-950">
 
   <!-- Header -->
-  <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-50 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+  <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-40 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
     <div class="flex items-center gap-3">
       <div class="h-9 w-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-bold text-lg shadow-sm">P</div>
       <div>
@@ -22,14 +45,23 @@
       </div>
     </div>
     
-    <nav class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
-      <button onclick="switchTab('gym')" id="tab-gym" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all">Gimnasio (45)</button>
-      <button onclick="switchTab('rewriter')" id="tab-rewriter" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all">Reescritor IA</button>
-      <button onclick="switchTab('vault')" id="tab-vault" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-1.5">
-        Bóveda <span id="vault-count-badge" class="px-1.5 py-0.2 rounded-full bg-slate-800 text-amber-400 text-xs">0</span>
-      </button>
-      <button onclick="openProfileModal()" title="Editar Perfil" class="p-1.5 text-slate-400 hover:text-amber-400 transition-all">⚙️</button>
-    </nav>
+    <div class="flex items-center gap-3">
+      <nav class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
+        <button onclick="switchTab('gym')" id="tab-gym" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all">Gimnasio (45)</button>
+        <button onclick="switchTab('rewriter')" id="tab-rewriter" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all">Reescritor IA</button>
+        <button onclick="switchTab('vault')" id="tab-vault" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-1.5">
+          Bóveda <span id="vault-count-badge" class="px-1.5 py-0.2 rounded-full bg-slate-800 text-amber-400 text-xs">0</span>
+        </button>
+        <button onclick="openProfileModal()" title="Editar Perfil" class="p-1.5 text-slate-400 hover:text-amber-400 transition-all">⚙️</button>
+      </nav>
+      
+      <!-- Badge de Sesión del Miembro -->
+      <div id="userNavBadge" class="hidden sm:flex items-center gap-2 text-xs border border-slate-800 bg-slate-900/80 px-3 py-1.5 rounded-lg text-slate-400">
+        <span>Miembro:</span>
+        <span id="badge-email" class="text-amber-400 font-medium truncate max-w-[150px]"></span>
+        <button onclick="logoutUser()" title="Cerrar Sesión" class="text-rose-400 hover:text-rose-300 ml-1 font-semibold">✕</button>
+      </div>
+    </div>
   </header>
 
   <!-- Banner de Perfil Activo -->
@@ -185,6 +217,27 @@
 
   </main>
 
+  <!-- MODAL DE ACCESO / VALIDACIÓN DE CORREO -->
+  <div id="authModal" class="auth-overlay">
+    <div class="auth-card">
+      <div class="h-10 w-10 mx-auto mb-3 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-bold text-xl shadow-lg">P</div>
+      <h2 class="text-xl font-bold text-white tracking-tight mb-1">PitchFlow</h2>
+      <p class="text-xs text-slate-400 mb-6">Suite de Calibración de Autoridad<br><span class="text-amber-400 font-semibold">Exclusivo TalkFlow Academy</span></p>
+      
+      <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+        <div class="text-left">
+          <label class="block text-xs uppercase tracking-wider font-semibold text-slate-400 mb-1.5">Correo de Miembro</label>
+          <input type="email" id="authEmailInput" placeholder="tu_correo@ejemplo.com" required autocomplete="email" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-sm text-slate-200 focus:outline-none focus:border-amber-400 transition-all" />
+          <p id="authErrorMsg" class="hidden text-rose-400 text-xs mt-1.5">Ingrese un correo electrónico válido.</p>
+        </div>
+        <button type="submit" class="w-full py-3.5 rounded-xl font-bold bg-amber-400 text-slate-950 hover:bg-amber-300 transition-all text-sm shadow-md cursor-pointer">
+          Acceder al Entorno
+        </button>
+      </form>
+      <p class="text-[11px] text-slate-500 mt-5">Acceso profesional restringido a la comunidad ejecutiva.</p>
+    </div>
+  </div>
+
   <!-- MODAL DE PERFIL -->
   <div id="profile-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 max-w-md w-full space-y-5 shadow-2xl">
@@ -221,6 +274,46 @@
 
   <script>
     const WORKER_URL = "https://pitchflow-api.anacavea55.workers.dev";
+
+    // --- GESTIÓN DE ACCESO Y MEMBRESÍA ---
+    function checkAuthStatus() {
+      const userEmail = localStorage.getItem('pitchflow_user_email');
+      const authModal = document.getElementById('authModal');
+      const navBadge = document.getElementById('userNavBadge');
+      const badgeEmail = document.getElementById('badge-email');
+      
+      if (userEmail && userEmail.includes('@')) {
+        if (authModal) authModal.style.display = 'none';
+        if (navBadge) navBadge.classList.remove('hidden');
+        if (badgeEmail) badgeEmail.textContent = userEmail;
+      } else {
+        if (authModal) authModal.style.display = 'flex';
+        if (navBadge) navBadge.classList.add('hidden');
+      }
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const emailInput = document.getElementById('authEmailInput');
+      const errorMsg = document.getElementById('authErrorMsg');
+      const email = emailInput.value.trim().toLowerCase();
+      
+      if (!email || !email.includes('@') || !email.includes('.')) {
+        errorMsg.classList.remove('hidden');
+        return;
+      }
+      
+      errorMsg.classList.add('hidden');
+      localStorage.setItem('pitchflow_user_email', email);
+      checkAuthStatus();
+    }
+
+    function logoutUser() {
+      if (confirm('¿Deseas cerrar tu sesión actual en PitchFlow?')) {
+        localStorage.removeItem('pitchflow_user_email');
+        location.reload();
+      }
+    }
 
     const SCENARIO_PRESETS = {
       entrevista: [
@@ -298,6 +391,7 @@
     let answered = false;
 
     document.addEventListener("DOMContentLoaded", () => {
+      checkAuthStatus();
       loadProfile();
       updateScenarioPrompts();
       renderQuestion();
@@ -442,6 +536,7 @@
 
       const scenario = document.getElementById('rw-scenario').value;
       const btn = document.getElementById('btn-process');
+      const userEmail = localStorage.getItem('pitchflow_user_email') || 'anonymous@member.com';
 
       btn.innerHTML = `<span class="animate-spin inline-block">⏳</span> <span>Calibrando con IA...</span>`;
       btn.disabled = true;
@@ -450,7 +545,7 @@
         const response = await fetch(WORKER_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: rawInput, scenario: scenario })
+          body: JSON.stringify({ text: rawInput, scenario: scenario, email: userEmail })
         });
 
         if (!response.ok) {
