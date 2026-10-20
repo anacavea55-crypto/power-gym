@@ -1,3 +1,24 @@
+// ACCIÓN A: VALIDACIÓN DE MIEMBRO AL ENTRAR
+if (body.action === "verify_member") { ... }
+```
+
+El Worker exige que el cuerpo de la petición envíe `"action": "verify_member"`[cite: 4].  
+Sin embargo, en el `index.html` anterior estábamos enviando la petición a una URL `/auth-check` sin ese campo `action`, por lo que el Worker se salteaba la validación y caía directo en el error.
+
+Además, en las capturas subsiguientes (`Captura de pantalla 2026-10-20 100038.png` y `100101.png`), tu Worker devuelve un JSON con estas propiedades exactas para el Calibrador[cite: 6, 7]:
+* `version_ejecutiva`[cite: 6]
+* `fugas_detectadas`[cite: 6]
+* `analisis`[cite: 6]
+
+El ajuste es **únicamente en `index.html`** (en GitHub), no tenés que tocar nada más en Cloudflare.
+
+---
+
+### Solución: Código completo de `index.html`
+
+Copiá este código y pegalo en tu `index.html` en GitHub reemplazando todo:
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -266,7 +287,7 @@
     }
     .calibrate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* CONTENEDORES DE RESULTADO AUTHORITY FRAME */
+    /* CONTENEDORES DE RESULTADO */
     .frame-results {
       display: flex;
       flex-direction: column;
@@ -325,7 +346,6 @@
       font-size: 1rem;
       line-height: 1.5;
       color: #fff;
-      font-style: normal;
     }
     .frame-actions {
       display: flex;
@@ -476,11 +496,11 @@
       <div class="card">
         <label class="input-label">Seleccioná el Escenario Táctico</label>
         <select id="scenarioSelect" class="select-dropdown" onchange="loadPresetExample()">
-          <option value="claridad">Claridad Estratégica (Oficina & Calls) - Frenar ruido / Clarificar sin pedir perdón</option>
-          <option value="decision">Decisión Estratégica / Dirección - Asumir postura firme ante el equipo</option>
-          <option value="reunion">Presentación / Estatus - Reportar avances sin dar rodeos</option>
-          <option value="negociacion">Negociación de Tarifas / Recursos - Defender números con solidez</option>
-          <option value="entrevista">Entrevista de Carrera / Liderazgo - Demostrar autoridad técnica</option>
+          <option value="Claridad Estratégica (Oficina & Calls)">Claridad Estratégica (Oficina & Calls) - Frenar ruido / Clarificar sin pedir perdón</option>
+          <option value="Decisión Estratégica / Dirección">Decisión Estratégica / Dirección - Asumir postura firme ante el equipo</option>
+          <option value="Presentación / Reunión de Estatus">Presentación / Estatus - Reportar avances sin dar rodeos</option>
+          <option value="Negociación de Tarifas / Recursos">Negociación de Tarifas / Recursos - Defender números con solidez</option>
+          <option value="Entrevista de Carrera / Liderazgo">Entrevista de Carrera / Liderazgo - Demostrar autoridad técnica</option>
         </select>
 
         <div class="grid-editor">
@@ -502,10 +522,10 @@
                 <div id="diagHabit">⚠️ Hábito detectado: Esperando calibración de mensaje...</div>
               </div>
 
-              <!-- Opción 1: Direct & Firm -->
+              <!-- Versión Ejecutiva Calibrada -->
               <div class="frame-card">
                 <div class="frame-header">
-                  <span class="frame-title">Opción 1: Direct & Firm</span>
+                  <span class="frame-title">Versión Ejecutiva (Direct & Firm)</span>
                   <span class="frame-tag" id="tagOpt1">Foco en Dirección</span>
                 </div>
                 <div class="frame-quote" id="textOpt1">"The executive response will appear here with maximum directness."</div>
@@ -516,23 +536,9 @@
                 </div>
               </div>
 
-              <!-- Opción 2: Collaborative & Poised -->
-              <div class="frame-card">
-                <div class="frame-header">
-                  <span class="frame-title">Opción 2: Collaborative & Poised</span>
-                  <span class="frame-tag" id="tagOpt2">Autoridad Serena</span>
-                </div>
-                <div class="frame-quote" id="textOpt2">"The poised alternative will appear here maintaining firm boundaries."</div>
-                <div class="frame-actions">
-                  <button class="action-btn" onclick="copyPhrase('textOpt2')">📋 Copiar</button>
-                  <button class="action-btn" onclick="speakPhrase('textOpt2')">🔊 Escuchar pronunciación</button>
-                  <button class="action-btn" onclick="saveSpecificToVault('textOpt2')">💾 Guardar en Bóveda</button>
-                </div>
-              </div>
-
-              <!-- Micro-lección -->
+              <!-- Micro-lección / Análisis -->
               <div class="lesson-box">
-                <div class="lesson-title">💡 Micro-lección de Impacto</div>
+                <div class="lesson-title">💡 Análisis Estratégico</div>
                 <div id="lessonText">Completá el borrador a la izquierda para analizar la ganancia estratégica de tu comunicación.</div>
               </div>
 
@@ -577,7 +583,7 @@
   <script>
     const WORKER_ENDPOINT = "https://pitchflow-api.anacavea55.workers.dev";
 
-    // 1. AUTENTICACIÓN
+    // 1. AUTENTICACIÓN EXACTA CON EL WORKER
     function checkAuth() {
       const email = localStorage.getItem("pitchflow_user");
       if (email) {
@@ -596,14 +602,19 @@
       if (!emailInput) return;
 
       try {
-        const res = await fetch(`${WORKER_ENDPOINT}/auth-check`, {
+        // Enviar action: "verify_member" como requiere la línea 37 de tu Worker
+        const res = await fetch(WORKER_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: emailInput })
+          body: JSON.stringify({ 
+            action: "verify_member", 
+            email: emailInput 
+          })
         });
         const data = await res.json();
 
-        if (data.authorized) {
+        // Tu Worker devuelve authorized: true/false según isAllowed
+        if (data.authorized || data.isAllowed) {
           localStorage.setItem("pitchflow_user", emailInput);
           checkAuth();
         } else {
@@ -630,11 +641,11 @@
 
     // 3. AUTHORITY FRAME
     const PRESETS = {
-      claridad: "El cliente/director habló durante tres minutos muy rápido, usó términos raros y no entendí bien qué me pide. Quiero pedirle que defina el objetivo puntual sin disculparme por mi inglés.",
-      decision: "Creo que tal vez deberíamos esperar un poco antes de lanzar la campaña porque quizás no todos los miembros revisaron los datos.",
-      reunion: "Disculpen que interrumpa, solo quería decir que mi equipo ya terminó casi todo lo que nos tocaba hacer esta semana.",
-      negociacion: "No sé si les parezca bien este precio, si les parece alto podemos bajarlo un poco para ajustarnos a su presupuesto.",
-      entrevista: "Tengo mucha experiencia en calidad pero a veces me cuesta explicar todo lo que sé en inglés, perdón por mi nivel."
+      "Claridad Estratégica (Oficina & Calls)": "El cliente habló durante tres minutos muy rápido, usó términos raros y no entendí bien qué me pide. Quiero pedirle que defina el objetivo puntual sin disculparme por mi inglés.",
+      "Decisión Estratégica / Dirección": "Creo que tal vez deberíamos esperar un poco antes de lanzar la campaña porque quizás no todos los miembros revisaron los datos.",
+      "Presentación / Reunión de Estatus": "Disculpen que interrumpa, solo quería decir que mi equipo ya terminó casi todo lo que nos tocaba hacer esta semana.",
+      "Negociación de Tarifas / Recursos": "No sé si les parezca bien este precio, si les parece alto podemos bajarlo un poco para ajustarnos a su presupuesto.",
+      "Entrevista de Carrera / Liderazgo": "Tengo mucha experiencia en calidad pero a veces me cuesta explicar todo lo que sé en inglés, perdón por mi nivel."
     };
 
     function loadPresetExample() {
@@ -646,7 +657,7 @@
       const btn = document.getElementById("calibrateBtn");
       const text = document.getElementById("inputText").value.trim();
       const scenario = document.getElementById("scenarioSelect").value;
-      const user = localStorage.getItem("pitchflow_user");
+      const userEmail = localStorage.getItem("pitchflow_user");
 
       if (!text) return;
 
@@ -654,22 +665,26 @@
       btn.innerHTML = "<span>⚡ Calibrando Postura...</span>";
 
       try {
-        const res = await fetch(`${WORKER_ENDPOINT}/calibrate`, {
+        // Estructura requerida por tu Worker en la línea 49-60
+        const res = await fetch(WORKER_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text, scenario, user })
+          body: JSON.stringify({ 
+            email: userEmail,
+            text: text, 
+            scenario: scenario 
+          })
         });
         const data = await res.json();
 
-        if (data.diagnostic) {
-          document.getElementById("diagHabit").innerText = "⚠️ " + data.diagnostic;
-          document.getElementById("textOpt1").innerText = data.primaryFrame || data.result;
-          document.getElementById("textOpt2").innerText = data.poisedAlternative || "";
-          document.getElementById("lessonText").innerText = data.microLesson || "Enfoque ejecutado con dirección y autoridad.";
+        if (data.version_ejecutiva) {
+          document.getElementById("diagHabit").innerText = "⚠️ Fugas eliminadas: " + (data.fugas_detected || data.fugas_detectadas || "Disculpas y vacilaciones erradicadas.");
+          document.getElementById("textOpt1").innerText = data.version_ejecutiva;
+          document.getElementById("lessonText").innerText = Array.isArray(data.analisis) ? data.analisis.join(" ") : (data.analisis || "Intervención estructurada con dirección y autoridad.");
         } else if (data.result) {
-          // Fallback en caso de string simple
           document.getElementById("textOpt1").innerText = data.result;
-          document.getElementById("textOpt2").innerText = data.result;
+        } else if (data.error) {
+          alert("Error: " + data.error);
         }
       } catch (err) {
         document.getElementById("diagHabit").innerText = "Error de conexión con el Worker.";
@@ -695,7 +710,7 @@
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = "en-US";
-      utterance.rate = 0.95; // Cadencia serena y ejecutiva
+      utterance.rate = 0.95;
       
       const voices = window.speechSynthesis.getVoices();
       const usVoice = voices.find(v => v.lang.startsWith("en-US") || v.lang.startsWith("en"));
@@ -710,7 +725,7 @@
       let vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
       vault.push({ 
         text, 
-        category: scenario === "claridad" ? "Claridad Estratégica" : "General", 
+        category: scenario.includes("Claridad") ? "Claridad Estratégica" : "General", 
         date: new Date().toLocaleDateString() 
       });
       localStorage.setItem("pitchflow_vault", JSON.stringify(vault));
