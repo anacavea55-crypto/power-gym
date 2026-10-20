@@ -1,24 +1,3 @@
-// ACCIÓN A: VALIDACIÓN DE MIEMBRO AL ENTRAR
-if (body.action === "verify_member") { ... }
-```
-
-El Worker exige que el cuerpo de la petición envíe `"action": "verify_member"`[cite: 4].  
-Sin embargo, en el `index.html` anterior estábamos enviando la petición a una URL `/auth-check` sin ese campo `action`, por lo que el Worker se salteaba la validación y caía directo en el error.
-
-Además, en las capturas subsiguientes (`Captura de pantalla 2026-10-20 100038.png` y `100101.png`), tu Worker devuelve un JSON con estas propiedades exactas para el Calibrador[cite: 6, 7]:
-* `version_ejecutiva`[cite: 6]
-* `fugas_detectadas`[cite: 6]
-* `analisis`[cite: 6]
-
-El ajuste es **únicamente en `index.html`** (en GitHub), no tenés que tocar nada más en Cloudflare.
-
----
-
-### Solución: Código completo de `index.html`
-
-Copiá este código y pegalo en tu `index.html` en GitHub reemplazando todo:
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
