@@ -379,6 +379,7 @@
       border-radius: 20px;
       font-size: 0.8rem;
       cursor: pointer;
+      transition: all 0.2s;
     }
     .filter-chip.active {
       background: var(--accent-gold);
@@ -391,7 +392,7 @@
       border: 1px solid var(--card-border);
       border-radius: 10px;
       padding: 1.5rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
     }
     .exercise-tag {
       font-size: 0.75rem;
@@ -399,20 +400,37 @@
       letter-spacing: 0.5px;
       color: var(--accent-gold);
       font-weight: 700;
-      margin-bottom: 0.5rem;
-      display: block;
+      margin-bottom: 0.4rem;
+      display: inline-block;
     }
-    .exercise-prompt {
-      font-size: 1rem;
-      margin-bottom: 1.2rem;
+    .exercise-situation {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .habit-comparison {
+      background: #090c12;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
       line-height: 1.5;
+    }
+    .habit-weak {
+      color: var(--accent-ruby);
+      margin-bottom: 0.35rem;
+    }
+    .habit-prompt {
+      color: var(--text-muted);
     }
     .options-grid {
       display: grid;
       gap: 0.6rem;
     }
     .option-btn {
-      background: #090c12;
+      background: #0e121a;
       border: 1px solid var(--card-border);
       padding: 0.85rem 1rem;
       border-radius: 8px;
@@ -426,13 +444,25 @@
     .option-btn:hover { border-color: var(--text-muted); }
     .option-btn.correct { background: rgba(16, 185, 129, 0.15); border-color: var(--accent-emerald); color: #fff; }
     .option-btn.wrong { background: rgba(239, 68, 68, 0.15); border-color: var(--accent-ruby); color: #fff; }
+    
     .feedback-box {
       margin-top: 1rem;
-      padding: 0.85rem;
-      border-radius: 6px;
-      font-size: 0.85rem;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
       line-height: 1.5;
       display: none;
+    }
+    .solution-quote {
+      font-size: 0.98rem;
+      color: #fff;
+      font-weight: 600;
+      margin-top: 0.5rem;
+      margin-bottom: 0.75rem;
+      padding: 0.6rem 0.8rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-left: 3px solid var(--accent-gold);
+      border-radius: 4px;
     }
   </style>
 </head>
@@ -509,8 +539,8 @@
                 </div>
                 <div class="frame-quote" id="textOpt1">"The executive response will appear here with maximum directness."</div>
                 <div class="frame-actions">
-                  <button class="action-btn" onclick="copyPhrase('textOpt1')">📋 Copiar</button>
-                  <button class="action-btn" onclick="speakPhrase('textOpt1')">🔊 Escuchar pronunciación</button>
+                  <button class="action-btn" onclick="copyText('textOpt1')">📋 Copiar</button>
+                  <button class="action-btn" onclick="speakText('textOpt1')">🔊 Escuchar pronunciación</button>
                   <button class="action-btn" onclick="saveSpecificToVault('textOpt1')">💾 Guardar en Bóveda</button>
                 </div>
               </div>
@@ -530,14 +560,13 @@
     <!-- 2. GIMNASIO DE PODER -->
     <section id="gimnasio" class="section-content">
       <h1 class="hero-title">Gimnasio de Poder</h1>
-      <p class="hero-subtitle">Entrená el reflejo automático para responder con jerarquía en situaciones de alta presión, tanto en la oficina presencial como en llamadas virtuales.</p>
+      <p class="hero-subtitle">Entrená el reflejo automático para responder con jerarquía en situaciones de alta presión. Cada ejercicio cuenta con herramientas para copiar y escuchar la entonación ejecutiva.</p>
       
       <div class="filter-bar">
-        <button class="filter-chip active" onclick="filterGym('all', this)">Todos</button>
-        <button class="filter-chip" onclick="filterGym('Claridad Estratégica', this)">Claridad Estratégica</button>
-        <button class="filter-chip" onclick="filterGym('Decisión', this)">Decisión</button>
-        <button class="filter-chip" onclick="filterGym('Límites', this)">Límites</button>
-        <button class="filter-chip" onclick="filterGym('Negociación', this)">Negociación</button>
+        <button class="filter-chip active" onclick="filterGym('all', this)">Todos (15)</button>
+        <button class="filter-chip" onclick="filterGym('Manejo del Tiempo', this)">Manejo del Tiempo & Ritmo</button>
+        <button class="filter-chip" onclick="filterGym('Criterio Técnico', this)">Criterio Técnico & Validación</button>
+        <button class="filter-chip" onclick="filterGym('Límites & Decisión', this)">Límites & Toma de Decisiones</button>
       </div>
 
       <div id="gymContainer"></div>
@@ -546,13 +575,13 @@
     <!-- 3. BOVEDA -->
     <section id="boveda" class="section-content">
       <h1 class="hero-title">Bóveda de Recursos</h1>
-      <p class="hero-subtitle">Tus frases de rescate táctico y fórmulas calibradas para consultar en 10 segundos antes de una reunión o conversación decisiva.</p>
+      <p class="hero-subtitle">Tus frases de rescate táctico y fórmulas calibradas guardadas para consultar en 10 segundos antes de una reunión decisiva.</p>
       
       <div class="filter-bar">
         <button class="filter-chip active" onclick="filterVault('all', this)">Todos</button>
-        <button class="filter-chip" onclick="filterVault('Claridad Estratégica', this)">Claridad Estratégica</button>
-        <button class="filter-chip" onclick="filterVault('Decisión', this)">Decisión</button>
-        <button class="filter-chip" onclick="filterVault('Negociación', this)">Negociación</button>
+        <button class="filter-chip" onclick="filterVault('Manejo del Tiempo', this)">Manejo del Tiempo</button>
+        <button class="filter-chip" onclick="filterVault('Criterio Técnico', this)">Criterio Técnico</button>
+        <button class="filter-chip" onclick="filterVault('Límites & Decisión', this)">Límites & Decisión</button>
       </div>
 
       <div id="vaultContainer"></div>
@@ -562,7 +591,7 @@
   <script>
     const WORKER_ENDPOINT = "https://pitchflow-api.anacavea55.workers.dev";
 
-    // 1. AUTENTICACIÓN EXACTA CON EL WORKER
+    // 1. AUTENTICACIÓN
     function checkAuth() {
       const email = localStorage.getItem("pitchflow_user");
       if (email) {
@@ -581,7 +610,6 @@
       if (!emailInput) return;
 
       try {
-        // Enviar action: "verify_member" como requiere la línea 37 de tu Worker
         const res = await fetch(WORKER_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -592,7 +620,6 @@
         });
         const data = await res.json();
 
-        // Tu Worker devuelve authorized: true/false según isAllowed
         if (data.authorized || data.isAllowed) {
           localStorage.setItem("pitchflow_user", emailInput);
           checkAuth();
@@ -644,7 +671,6 @@
       btn.innerHTML = "<span>⚡ Calibrando Postura...</span>";
 
       try {
-        // Estructura requerida por tu Worker en la línea 49-60
         const res = await fetch(WORKER_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -673,23 +699,26 @@
       }
     }
 
-    // BOTONES DE ACCIÓN: COPIAR Y ESCUCHAR PRONUNCIACIÓN
-    function copyPhrase(elementId) {
-      const text = document.getElementById(elementId).innerText.replace(/^"|"$/g, '');
-      navigator.clipboard.writeText(text);
-      alert("Frase copiada al portapapeles.");
+    // ACCIONES GENERALES: COPIAR Y ESCUCHAR AUDIO
+    function copyDirectText(rawText) {
+      navigator.clipboard.writeText(rawText);
+      alert("Fórmula copiada al portapapeles.");
     }
 
-    function speakPhrase(elementId) {
+    function copyText(elementId) {
       const text = document.getElementById(elementId).innerText.replace(/^"|"$/g, '');
+      copyDirectText(text);
+    }
+
+    function speakDirectText(rawText) {
       if (!window.speechSynthesis) {
         alert("Tu navegador no soporta síntesis de voz.");
         return;
       }
       window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
+      const utterance = new SpeechSynthesisUtterance(rawText);
       utterance.lang = "en-US";
-      utterance.rate = 0.95;
+      utterance.rate = 0.92;
       
       const voices = window.speechSynthesis.getVoices();
       const usVoice = voices.find(v => v.lang.startsWith("en-US") || v.lang.startsWith("en"));
@@ -698,13 +727,18 @@
       window.speechSynthesis.speak(utterance);
     }
 
+    function speakText(elementId) {
+      const text = document.getElementById(elementId).innerText.replace(/^"|"$/g, '');
+      speakDirectText(text);
+    }
+
     function saveSpecificToVault(elementId) {
       const text = document.getElementById(elementId).innerText.replace(/^"|"$/g, '');
       const scenario = document.getElementById("scenarioSelect").value;
       let vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
       vault.push({ 
         text, 
-        category: scenario.includes("Claridad") ? "Claridad Estratégica" : "General", 
+        category: "Authority Frame", 
         date: new Date().toLocaleDateString() 
       });
       localStorage.setItem("pitchflow_vault", JSON.stringify(vault));
@@ -712,75 +746,191 @@
       alert("Guardado en tu Bóveda de Recursos.");
     }
 
-    // 4. GIMNASIO DE PODER
+    // 4. GIMNASIO DE PODER: LOS 15 ESCENARIOS TÁCTICOS
     const GYM_EXERCISES = [
+      // BLOQUE 1: MANEJO DEL TIEMPO, TURNOS Y RITMO
       {
-        category: "Claridad Estratégica",
-        scenario: "Oficina Presencial: Un colega pasa apurado por tu escritorio, habla rápido y te pide una tarea sin contexto claro.",
-        prompt: "To make sure we execute this accurately, ______ the primary deliverable before I begin?",
+        category: "Manejo del Tiempo",
+        title: "1. Llegar un par de minutos tarde a una llamada",
+        weak: "«Perdón a todos por la demora, se me complicó la reunión anterior...»",
+        prompt: "¿Cuál es la fórmula ejecutiva para no trasladar el estrés de tu agenda?",
+        phraseEn: "Thank you for waiting. Let's dive straight into the first agenda item.",
+        strategy: "No traslada el estrés de tu agenda a la mesa; enfoca al equipo en la acción inmediata.",
         options: [
-          { text: "could you define", correct: true, feedback: "'Could you define the primary deliverable' frena el apuro del otro con elegancia. Establece que tu tiempo operativo requiere precisión sin exponerte." },
-          { text: "sorry, you speak too fast for me to understand", correct: false, feedback: "Decir que tu inglés es malo o que el otro habla rápido te pone en sumisión frente a tu par." },
-          { text: "I didn't get that because my English is bad, so", correct: false, feedback: "Dinamita tu autoridad inmediatamente justificándote en el idioma." }
+          { text: "Thank you for waiting. Let's dive straight into the first agenda item.", correct: true },
+          { text: "Sorry for being late everyone, my previous call was a complete disaster.", correct: false, feedback: "Justificarte con tu agenda desordenada reduce tu percepción de control." }
         ]
       },
       {
-        category: "Claridad Estratégica",
-        scenario: "Sala de Juntas: En plena reunión usan una jerga enredada o siglas internas y necesitás entender el fondo sin exponerte.",
-        prompt: "______ the business implication behind that approach?",
+        category: "Manejo del Tiempo",
+        title: "2. La reunión se está desviando del tema principal",
+        weak: "«Perdón que me meta, pero creo que nos fuimos de tema...»",
+        prompt: "¿Cómo modelar liderazgo para cuidar el tiempo del equipo?",
+        phraseEn: "To protect the team's time, I propose we steer back to the core objective of this session.",
+        strategy: "Modela liderazgo de proyecto cuidando el recurso más valioso: el tiempo de todos.",
         options: [
-          { text: "Could you clarify", correct: true, feedback: "'Could you clarify the business implication' eleva la discusión: obligás al otro a salir del tecnicismo o la confusión y hablar de impacto." },
-          { text: "Sorry, I am lost and don't know what you are saying", correct: false, feedback: "Decir 'I am lost' transmite descontrol ante la mirada de todo el equipo en la sala." },
-          { text: "Wait, what does that mean? I don't understand", correct: false, feedback: "Suena reactivo e inseguro. Es mejor enfocar la pregunta en el impacto de negocio." }
+          { text: "To protect the team's time, I propose we steer back to the core objective of this session.", correct: true },
+          { text: "Sorry to interrupt, but I think we are wasting time talking about other things.", correct: false, feedback: "Suena agresivo o quejoso en vez de una propuesta directiva orientada al objetivo." }
         ]
       },
       {
-        category: "Claridad Estratégica",
-        scenario: "Reunión 1 a 1: Tu superior te da instrucciones que chocan con lo acordado ayer.",
-        prompt: "To align with yesterday's baseline, ______ prioritizing speed over scope validation?",
+        category: "Manejo del Tiempo",
+        title: "3. Necesitás que repitan un dato que no se escuchó bien",
+        weak: "«Perdón, mala mía, ¿me repetís lo último que no presté atención?»",
+        prompt: "¿Cómo pedir la repetición atribuyéndola a rigor técnico y no a distracción?",
+        phraseEn: "The audio broke up on that last metric. Could you restate it to ensure the data is aligned?",
+        strategy: "Quita la culpa personal y atribuye la repetición a la precisión técnica necesaria.",
         options: [
-          { text: "are we officially", correct: true, feedback: "'Are we officially prioritizing' pide una definición de dirección formal sin confrontar ni sonar a queja personal." },
-          { text: "you are confusing me, sorry, what do you want?", correct: false, feedback: "Te coloca como víctima de la confusión en lugar de socia estratégica que audita el proceso." },
-          { text: "I think you said something completely different yesterday", correct: false, feedback: "Genera fricción personal en vez de enfocarse en la decisión técnica." }
+          { text: "The audio broke up on that last metric. Could you restate it to ensure the data is aligned?", correct: true },
+          { text: "Sorry, my bad, I didn't pay attention. Can you repeat please?", correct: false, feedback: "Asumir culpa por falta de atención dinamita tu perfil profesional frente a la sala." }
         ]
       },
       {
-        category: "Claridad Estratégica",
-        scenario: "Pasillo / Café: En una charla rápida con ruido ambiente no captaste la última parte de su pregunta.",
-        prompt: "______ the second part of that question so I can give you an accurate answer?",
+        category: "Manejo del Tiempo",
+        title: "4. Querés cerrar la reunión porque se cumplió la hora",
+        weak: "«Perdón que tenga que cortar, pero me tengo que ir a otra llamada...»",
+        prompt: "¿Cómo respetar el marco temporal pactado con autoridad?",
+        phraseEn: "We have reached our scheduled time. Let's confirm action items and lock in next steps.",
+        strategy: "Respeta el marco temporal pactado sin necesidad de justificar compromisos posteriores.",
         options: [
-          { text: "Could you restate", correct: true, feedback: "'Could you restate the second part' demuestra escucha activa y profesionalismo enfocado en responder con precisión." },
-          { text: "Sorry, what? My English is not good today", correct: false, feedback: "Disculparte por tu idioma en una charla informal destruye tu autoridad sin necesidad." },
-          { text: "I don't understand, can you say it again slower?", correct: false, feedback: "Te posiciona como estudiante en vez de como ejecutiva par." }
+          { text: "We have reached our scheduled time. Let's confirm action items and lock in next steps.", correct: true },
+          { text: "Sorry guys, I have to jump to another call, so I must hang up now.", correct: false, feedback: "Pide disculpas por cumplir el horario previamente estipulado." }
         ]
       },
       {
-        category: "Claridad Estratégica",
-        scenario: "Presentación en Vivo: Una pregunta del público es desordenada, larga o capciosa.",
-        prompt: "To address your core concern directly, ______ the specific risk you want to mitigate?",
+        category: "Manejo del Tiempo",
+        title: "5. Tenés que retirarte antes de que finalice la sesión",
+        weak: "«Mil disculpas con todos, me da vergüenza pero me tengo que desconectar...»",
+        prompt: "¿Cómo comunicar tu salida anticipada con orden y sin pedir indulgencia?",
+        phraseEn: "I have a hard stop at 11:00 for a prior commitment. I will leave my notes in the chat and review the minutes.",
+        strategy: "Comunica orden profesional y anticipación sin pedir disculpas por gestionar tu calendario.",
         options: [
-          { text: "could you isolate", correct: true, feedback: "'Could you isolate the specific risk' desactiva el desorden, devuelve el foco al interlocutor y te da el control de la sala." },
-          { text: "Sorry, I didn't understand your point at all", correct: false, feedback: "Expone una supuesta falta de comprensión propia frente a toda la audiencia." },
-          { text: "That was very confusing, what do you mean?", correct: false, feedback: "Confrontar agresivamente debilita tu compostura ejecutiva." }
+          { text: "I have a hard stop at 11:00 for a prior commitment. I will leave my notes in the chat and review the minutes.", correct: true },
+          { text: "A thousand apologies, I feel so bad but I have to leave early.", correct: false, feedback: "Decir 'I feel so bad' introduce una carga de culpa innecesaria en el ámbito corporativo." }
+        ]
+      },
+
+      // BLOQUE 2: CRITERIO TÉCNICO, OBJECIONES Y VALIDACIÓN
+      {
+        category: "Criterio Técnico",
+        title: "6. No sabés un dato específico en ese momento",
+        weak: "«Perdón, no sé cómo se me pasó ese número, qué desastre...»",
+        prompt: "¿Cómo reemplazar la vacilación por rigor y compromiso de entrega?",
+        phraseEn: "That specific metric is not consolidated here. I will verify it and follow up in writing today.",
+        strategy: "Reemplaza la vergüenza por rigor metodológico y compromiso formal de entrega.",
+        options: [
+          { text: "That specific metric is not consolidated here. I will verify it and follow up in writing today.", correct: true },
+          { text: "I'm so sorry, I don't know how I missed that number, what a disaster.", correct: false, feedback: "Autodescalificarte frente a tu equipo erosiona tu autoridad técnica." }
         ]
       },
       {
-        category: "Decisión",
-        scenario: "Definir postura técnica sobre un lanzamiento postergado.",
-        prompt: "Based on our quality audit, I ______ proceeding until all validation checks pass.",
+        category: "Criterio Técnico",
+        title: "7. Detectás un error evidente en la presentación de otro",
+        weak: "«Perdón si me equivoco, pero me parece que ese gráfico está mal...»",
+        prompt: "¿Cómo aportar el dato objetivo sin dudar de tu propio análisis ni atacar?",
+        phraseEn: "An observation on that metric: cross-referencing our system logs, the verified figure is this.",
+        strategy: "No duda de su propio análisis; aporta el dato objetivo sin atacar personalmente al presentador.",
         options: [
-          { text: "strongly advise against", correct: true, feedback: "'Strongly advise against' refleja juicio experto y firmeza técnica." },
-          { text: "think maybe we should not", correct: false, feedback: "Transmite duda y falta de convicción." },
-          { text: "am afraid we can't", correct: false, feedback: "Introduce debilidad emocional innecesaria." }
+          { text: "An observation on that metric: cross-referencing our system logs, the verified figure is this.", correct: true },
+          { text: "Sorry if I'm wrong, but I think your slide has a big mistake.", correct: false, feedback: "Abrir con 'Sorry if I'm wrong' le resta peso inmediato a tu corrección técnica." }
         ]
       },
       {
-        category: "Límites",
-        scenario: "Frenar un pedido fuera de hora sin pedir perdón.",
-        prompt: "I am currently offline. I will ______ tomorrow morning during working hours.",
+        category: "Criterio Técnico",
+        title: "8. La propuesta del cliente o colega es inviable",
+        weak: "«Disculpame, pero me parece que lo que pedís es medio imposible...»",
+        prompt: "¿Cómo pasar de la queja emocional a un diagnóstico con solución adjunta?",
+        phraseEn: "With our current timeline and resources, that scope compromises quality. The viable alternative is this.",
+        strategy: "Pasa de la queja emocional a un diagnóstico técnico objetivo acompañado de una alternativa viable.",
         options: [
-          { text: "review this first thing", correct: true, feedback: "Fija el límite con autoridad y enfoque en el entregable." },
-          { text: "try to look at it if I have time, sorry", correct: false, feedback: "Pide disculpas por respetar tus propios horarios." }
+          { text: "With our current timeline and resources, that scope compromises quality. The viable alternative is this.", correct: true },
+          { text: "Excuse me, but what you are asking for is completely impossible to do.", correct: false, feedback: "Genera rechazo y confrontación sin brindar una alternativa constructiva." }
+        ]
+      },
+      {
+        category: "Criterio Técnico",
+        title: "9. El interlocutor no comprende tu explicación técnica",
+        weak: "«Perdón, me expliqué horrible, soy muy malo explicando esto...»",
+        prompt: "¿Cómo asumir la claridad pedagógica sin denigrar tu propia capacidad?",
+        phraseEn: "Let's look at this workflow from another angle to ensure the operational impact is fully clear.",
+        strategy: "Asume la responsabilidad de la claridad pedagógica sin atacar la propia competencia profesional.",
+        options: [
+          { text: "Let's look at this workflow from another angle to ensure the operational impact is fully clear.", correct: true },
+          { text: "Sorry, I explained that terribly, I am so bad at explaining things in English.", correct: false, feedback: "Atacar tu capacidad de comunicación frente al cliente te posiciona en inferioridad." }
+        ]
+      },
+      {
+        category: "Criterio Técnico",
+        title: "10. Reclamar una tarea demorada que frena tu trabajo",
+        weak: "«Perdón que sea tan pesado molestándote con esto de nuevo...»",
+        prompt: "¿Cómo establecer que el seguimiento es un deber operativo y no una molestia?",
+        phraseEn: "To keep our final delivery on schedule, I need that input. What time can I expect it today?",
+        strategy: "Establece que el seguimiento es un deber operativo de calidad, no una molestia interpersonal.",
+        options: [
+          { text: "To keep our final delivery on schedule, I need that input. What time can I expect it today?", correct: true },
+          { text: "Sorry to bother you again and be annoying, but do you have my file?", correct: false, feedback: "Definirte como 'pesado' o 'molestia' desvaloriza la importancia crítica de tu entregable." }
+        ]
+      },
+
+      // BLOQUE 3: LÍMITES, NEGOCIACIÓN Y TOMA DE DECISIONES
+      {
+        category: "Límites & Decisión",
+        title: "11. Decir «no» a un pedido fuera de alcance (Scope creep)",
+        weak: "«Perdón, me encantaría pero de verdad no llego con nada...»",
+        prompt: "¿Cómo poner el costo de la decisión en el tomador de decisiones?",
+        phraseEn: "Adding that deliverable requires adjusting the timeline or deprioritizing another task. Which do we trade off?",
+        strategy: "Pone el costo y la responsabilidad de la decisión en quien la pide, en lugar de asumir la culpa.",
+        options: [
+          { text: "Adding that deliverable requires adjusting the timeline or deprioritizing another task. Which do we trade off?", correct: true },
+          { text: "Sorry, I would love to help but I have too much work and I can't.", correct: false, feedback: "Suena a queja de sobrecarga personal en lugar de un cálculo estratégico de capacidad." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "12. Defender tus honorarios o presupuesto",
+        weak: "«Perdón que hable de números ahora, pero el costo sería este...»",
+        prompt: "¿Cómo hablar de inversión con absoluta neutralidad financiera?",
+        phraseEn: "The investment required to deliver this standard of execution is [Amount].",
+        strategy: "Enmarca el precio como una inversión con neutralidad financiera; el dinero es un indicador de valor.",
+        options: [
+          { text: "The investment required to deliver this standard of execution is [Amount].", correct: true },
+          { text: "Sorry to bring up pricing, but our fee would be around [Amount] if that works for you.", correct: false, feedback: "Pedir permiso para cobrar o disculparse por tus tarifas deprecia tu servicio." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "13. Interrumpir a alguien que monopoliza la palabra",
+        weak: "«Disculpá que te corte, perdón, pero quería decir una cosa...»",
+        prompt: "¿Cómo redireccionar la sala hacia la resolución sin pedir disculpas?",
+        phraseEn: "Building on that last point, let's bring the focus to the decision we need to lock in today.",
+        strategy: "Capitaliza la última idea del interlocutor y redirige con elegancia a toda la sala hacia el acuerdo.",
+        options: [
+          { text: "Building on that last point, let's bring the focus to the decision we need to lock in today.", correct: true },
+          { text: "Excuse me for cutting you off, sorry, but I just wanted to say one thing.", correct: false, feedback: "Interrumpir pidiendo perdón evidencia timidez y diluye la fuerza de tu aporte." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "14. Mantener tu postura ante la insistencia ajena",
+        weak: "«Perdón, de verdad no te enojes, pero sigo pensando lo mismo...»",
+        prompt: "¿Cómo demostrar escucha empática manteniendo firmeza innegociable?",
+        phraseEn: "I understand your perspective; however, I stand by this technical approach based on these two pillars.",
+        strategy: "Valida la postura ajena con serenidad pero sostiene la decisión basada en fundamentos técnicos sólidos.",
+        options: [
+          { text: "I understand your perspective; however, I stand by this technical approach based on these two pillars.", correct: true },
+          { text: "Sorry, please don't get mad at me, but I still think the exact same thing.", correct: false, feedback: "Pedir 'que no se enojen' te infantiliza y destruye tu liderazgo profesional." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "15. Pedir atención plena en la sala",
+        weak: "«Perdón si los aburro con esto, prometo que es cortito...»",
+        prompt: "¿Cómo enmarcar tu tema como crítico y de alto valor antes de comenzar?",
+        phraseEn: "This item directly impacts project viability; I require five minutes of full team focus.",
+        strategy: "Posiciona el tema como un punto crítico de alto impacto antes de pronunciar la primera palabra.",
+        options: [
+          { text: "This item directly impacts project viability; I require five minutes of full team focus.", correct: true },
+          { text: "Sorry if this is boring guys, I promise I will be very quick.", correct: false, feedback: "Anunciar que tu presentación es aburrida condiciona negativamente la atención del equipo." }
         ]
       }
     ];
@@ -795,9 +945,14 @@
         const card = document.createElement("div");
         card.className = "exercise-card";
         card.innerHTML = `
-          <span class="exercise-tag">${ex.category}</span>
-          <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:0.5rem;">${ex.scenario}</p>
-          <p class="exercise-prompt"><strong>${ex.prompt}</strong></p>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="exercise-tag">${ex.category}</span>
+          </div>
+          <div class="exercise-situation">${ex.title}</div>
+          <div class="habit-comparison">
+            <div class="habit-weak"><strong>⚠️ Hábito sumiso habitual:</strong> ${ex.weak}</div>
+            <div class="habit-prompt"><strong>🎯 Desafío:</strong> ${ex.prompt}</div>
+          </div>
           <div class="options-grid">
             ${ex.options.map((opt, oIdx) => `
               <button class="option-btn" onclick="checkAnswer(${idx}, ${oIdx}, this)">${opt.text}</button>
@@ -826,15 +981,35 @@
         feedback.style.background = "rgba(16, 185, 129, 0.1)";
         feedback.style.border = "1px solid var(--accent-emerald)";
         feedback.style.color = "var(--text-main)";
-        feedback.innerHTML = `<strong>✓ Impecable:</strong> ${opt.feedback}`;
+        feedback.innerHTML = `
+          <div><strong>✓ Postura Impecable:</strong> ${ex.strategy}</div>
+          <div class="solution-quote">"${ex.phraseEn}"</div>
+          <div class="frame-actions">
+            <button class="action-btn" onclick="copyDirectText('${ex.phraseEn}')">📋 Copiar Fórmula</button>
+            <button class="action-btn" onclick="speakDirectText('${ex.phraseEn}')">🔊 Escuchar Pronunciación</button>
+            <button class="action-btn" onclick="saveExerciseToVault('${ex.category}', '${ex.phraseEn}')">💾 Guardar en Bóveda</button>
+          </div>
+        `;
       } else {
         btn.classList.add("wrong");
         feedback.style.display = "block";
         feedback.style.background = "rgba(239, 68, 68, 0.1)";
         feedback.style.border = "1px solid var(--accent-ruby)";
         feedback.style.color = "var(--text-main)";
-        feedback.innerHTML = `<strong>✗ Fuga de autoridad:</strong> ${opt.feedback}`;
+        feedback.innerHTML = `<strong>✗ Fuga de Autoridad:</strong> ${opt.feedback}`;
       }
+    }
+
+    function saveExerciseToVault(cat, phrase) {
+      let vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
+      vault.push({ 
+        text: phrase, 
+        category: cat, 
+        date: new Date().toLocaleDateString() 
+      });
+      localStorage.setItem("pitchflow_vault", JSON.stringify(vault));
+      renderVault();
+      alert("Fórmula guardada en tu Bóveda de Recursos.");
     }
 
     function filterGym(cat, chip) {
@@ -850,22 +1025,26 @@
       container.innerHTML = "";
 
       if (vault.length === 0) {
-        container.innerHTML = `<p style="color:var(--text-dim); text-align:center; padding:2rem;">Aún no guardaste fórmulas calibradas en tu Bóveda.</p>`;
+        container.innerHTML = `<p style="color:var(--text-dim); text-align:center; padding:2rem;">Aún no guardaste fórmulas calibradas en tu Bóveda. Entrená en el Gimnasio de Poder o usá Authority Frame para guardar tus favoritas.</p>`;
         return;
       }
 
       const filtered = filter === "all" ? vault : vault.filter(v => v.category === filter);
 
-      filtered.forEach((item, i) => {
+      filtered.forEach((item) => {
         const card = document.createElement("div");
         card.className = "card";
         card.style.marginBottom = "0.75rem";
         card.innerHTML = `
-          <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; align-items:center;">
             <span class="exercise-tag">${item.category}</span>
             <span style="font-size:0.75rem; color:var(--text-dim);">${item.date}</span>
           </div>
-          <p style="font-size:0.95rem; line-height:1.5;">${item.text}</p>
+          <p style="font-size:1rem; line-height:1.5; color:#fff; margin-bottom:0.75rem;">"${item.text}"</p>
+          <div class="frame-actions">
+            <button class="action-btn" onclick="copyDirectText('${item.text}')">📋 Copiar</button>
+            <button class="action-btn" onclick="speakDirectText('${item.text}')">🔊 Escuchar</button>
+          </div>
         `;
         container.appendChild(card);
       });
