@@ -702,8 +702,32 @@
 
     // UTILIDADES: COPIAR Y ESCUCHAR AUDIO
     function copyDirectText(rawText) {
-      navigator.clipboard.writeText(rawText);
-      alert("Fórmula copiada al portapapeles.");
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(rawText).then(() => {
+          alert("Fórmula copiada al portapapeles.");
+        }).catch(() => {
+          fallbackCopyText(rawText);
+        });
+      } else {
+        fallbackCopyText(rawText);
+      }
+    }
+
+    function fallbackCopyText(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        alert("Fórmula copiada al portapapeles.");
+      } catch (err) {
+        alert("No se pudo copiar el texto.");
+      }
+      document.body.removeChild(textArea);
     }
 
     function copyText(elementId) {
@@ -1301,13 +1325,15 @@
       }
     ];
 
+    let currentGymFilteredList = GYM_EXERCISES;
+
     function renderGym(filter = "all") {
       const container = document.getElementById("gymContainer");
       container.innerHTML = "";
       
-      const filtered = filter === "all" ? GYM_EXERCISES : GYM_EXERCISES.filter(e => e.category === filter);
+      currentGymFilteredList = filter === "all" ? GYM_EXERCISES : GYM_EXERCISES.filter(e => e.category === filter);
 
-      filtered.forEach((ex, idx) => {
+      currentGymFilteredList.forEach((ex, idx) => {
         const card = document.createElement("div");
         card.className = "exercise-card";
         card.innerHTML = `
@@ -1331,7 +1357,7 @@
     }
 
     function checkAnswer(exIdx, optIdx, btn) {
-      const ex = GYM_EXERCISES[exIdx];
+      const ex = currentGymFilteredList[exIdx];
       const opt = ex.options[optIdx];
       const feedback = document.getElementById(`feedback-${exIdx}`);
       const parent = btn.parentElement;
@@ -1351,9 +1377,9 @@
           <div><strong>✓ Postura Impecable:</strong> ${ex.strategy}</div>
           <div class="solution-quote">"${ex.phraseEn}"</div>
           <div class="frame-actions">
-            <button class="action-btn" onclick="copyDirectText('${ex.phraseEn}')">📋 Copiar Fórmula</button>
-            <button class="action-btn" onclick="speakDirectText('${ex.phraseEn}')">🔊 Escuchar Pronunciación</button>
-            <button class="action-btn" onclick="saveExerciseToVault('${ex.category}', '${ex.phraseEn}')">💾 Guardar en Bóveda</button>
+            <button class="action-btn" onclick="copyGymItem(${exIdx})">📋 Copiar Fórmula</button>
+            <button class="action-btn" onclick="speakGymItem(${exIdx})">🔊 Escuchar Pronunciación</button>
+            <button class="action-btn" onclick="saveGymItem(${exIdx})">💾 Guardar en Bóveda</button>
           </div>
         `;
       } else {
@@ -1366,16 +1392,34 @@
       }
     }
 
-    function saveExerciseToVault(cat, phrase) {
-      let vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
-      vault.push({ 
-        text: phrase, 
-        category: cat, 
-        date: new Date().toLocaleDateString() 
-      });
-      localStorage.setItem("pitchflow_vault", JSON.stringify(vault));
-      renderVault();
-      alert("Fórmula guardada en tu Bóveda de Recursos.");
+    // ACCIONES DIRECTAS POR ÍNDICE (Inmunes a comillas y apóstrofes)
+    function copyGymItem(idx) {
+      const ex = currentGymFilteredList[idx];
+      if (ex && ex.phraseEn) {
+        copyDirectText(ex.phraseEn);
+      }
+    }
+
+    function speakGymItem(idx) {
+      const ex = currentGymFilteredList[idx];
+      if (ex && ex.phraseEn) {
+        speakDirectText(ex.phraseEn);
+      }
+    }
+
+    function saveGymItem(idx) {
+      const ex = currentGymFilteredList[idx];
+      if (ex && ex.phraseEn) {
+        let vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
+        vault.push({ 
+          text: ex.phraseEn, 
+          category: ex.category, 
+          date: new Date().toLocaleDateString() 
+        });
+        localStorage.setItem("pitchflow_vault", JSON.stringify(vault));
+        renderVault();
+        alert("Fórmula guardada en tu Bóveda de Recursos.");
+      }
     }
 
     function filterGym(cat, chip) {
@@ -1385,6 +1429,8 @@
     }
 
     // 5. BOVEDA
+    let currentVaultFilteredList = [];
+
     function renderVault(filter = "all") {
       const container = document.getElementById("vaultContainer");
       const vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
@@ -1395,9 +1441,9 @@
         return;
       }
 
-      const filtered = filter === "all" ? vault : vault.filter(v => v.category === filter);
+      currentVaultFilteredList = filter === "all" ? vault : vault.filter(v => v.category === filter);
 
-      filtered.forEach((item) => {
+      currentVaultFilteredList.forEach((item, vIdx) => {
         const card = document.createElement("div");
         card.className = "card";
         card.style.marginBottom = "0.75rem";
@@ -1408,12 +1454,31 @@
           </div>
           <p style="font-size:1rem; line-height:1.5; color:#fff; margin-bottom:0.75rem;">"${item.text}"</p>
           <div class="frame-actions">
-            <button class="action-btn" onclick="copyDirectText('${item.text}')">📋 Copiar</button>
-            <button class="action-btn" onclick="speakDirectText('${item.text}')">🔊 Escuchar</button>
+            <button class="action-btn" onclick="copyVaultItem(${vIdx})">📋 Copiar</button>
+            <button class="action-btn" onclick="speakVaultItem(${vIdx})">🔊 Escuchar</button>
+            <button class="action-btn" style="color:var(--accent-ruby);" onclick="deleteVaultItem(${vIdx})">🗑️ Eliminar</button>
           </div>
         `;
         container.appendChild(card);
       });
+    }
+
+    function copyVaultItem(idx) {
+      const item = currentVaultFilteredList[idx];
+      if (item && item.text) copyDirectText(item.text);
+    }
+
+    function speakVaultItem(idx) {
+      const item = currentVaultFilteredList[idx];
+      if (item && item.text) speakDirectText(item.text);
+    }
+
+    function deleteVaultItem(idx) {
+      const itemToDelete = currentVaultFilteredList[idx];
+      let vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
+      vault = vault.filter(v => !(v.text === itemToDelete.text && v.date === itemToDelete.date));
+      localStorage.setItem("pitchflow_vault", JSON.stringify(vault));
+      renderVault();
     }
 
     function filterVault(cat, chip) {
