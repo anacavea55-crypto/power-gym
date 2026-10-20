@@ -206,6 +206,21 @@
       margin-bottom: 1.5rem;
     }
 
+    /* CONFIGURACION DE PERFIL EJECUTIVO */
+    .profile-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      background: #090c12;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 640px) {
+      .profile-bar { grid-template-columns: 1fr; }
+    }
+
     /* AUTHORITY FRAME */
     .grid-editor {
       display: grid;
@@ -247,9 +262,9 @@
       padding: 0.75rem 1rem;
       color: #fff;
       font-size: 0.9rem;
-      margin-bottom: 1rem;
       outline: none;
     }
+    .select-dropdown:focus { border-color: var(--accent-gold); }
     .calibrate-btn {
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
       color: #000;
@@ -500,11 +515,36 @@
     <!-- 1. AUTHORITY FRAME -->
     <section id="authority-frame" class="section-content active">
       <h1 class="hero-title">Authority Frame</h1>
-      <p class="hero-subtitle">Elevá tu estatus ejecutivo eliminando disculpas, vacilaciones y rodeos. Estructurá intervenciones directas con dirección, impacto y límites claros.</p>
+      <p class="hero-subtitle">Calibrá tu intervención ejecutiva eliminando disculpas, vacilaciones y subordinación. Las fórmulas se adaptan con precisión a tu industria y a tu nivel de inglés actual.</p>
       
       <div class="card">
+        
+        <!-- PERSONALIZACION DE CONTEXTO: ROL & NIVEL -->
+        <div class="profile-bar">
+          <div>
+            <label class="input-label">Tu Rol / Especialidad</label>
+            <select id="userRoleSelect" class="select-dropdown" onchange="saveProfileSettings()">
+              <option value="Operations Manager / Logística">Operations Manager / Logística</option>
+              <option value="Tech Lead / Engineering Manager">Tech Lead / Engineering Manager</option>
+              <option value="Consultor / Asesor Estratégico">Consultor / Asesor Estratégico</option>
+              <option value="Project Manager / Scrum Master">Project Manager / Scrum Master</option>
+              <option value="Quality Assurance / Regulatory Lead">Quality Assurance / Regulatory Lead</option>
+              <option value="Ejecutivo C-Level / Director">Ejecutivo C-Level / Director</option>
+              <option value="Ventas Técnicas / Account Executive">Ventas Técnicas / Account Executive</option>
+            </select>
+          </div>
+          <div>
+            <label class="input-label">Nivel de Inglés Operativo</label>
+            <select id="userLevelSelect" class="select-dropdown" onchange="saveProfileSettings()">
+              <option value="A2 (Estructura Base & Firmeza - Frases cortas y contundentes)">A2 (Estructura Base & Firmeza - Frases directas sin trabas)</option>
+              <option value="B1 (Transición a Liderazgo - Explicaciones sintéticas sin disculpas)">B1 (Transición a Liderazgo - Sintético y seguro)</option>
+              <option value="B2/C1 (Impacto Ejecutivo & Frialdad Táctica - Dominio de sala)">B2/C1 (Impacto Ejecutivo & Frialdad Táctica)</option>
+            </select>
+          </div>
+        </div>
+
         <label class="input-label">Seleccioná el Escenario Táctico</label>
-        <select id="scenarioSelect" class="select-dropdown" onchange="loadPresetExample()">
+        <select id="scenarioSelect" class="select-dropdown" onchange="loadPresetExample()" style="margin-bottom: 1rem;">
           <option value="Claridad Estratégica (Oficina & Calls)">Claridad Estratégica (Oficina & Calls) - Frenar ruido / Clarificar sin pedir perdón</option>
           <option value="Decisión Estratégica / Dirección">Decisión Estratégica / Dirección - Asumir postura firme ante el equipo</option>
           <option value="Presentación / Reunión de Estatus">Presentación / Estatus - Reportar avances sin dar rodeos</option>
@@ -535,7 +575,7 @@
               <div class="frame-card">
                 <div class="frame-header">
                   <span class="frame-title">Versión Ejecutiva (Direct & Firm)</span>
-                  <span class="frame-tag" id="tagOpt1">Foco en Dirección</span>
+                  <span class="frame-tag" id="tagOpt1">Calibrado a tu Rol</span>
                 </div>
                 <div class="frame-quote" id="textOpt1">"The executive response will appear here with maximum directness."</div>
                 <div class="frame-actions">
@@ -646,6 +686,28 @@
       document.getElementById(tabId).classList.add("active");
     }
 
+    // PERSONALIZACION DE CONTEXTO (PERSISTENCIA)
+    function saveProfileSettings() {
+      const role = document.getElementById("userRoleSelect").value;
+      const level = document.getElementById("userLevelSelect").value;
+      localStorage.setItem("pitchflow_user_role", role);
+      localStorage.setItem("pitchflow_user_level", level);
+      
+      const tag = document.getElementById("tagOpt1");
+      if (tag) {
+        const shortRole = role.split("/")[0].trim();
+        tag.innerText = shortRole + " (" + level.substring(0, 2) + ")";
+      }
+    }
+
+    function loadProfileSettings() {
+      const savedRole = localStorage.getItem("pitchflow_user_role");
+      const savedLevel = localStorage.getItem("pitchflow_user_level");
+      if (savedRole) document.getElementById("userRoleSelect").value = savedRole;
+      if (savedLevel) document.getElementById("userLevelSelect").value = savedLevel;
+      saveProfileSettings();
+    }
+
     // 3. AUTHORITY FRAME
     const PRESETS = {
       "Claridad Estratégica (Oficina & Calls)": "El cliente habló durante tres minutos muy rápido, usó términos raros y no entendí bien qué me pide. Quiero pedirle que defina el objetivo puntual sin disculparme por mi inglés.",
@@ -665,6 +727,8 @@
       const text = document.getElementById("inputText").value.trim();
       const scenario = document.getElementById("scenarioSelect").value;
       const userEmail = localStorage.getItem("pitchflow_user");
+      const userRole = document.getElementById("userRoleSelect").value;
+      const userLevel = document.getElementById("userLevelSelect").value;
 
       if (!text) return;
 
@@ -678,7 +742,9 @@
           body: JSON.stringify({ 
             email: userEmail,
             text: text, 
-            scenario: scenario 
+            scenario: scenario,
+            role: userRole,
+            english_level: userLevel
           })
         });
         const data = await res.json();
@@ -686,7 +752,7 @@
         if (data.version_ejecutiva) {
           document.getElementById("diagHabit").innerText = "⚠️ Fugas eliminadas: " + (data.fugas_detected || data.fugas_detectadas || "Disculpas y vacilaciones erradicadas.");
           document.getElementById("textOpt1").innerText = data.version_ejecutiva;
-          document.getElementById("lessonText").innerText = Array.isArray(data.analisis) ? data.analisis.join(" ") : (data.analisis || "Intervención estructurada con dirección y autoridad.");
+          document.getElementById("lessonText").innerText = Array.isArray(data.analisis) ? data.analisis.join(" ") : (data.analisis || "Intervención estructurada con dirección y autoridad según tu jerarquía.");
         } else if (data.result) {
           document.getElementById("textOpt1").innerText = data.result;
         } else if (data.error) {
@@ -772,9 +838,7 @@
 
     // 4. GIMNASIO DE PODER: LOS 45 ESCENARIOS COMPLETOS
     const GYM_EXERCISES = [
-      // ==========================================
       // BLOQUE 1: MANEJO DEL TIEMPO, TURNOS Y RITMO (1 a 15)
-      // ==========================================
       {
         category: "Manejo del Tiempo",
         title: "1. Demora al entrar a una videollamada",
@@ -956,9 +1020,7 @@
         ]
       },
 
-      // ==========================================
       // BLOQUE 2: CRITERIO TÉCNICO, OBJECIONES Y VALIDACIÓN (16 a 30)
-      // ==========================================
       {
         category: "Criterio Técnico",
         title: "16. No disponer de un dato específico en ese momento",
@@ -1140,9 +1202,7 @@
         ]
       },
 
-      // ==========================================
       // BLOQUE 3: LÍMITES OPERATIVOS, NEGOCIACIÓN Y TOMA DE DECISIONES (31 a 45)
-      // ==========================================
       {
         category: "Límites & Decisión",
         title: "31. Rechazar un pedido fuera de alcance (Scope creep)",
@@ -1207,293 +1267,4 @@
         category: "Límites & Decisión",
         title: "36. Frenar un mensaje fuera de horario laboral",
         weak: "«Perdón que no te respondí anoche, estaba cenando con mi familia...»",
-        prompt: "¿Cómo fijar la frontera de horario con naturalidad ejecutiva?",
-        phraseEn: "I am reviewing this now during operational hours. Here is the status update on the deliverable.",
-        strategy: "Normaliza la respuesta en horario operativo sin rendir cuentas de tu vida privada.",
-        options: [
-          { text: "I am reviewing this now during operational hours. Here is the status update on the deliverable.", correct: true },
-          { text: "Sorry for not replying last night, I was eating dinner with my family and missed it.", correct: false, feedback: "Disculparte por descansar debilita los límites que protegen tu energía profesional." }
-        ]
-      },
-      {
-        category: "Límites & Decisión",
-        title: "37. Rechazar una rebaja de precio exigida por el cliente",
-        weak: "«Disculpe, pero si le bajo el precio me fundo...»",
-        prompt: "¿Cómo vincular el valor monetario al alcance del entregable?",
-        phraseEn: "To match that budget threshold, we can adjust the scope by removing modules B and C. Shall we explore that?",
-        strategy: "El precio no se negocia por caridad: si baja la inversión, baja el alcance con rigor comercial.",
-        options: [
-          { text: "To match that budget threshold, we can adjust the scope by removing modules B and C. Shall we explore that?", correct: true },
-          { text: "Sorry, but I cannot give you a discount because that would be unfair for my team.", correct: false, feedback: "Introducir nociones morales como 'unfair' desplaza la negociación de su eje comercial." }
-        ]
-      },
-      {
-        category: "Límites & Decisión",
-        title: "38. Definir la propiedad de una decisión frente a un colega invasivo",
-        weak: "«Perdón pero me parece que este tema me tocaba decidirlo a mí...»",
-        prompt: "¿Cómo ratificar tu ámbito de responsabilidad con calma directiva?",
-        phraseEn: "I appreciate the input; as the lead on this architecture, I will make the final determination.",
-        strategy: "Agradece la opinión de tu par pero ratifica la potestad final que tu rol confiere.",
-        options: [
-          { text: "I appreciate the input; as the lead on this architecture, I will make the final determination.", correct: true },
-          { text: "Sorry, but this is my job not yours, so stop telling me what to do.", correct: false, feedback: "La confrontación territorial agresiva denota inseguridad de estatus." }
-        ]
-      },
-      {
-        category: "Límites & Decisión",
-        title: "39. Poner fin a una negociación circular sin acuerdos",
-        weak: "«Perdón que insista, pero ya dimos mil vueltas sobre lo mismo...»",
-        prompt: "¿Cómo forzar una definición concreta cuando la charla se estanca?",
-        phraseEn: "We have mapped all considerations. To avoid project paralysis, let's select Option A or Option B now.",
-        strategy: "Identifica la parálisis y obliga a los decisores a votar entre las alternativas reales.",
-        options: [
-          { text: "We have mapped all considerations. To avoid project paralysis, let's select Option A or Option B now.", correct: true },
-          { text: "Sorry to repeat myself, but we are just going in circles and wasting time.", correct: false, feedback: "La queja de 'dar vueltas' no aporta el marco de cierre que desbloquea la reunión." }
-        ]
-      },
-      {
-        category: "Límites & Decisión",
-        title: "40. Delegar una tarea sin disculparte por asignar trabajo",
-        weak: "«Perdón que te moleste con este trabajito, te juro que no es mucho...»",
-        prompt: "¿Cómo empoderar al colaborador al asignarle una responsabilidad?",
-        phraseEn: "I am assigning you the execution of this module based on your technical precision with past deliverables.",
-        strategy: "Asigna la tarea vinculándola a la excelencia demostrada del colaborador en vez de disculparte.",
-        options: [
-          { text: "I am assigning you the execution of this module based on your technical precision with past deliverables.", correct: true },
-          { text: "Sorry to burden you with extra work, I really hate having to ask you this.", correct: false, feedback: "Pedir perdón por delegar mina tu autoridad directiva frente al equipo." }
-        ]
-      },
-      {
-        category: "Límites & Decisión",
-        title: "41. Rechazar una reunión innecesaria que puede ser un correo",
-        weak: "«Perdón que no acepte la llamada, pero estoy con mucho lío...»",
-        prompt: "¿Cómo proteger tu tiempo canalizando la consulta de forma asincrónica?",
-        phraseEn: "To optimize team bandwidth, please share the specific questions via email so I can respond asynchronously today.",
-        strategy: "Protege el ancho de banda del equipo proponiendo una resolución asincrónica eficiente.",
-        options: [
-          { text: "To optimize team bandwidth, please share the specific questions via email so I can respond asynchronously today.", correct: true },
-          { text: "Sorry, I can't meet because I have too many meetings already.", correct: false, feedback: "Quejarse de tener muchas reuniones suena a desborde en lugar de disciplina operativa." }
-        ]
-      },
-      {
-        category: "Límites & Decisión",
-        title: "42. Frenar un feedback informal que no corresponde en ese momento",
-        weak: "«Perdón, no me digas esto acá adelante de todos, me pone mal...»",
-        prompt: "¿Cómo trasladar una conversación delicada a un ámbito 1 a 1?",
-        phraseEn: "Let's align on this operational feedback during our dedicated 1-on-1 session this afternoon.",
-        strategy: "Protege el encuadre profesional y traslada el intercambio a un espacio privado sin reactividad.",
-        options: [
-          { text: "Let's align on this operational feedback during our dedicated 1-on-1 session this afternoon.", correct: true },
-          { text: "Sorry, could you not criticize me in public? It's very uncomfortable.", correct: false, feedback: "Demuestra fragilidad emocional en público en lugar de gestionar el marco formal del feedback." }
-        ]
-      },
-      {
-        category: "Límites & Decisión",
-        title: "43. Ratificar una fecha límite estricta que intentan mover",
-        weak: "«Disculpá que no te dé más días, no te enojes conmigo...»",
-        prompt: "¿Cómo sostener el plazo vinculándolo a compromisos aguas abajo?",
-        phraseEn: "The Friday deadline remains firm to uphold our downstream commitments with the testing team.",
-        strategy: "Despersonaliza la fecha límite conectándola a la cadena de valor y entregables de terceros.",
-        options: [
-          { text: "The Friday deadline remains firm to uphold our downstream commitments with the testing team.", correct: true },
-          { text: "Sorry, I would give you more time but my boss won't let me.", correct: false, feedback: "Trasladar la culpa a tu superior desmantela tu propia autoridad como líder." }
-        ]
-      },
-      {
-        category: "Límites & Decisión",
-        title: "44. Decir que 'no' a una invitación social de la empresa sin inventar excusas",
-        weak: "«Mil disculpas, qué lástima, justo me surgió un tema personal...»",
-        prompt: "¿Cómo declinar un evento social con elegancia y sin dar explicaciones ficticias?",
-        phraseEn: "Thank you for the invitation. I will not be able to attend this evening, but I look forward to connecting tomorrow.",
-        strategy: "Agradece con calidez pero declina con sobriedad y sin justificaciones personales innecesarias.",
-        options: [
-          { text: "Thank you for the invitation. I will not be able to attend this evening, but I look forward to connecting tomorrow.", correct: true },
-          { text: "I'm so sorry, I feel awful about missing it, I had a family thing come up at the last minute.", correct: false, feedback: "Inventar justificaciones domésticas denota necesidad de aprobación en lugar de autonomía." }
-        ]
-      },
-      {
-        category: "Límites & Decisión",
-        title: "45. Asumir el veto técnico final de un proyecto riesgoso",
-        weak: "«Perdón a todos los que trabajaron, pero me parece que no podemos salir en vivo...»",
-        prompt: "¿Cómo ejercer el veto directivo con máxima solvencia ejecutiva?",
-        phraseEn: "Based on our quality audit, I officially withhold release approval until security criteria are satisfied.",
-        strategy: "Ejerce la máxima responsabilidad técnica: el veto formal sustentado en la auditoría de calidad.",
-        options: [
-          { text: "Based on our quality audit, I officially withhold release approval until security criteria are satisfied.", correct: true },
-          { text: "Sorry to disappoint everyone after all your hard work, but we probably shouldn't launch.", correct: false, feedback: "Disculparse por proteger a la empresa de una falla catastrófica es una contradicción de liderazgo." }
-        ]
-      }
-    ];
-
-    let currentGymFilteredList = GYM_EXERCISES;
-
-    function renderGym(filter = "all") {
-      const container = document.getElementById("gymContainer");
-      container.innerHTML = "";
-      
-      currentGymFilteredList = filter === "all" ? GYM_EXERCISES : GYM_EXERCISES.filter(e => e.category === filter);
-
-      currentGymFilteredList.forEach((ex, idx) => {
-        const card = document.createElement("div");
-        card.className = "exercise-card";
-        card.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span class="exercise-tag">${ex.category}</span>
-          </div>
-          <div class="exercise-situation">${ex.title}</div>
-          <div class="habit-comparison">
-            <div class="habit-weak"><strong>⚠️ Hábito sumiso habitual:</strong> ${ex.weak}</div>
-            <div class="habit-prompt"><strong>🎯 Desafío de postura:</strong> ${ex.prompt}</div>
-          </div>
-          <div class="options-grid">
-            ${ex.options.map((opt, oIdx) => `
-              <button class="option-btn" onclick="checkAnswer(${idx}, ${oIdx}, this)">${opt.text}</button>
-            `).join("")}
-          </div>
-          <div id="feedback-${idx}" class="feedback-box"></div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function checkAnswer(exIdx, optIdx, btn) {
-      const ex = currentGymFilteredList[exIdx];
-      const opt = ex.options[optIdx];
-      const feedback = document.getElementById(`feedback-${exIdx}`);
-      const parent = btn.parentElement;
-
-      parent.querySelectorAll(".option-btn").forEach(b => {
-        b.classList.remove("correct", "wrong");
-        b.disabled = true;
-      });
-
-      if (opt.correct) {
-        btn.classList.add("correct");
-        feedback.style.display = "block";
-        feedback.style.background = "rgba(16, 185, 129, 0.1)";
-        feedback.style.border = "1px solid var(--accent-emerald)";
-        feedback.style.color = "var(--text-main)";
-        feedback.innerHTML = `
-          <div><strong>✓ Postura Impecable:</strong> ${ex.strategy}</div>
-          <div class="solution-quote">"${ex.phraseEn}"</div>
-          <div class="frame-actions">
-            <button class="action-btn" onclick="copyGymItem(${exIdx})">📋 Copiar Fórmula</button>
-            <button class="action-btn" onclick="speakGymItem(${exIdx})">🔊 Escuchar Pronunciación</button>
-            <button class="action-btn" onclick="saveGymItem(${exIdx})">💾 Guardar en Bóveda</button>
-          </div>
-        `;
-      } else {
-        btn.classList.add("wrong");
-        feedback.style.display = "block";
-        feedback.style.background = "rgba(239, 68, 68, 0.1)";
-        feedback.style.border = "1px solid var(--accent-ruby)";
-        feedback.style.color = "var(--text-main)";
-        feedback.innerHTML = `<strong>✗ Fuga de Autoridad:</strong> ${opt.feedback}`;
-      }
-    }
-
-    // ACCIONES DIRECTAS POR ÍNDICE (Inmunes a comillas y apóstrofes)
-    function copyGymItem(idx) {
-      const ex = currentGymFilteredList[idx];
-      if (ex && ex.phraseEn) {
-        copyDirectText(ex.phraseEn);
-      }
-    }
-
-    function speakGymItem(idx) {
-      const ex = currentGymFilteredList[idx];
-      if (ex && ex.phraseEn) {
-        speakDirectText(ex.phraseEn);
-      }
-    }
-
-    function saveGymItem(idx) {
-      const ex = currentGymFilteredList[idx];
-      if (ex && ex.phraseEn) {
-        let vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
-        vault.push({ 
-          text: ex.phraseEn, 
-          category: ex.category, 
-          date: new Date().toLocaleDateString() 
-        });
-        localStorage.setItem("pitchflow_vault", JSON.stringify(vault));
-        renderVault();
-        alert("Fórmula guardada en tu Bóveda de Recursos.");
-      }
-    }
-
-    function filterGym(cat, chip) {
-      document.querySelectorAll("#gimnasio .filter-chip").forEach(c => c.classList.remove("active"));
-      chip.classList.add("active");
-      renderGym(cat);
-    }
-
-    // 5. BOVEDA
-    let currentVaultFilteredList = [];
-
-    function renderVault(filter = "all") {
-      const container = document.getElementById("vaultContainer");
-      const vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
-      container.innerHTML = "";
-
-      if (vault.length === 0) {
-        container.innerHTML = `<p style="color:var(--text-dim); text-align:center; padding:2rem;">Aún no guardaste fórmulas calibradas en tu Bóveda. Entrená en el Gimnasio de Poder o usá Authority Frame para guardar tus favoritas.</p>`;
-        return;
-      }
-
-      currentVaultFilteredList = filter === "all" ? vault : vault.filter(v => v.category === filter);
-
-      currentVaultFilteredList.forEach((item, vIdx) => {
-        const card = document.createElement("div");
-        card.className = "card";
-        card.style.marginBottom = "0.75rem";
-        card.innerHTML = `
-          <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; align-items:center;">
-            <span class="exercise-tag">${item.category}</span>
-            <span style="font-size:0.75rem; color:var(--text-dim);">${item.date}</span>
-          </div>
-          <p style="font-size:1rem; line-height:1.5; color:#fff; margin-bottom:0.75rem;">"${item.text}"</p>
-          <div class="frame-actions">
-            <button class="action-btn" onclick="copyVaultItem(${vIdx})">📋 Copiar</button>
-            <button class="action-btn" onclick="speakVaultItem(${vIdx})">🔊 Escuchar</button>
-            <button class="action-btn" style="color:var(--accent-ruby);" onclick="deleteVaultItem(${vIdx})">🗑️ Eliminar</button>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function copyVaultItem(idx) {
-      const item = currentVaultFilteredList[idx];
-      if (item && item.text) copyDirectText(item.text);
-    }
-
-    function speakVaultItem(idx) {
-      const item = currentVaultFilteredList[idx];
-      if (item && item.text) speakDirectText(item.text);
-    }
-
-    function deleteVaultItem(idx) {
-      const itemToDelete = currentVaultFilteredList[idx];
-      let vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
-      vault = vault.filter(v => !(v.text === itemToDelete.text && v.date === itemToDelete.date));
-      localStorage.setItem("pitchflow_vault", JSON.stringify(vault));
-      renderVault();
-    }
-
-    function filterVault(cat, chip) {
-      document.querySelectorAll("#boveda .filter-chip").forEach(c => c.classList.remove("active"));
-      chip.classList.add("active");
-      renderVault(cat);
-    }
-
-    // INICIALIZACIÓN
-    window.onload = () => {
-      checkAuth();
-      loadPresetExample();
-      renderGym();
-      renderVault();
-    };
-  </script>
-</body>
-</html>
+        prompt: "¿Cómo fijar la frontera de
