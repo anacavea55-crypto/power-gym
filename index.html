@@ -23,11 +23,7 @@
       --font-serif: 'Playfair Display', serif;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       background-color: var(--bg-dark);
@@ -114,10 +110,7 @@
       border-radius: 20px;
     }
 
-    .user-pill span {
-      color: var(--accent-gold);
-      font-weight: 600;
-    }
+    .user-pill span { color: var(--accent-gold); font-weight: 600; }
 
     .logout-btn {
       background: none;
@@ -136,15 +129,10 @@
       padding: 2.5rem 1.5rem;
     }
 
-    .section-content {
-      display: none;
-    }
+    .section-content { display: none; }
+    .section-content.active { display: block; }
 
-    .section-content.active {
-      display: block;
-    }
-
-    /* MODAL AUTENTICACION */
+    /* MODAL DE ACCESO PRIVADO */
     .auth-overlay {
       position: fixed;
       inset: 0;
@@ -195,9 +183,7 @@
       transition: border 0.2s;
     }
 
-    .auth-input:focus {
-      border-color: var(--accent-gold);
-    }
+    .auth-input:focus { border-color: var(--accent-gold); }
 
     .auth-btn {
       width: 100%;
@@ -212,9 +198,7 @@
       transition: opacity 0.2s;
     }
 
-    .auth-btn:hover {
-      opacity: 0.92;
-    }
+    .auth-btn:hover { opacity: 0.92; }
 
     .auth-error {
       color: var(--accent-ruby);
@@ -223,7 +207,7 @@
       display: none;
     }
 
-    /* TITULOS & TARJETAS */
+    /* COMPONENTES GENERALES */
     .hero-title {
       font-family: var(--font-serif);
       font-size: 2.2rem;
@@ -246,7 +230,7 @@
       margin-bottom: 1.5rem;
     }
 
-    /* BARRA DE PERSONALIZACIÓN DE ROL Y NIVEL */
+    /* CONFIGURACION DE ROL & NIVEL */
     .profile-bar {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -259,12 +243,9 @@
     }
 
     @media (max-width: 640px) {
-      .profile-bar {
-        grid-template-columns: 1fr;
-      }
+      .profile-bar { grid-template-columns: 1fr; }
     }
 
-    /* FORMULARIOS & SELECTORES */
     .input-label {
       display: block;
       font-size: 0.8rem;
@@ -283,9 +264,7 @@
     }
 
     @media (max-width: 860px) {
-      .grid-editor {
-        grid-template-columns: 1fr;
-      }
+      .grid-editor { grid-template-columns: 1fr; }
     }
 
     textarea {
@@ -302,9 +281,7 @@
       outline: none;
     }
 
-    textarea:focus {
-      border-color: var(--accent-gold);
-    }
+    textarea:focus { border-color: var(--accent-gold); }
 
     .select-dropdown {
       width: 100%;
@@ -317,9 +294,7 @@
       outline: none;
     }
 
-    .select-dropdown:focus {
-      border-color: var(--accent-gold);
-    }
+    .select-dropdown:focus { border-color: var(--accent-gold); }
 
     .calibrate-btn {
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
@@ -336,12 +311,9 @@
       margin-top: 1rem;
     }
 
-    .calibrate-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    .calibrate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* RESULTADOS AUTHORITY FRAME */
+    /* CONTENEDORES DE RESULTADO */
     .frame-results {
       display: flex;
       flex-direction: column;
@@ -430,10 +402,7 @@
       transition: all 0.2s;
     }
 
-    .action-btn:hover {
-      color: #fff;
-      border-color: var(--accent-gold);
-    }
+    .action-btn:hover { color: #fff; border-color: var(--accent-gold); }
 
     .lesson-box {
       background: rgba(197, 160, 89, 0.05);
@@ -454,7 +423,7 @@
       margin-bottom: 0.25rem;
     }
 
-    /* GIMNASIO DE PODER & BOVEDA */
+    /* GIMNASIO & BOVEDA */
     .filter-bar {
       display: flex;
       gap: 0.5rem;
@@ -542,21 +511,9 @@
       transition: all 0.2s;
     }
 
-    .option-btn:hover {
-      border-color: var(--text-muted);
-    }
-
-    .option-btn.correct {
-      background: rgba(16, 185, 129, 0.15);
-      border-color: var(--accent-emerald);
-      color: #fff;
-    }
-
-    .option-btn.wrong {
-      background: rgba(239, 68, 68, 0.15);
-      border-color: var(--accent-ruby);
-      color: #fff;
-    }
+    .option-btn:hover { border-color: var(--text-muted); }
+    .option-btn.correct { background: rgba(16, 185, 129, 0.15); border-color: var(--accent-emerald); color: #fff; }
+    .option-btn.wrong { background: rgba(239, 68, 68, 0.15); border-color: var(--accent-ruby); color: #fff; }
 
     .feedback-box {
       margin-top: 1rem;
@@ -618,7 +575,7 @@
       
       <div class="card">
         
-        <!-- PERSONALIZACION DE CONTEXTO: ROL & NIVEL -->
+        <!-- PERSONALIZACION DE ROL & NIVEL -->
         <div class="profile-bar">
           <div>
             <label class="input-label">Tu Rol / Especialidad</label>
@@ -699,7 +656,7 @@
     <!-- 2. GIMNASIO DE PODER -->
     <section id="gimnasio" class="section-content">
       <h1 class="hero-title">Gimnasio de Poder</h1>
-      <p class="hero-subtitle">Entrená los 45 escenarios críticos para erradicar la subordinación y responder con jerarquía ejecutiva. Cada ejercicio te permite copiar la fórmula y escuchar la pronunciación.</p>
+      <p class="hero-subtitle">Entrená los 45 escenarios críticos identificando trampas sutiles de oficina (vacilación, pedidos de permiso o rodeos). Cada ejercicio incluye 3 opciones desafiantes sin obviedades.</p>
       
       <div class="filter-bar">
         <button class="filter-chip active" onclick="filterGym('all', this)">Todos (45)</button>
@@ -865,7 +822,7 @@
       }
     }
 
-    // UTILIDADES: COPIAR Y SÍNTESIS DE AUDIO
+    // UTILIDADES: COPIAR Y AUDIO
     function copyDirectText(rawText) {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(rawText).then(() => {
@@ -935,7 +892,7 @@
       alert("Guardado en tu Bóveda de Recursos.");
     }
 
-    // 4. GIMNASIO DE PODER: LOS 45 ESCENARIOS TÁCTICOS
+    // 4. GIMNASIO DE PODER: 45 ESCENARIOS TÁCTICOS (3 OPCIONES DESAFIANTES SIN 'SORRY')
     const GYM_EXERCISES = [
       // BLOQUE 1: MANEJO DEL TIEMPO, TURNOS Y RITMO (1 a 15)
       {
@@ -944,10 +901,11 @@
         weak: "«Perdón a todos por la demora, se me complicó la reunión anterior...»",
         prompt: "¿Cuál es la fórmula para no trasladar el desorden de tu agenda a la mesa?",
         phraseEn: "Thank you for waiting. Let's dive straight into the first agenda item.",
-        strategy: "No traslada estrés ni culpa a los asistentes; enfoca al equipo en la acción inmediata.",
+        strategy: "Agradece la espera sin trasladar desorden personal ni culpar a reuniones previas; pone al equipo a trabajar de inmediato.",
         options: [
           { text: "Thank you for waiting. Let's dive straight into the first agenda item.", correct: true },
-          { text: "Sorry for being late everyone, my previous call was a complete mess.", correct: false, feedback: "Justificarte con tu agenda caótica reduce tu percepción de control." }
+          { text: "My previous commitment ran over schedule, so I appreciate everyone's extreme patience with my chaotic morning.", correct: false, feedback: "Sobre-explicar tu mañana caótica traslada estrés y proyecta falta de control sobre tu calendario." },
+          { text: "I hope I didn't hold anyone up too much; please let me know where you are so I can try to catch up.", correct: false, feedback: "Pedir validación pasiva y esperar a que te pongan al día te ubica en una posición reactiva." }
         ]
       },
       {
@@ -959,7 +917,8 @@
         strategy: "Modela liderazgo de proyecto cuidando el recurso más valioso: el tiempo de todos.",
         options: [
           { text: "To protect the team's time, I propose we steer back to the core objective of this session.", correct: true },
-          { text: "Sorry to interrupt, but I think we are wasting time talking about other things.", correct: false, feedback: "Suena agresivo o quejoso en vez de una propuesta directiva orientada al objetivo." }
+          { text: "I feel like maybe this discussion is drifting a bit, if nobody minds me mentioning it.", correct: false, feedback: "Decir 'if nobody minds' pide permiso para cumplir con un rol de facilitación necesario." },
+          { text: "We are wasting valuable bandwidth on secondary topics that aren't on the official slide deck.", correct: false, feedback: "Un tono acusatorio y rígido genera resistencia defensiva en lugar de orientar al equipo." }
         ]
       },
       {
@@ -971,7 +930,8 @@
         strategy: "Quita la culpa personal y atribuye la repetición a la precisión técnica necesaria.",
         options: [
           { text: "The audio broke up on that last metric. Could you restate it to ensure the data is aligned?", correct: true },
-          { text: "Sorry, my bad, I didn't pay attention. Can you repeat please?", correct: false, feedback: "Asumir culpa por falta de atención dinamita tu perfil profesional frente a la sala." }
+          { text: "I might have missed that number on my end; could you go over it one more time if you have a second?", correct: false, feedback: "Asumir la falla como una distracción individual ('I might have missed') disminuye tu presencia en sala." },
+          { text: "Your connection seems quite unstable right now, so please repeat the entire slide from the start.", correct: false, feedback: "Responsabilizar bruscamente la conexión ajena sin calibrar el alcance suena descortés e inflexible." }
         ]
       },
       {
@@ -980,10 +940,11 @@
         weak: "«Perdón que tenga que cortar, pero me tengo que ir a otra llamada...»",
         prompt: "¿Cómo respetar el marco temporal pactado con autoridad ejecutiva?",
         phraseEn: "We have reached our scheduled time. Let's confirm action items and lock in next steps.",
-        strategy: "Respeta el marco temporal pactado sin justificar compromisos posteriores.",
+        strategy: "Respeta el marco temporal pactado sin justificar compromisos posteriores ni pedir indulgencia.",
         options: [
           { text: "We have reached our scheduled time. Let's confirm action items and lock in next steps.", correct: true },
-          { text: "Sorry guys, I have to jump to another call, so I must hang up now.", correct: false, feedback: "Pide disculpas por cumplir el horario previamente estipulado." }
+          { text: "I hate to be the one to cut this off, but I have another back-to-back meeting starting right now.", correct: false, feedback: "Decir 'I hate to be the one' introduce culpa injustificada por respetar la hora acordada." },
+          { text: "Is it okay if we wrap up now, or does anyone feel we left something critical unresolved?", correct: false, feedback: "Abrir la puerta a preguntas abiertas al minuto exacto de cierre desarma el control de la sesión." }
         ]
       },
       {
@@ -992,10 +953,11 @@
         weak: "«Mil disculpas con todos, me da vergüenza pero me tengo que desconectar...»",
         prompt: "¿Cómo comunicar tu salida anticipada con orden y sin pedir indulgencia?",
         phraseEn: "I have a hard stop at 11:00 for a prior commitment. I will leave my notes in the chat and review the minutes.",
-        strategy: "Comunica orden profesional y anticipación sin pedir indulgencia.",
+        strategy: "Comunica orden profesional y anticipación sin pedir indulgencia ni exponer incomodidad.",
         options: [
           { text: "I have a hard stop at 11:00 for a prior commitment. I will leave my notes in the chat and review the minutes.", correct: true },
-          { text: "A thousand apologies, I feel so bad but I have to leave early.", correct: false, feedback: "Decir 'I feel so bad' introduce una carga de culpa infantil en el ámbito corporativo." }
+          { text: "I must quietly excuse myself from the call due to overlapping calendar conflicts that I couldn't move.", correct: false, feedback: "Explicar que tuviste conflictos que no pudiste mover transmite impotencia frente a tu agenda." },
+          { text: "Hopefully my early departure won't disrupt the flow; please someone ping me if you need anything urgent.", correct: false, feedback: "Decir 'hopefully won't disrupt' proyecta inseguridad y genera la sospecha de falta de compromiso." }
         ]
       },
       {
@@ -1007,7 +969,8 @@
         strategy: "Frena la interrupción sin agresividad, completando la tesis antes de ceder el espacio.",
         options: [
           { text: "Allow me to conclude this point before opening the floor for feedback.", correct: true },
-          { text: "Sorry, you can speak first, my point was not that important.", correct: false, feedback: "Decir que tu punto no era importante invalida tu posición en la mesa." }
+          { text: "Go ahead with your thought first; my point can easily wait until you are finished.", correct: false, feedback: "Ceder el turno diciendo que tu punto puede esperar devalúa la importancia de tu intervención." },
+          { text: "Please let me speak without interrupting, as I wasn't done talking yet.", correct: false, feedback: "Una respuesta confrontativa y quejosa genera tensión personal en vez de dominio ejecutivo." }
         ]
       },
       {
@@ -1019,7 +982,8 @@
         strategy: "Toma el control operativo de la sesión estableciendo prioridades realistas de inmediato.",
         options: [
           { text: "Given our 45-minute window, let's prioritize topics 1 and 3 to ensure actionable decisions today.", correct: true },
-          { text: "Sorry, but this agenda is unrealistic and we will never finish in time.", correct: false, feedback: "La queja pasiva desordena la dinámica en lugar de proponer una reestructuración ejecutiva." }
+          { text: "This agenda looks quite ambitious, so perhaps we could just see how far we get and improvise the rest.", correct: false, feedback: "Proponer improvisar demuestra falta de liderazgo y resignación metodológica." },
+          { text: "Whoever designed this itinerary put in too many points for us to cover realistically.", correct: false, feedback: "Buscar culpables al inicio de la reunión desgasta el clima de trabajo." }
         ]
       },
       {
@@ -1031,7 +995,8 @@
         strategy: "Enfoca la aceleración en el beneficio colectivo: llegar a los acuerdos y decisiones.",
         options: [
           { text: "To ensure we reserve time for decision-making, let's jump straight to the strategic conclusions.", correct: true },
-          { text: "Sorry to rush you, but you are taking way too long on these details.", correct: false, feedback: "Atacar el ritmo del colega genera fricción personal innecesaria." }
+          { text: "If possible, try to speed up through the technical slides because the clock is ticking fast.", correct: false, feedback: "Pedir 'speed up' pone nervioso al presentador y suena a reto informal sin marco de valor." },
+          { text: "I think we already grasp the context, so maybe we don't need to dwell on every single slide.", correct: false, feedback: "Descartar el trabajo del expositor ('we don't need to dwell') roza la falta de respeto profesional." }
         ]
       },
       {
@@ -1043,7 +1008,8 @@
         strategy: "Presenta el receso como una optimización del foco técnico del equipo y no como debilidad física.",
         options: [
           { text: "Let's take a 5-minute technical recess to consolidate notes and resume with full focus.", correct: true },
-          { text: "Sorry everyone, I'm exhausted and need a quick break if possible.", correct: false, feedback: "Expone vulnerabilidad personal en vez de enmarcar la pausa en la calidad del entregable." }
+          { text: "Would the team mind a brief comfort pause? My energy levels are dropping slightly.", correct: false, feedback: "Hablar de tus niveles de energía expone vulnerabilidad personal innecesaria en la toma de decisiones." },
+          { text: "We have been talking for two hours straight, which is completely counterproductive for anyone.", correct: false, feedback: "La queja generalizada sobre la duración de la reunión desautoriza al facilitador sin ordenar la pausa." }
         ]
       },
       {
@@ -1055,7 +1021,8 @@
         strategy: "Usa 'table' como decisión de gestión consciente para dar el análisis que el tema merece.",
         options: [
           { text: "We will table item 4 for Thursday's standup to dedicate adequate analysis to it.", correct: true },
-          { text: "Sorry, we failed to cover this because time ran out so fast.", correct: false, feedback: "Presentar el cierre como un fracaso transmite falta de previsión y control." }
+          { text: "Unfortunately, time ran out on us, so we have no choice but to push this topic back.", correct: false, feedback: "Decir 'we have no choice' suena a descontrol y resignación ante el reloj." },
+          { text: "Since item 4 is relatively minor, we can probably just skip it altogether if everyone agrees.", correct: false, feedback: "Minimizar un tema como 'minor' para esquivarlo puede pasar por alto dependencias críticas." }
         ]
       },
       {
@@ -1067,7 +1034,8 @@
         strategy: "Posiciona tu solicitud en el valor que vas a aportar: venir preparado con datos concretos.",
         options: [
           { text: "To come fully prepared with the relevant data, could you share the target outcome for this session?", correct: true },
-          { text: "Sorry to ask, but what is this meeting even about? I have no context.", correct: false, feedback: "Suena reactivo y desinformado en vez de profesionalmente preventivo." }
+          { text: "I'm hesitant to accept calendar invites without knowing what is expected of me in advance.", correct: false, feedback: "Mostrarte dubitativo ('I'm hesitant') suena a evasión o resistencia antes que a disciplina." },
+          { text: "Please send an agenda before booking my time, as my calendar is extremely restricted.", correct: false, feedback: "Exhibir tu calendario como restrictivo de forma tajante puede percibirse como arrogancia burocrática." }
         ]
       },
       {
@@ -1079,7 +1047,8 @@
         strategy: "Establece la regla del espacio con tono neutral y orientado a la captura técnica.",
         options: [
           { text: "Let's maintain a single conversation in the room so we capture all technical inputs.", correct: true },
-          { text: "Sorry, guys, could you please stop whispering? It's really distracting.", correct: false, feedback: "Pedir permiso para solicitar silencio denota falta de jerarquía sobre la sala." }
+          { text: "Could we please hold side discussions for later? It makes it difficult to follow the main thread.", correct: false, feedback: "Hacer una pregunta rogativa ('Could we please hold') demuestra falta de jerarquía sobre el espacio." },
+          { text: "The background murmuring in the room is becoming very disruptive to this presentation.", correct: false, feedback: "Señalar la molestia sin proponer la regla directiva suena a queja pasivo-agresiva." }
         ]
       },
       {
@@ -1091,7 +1060,8 @@
         strategy: "Aplica 'due to + sustantivo' con neutralidad y propone inmediatamente la ventana de solución.",
         options: [
           { text: "Due to an unforeseen priority shift, I will reschedule our check-in. Does 3:00 PM tomorrow align with your calendar?", correct: true },
-          { text: "Sorry for the inconvenience, my day became crazy and I can't make it.", correct: false, feedback: "Describir tu día como 'crazy' proyecta desborde y falta de estructura." }
+          { text: "Something critical just landed on my desk, so I must ask for a favor to move our call.", correct: false, feedback: "Plantear una reprogramación como un 'favor' personal te debilita en la relación profesional." },
+          { text: "I have to cancel our sync today because my schedule blew up unexpectedly.", correct: false, feedback: "Decir que tu agenda 'blew up' comunica falta de previsión y caos operativo." }
         ]
       },
       {
@@ -1103,7 +1073,8 @@
         strategy: "Honra el tiempo colectivo y ofrece un canal formal de resolución asincrónica.",
         options: [
           { text: "To honor our end time, please drop any remaining technical queries in the channel; I will address each by end of day.", correct: true },
-          { text: "Sorry everyone, we have zero minutes left for questions so we have to stop.", correct: false, feedback: "Cierra de forma abrupta y reactiva sin dejar un camino de resolución." }
+          { text: "We have run out of time for Q&A, so unfortunately those with remaining questions will have to wait.", correct: false, feedback: "Un corte seco y negativo sin canal alternativo genera sensación de abandono en la audiencia." },
+          { text: "I wish we had more time to answer everyone, but the meeting room schedule is forcing us out.", correct: false, feedback: "Victimizarse culpando a la sala reduce tu imagen de control y orden temporal." }
         ]
       },
       {
@@ -1115,7 +1086,8 @@
         strategy: "Transforma la supuesta tardanza en una garantía de análisis exhaustivo y responsable.",
         options: [
           { text: "To provide a thorough technical review, I will examine the documentation and deliver my assessment by tomorrow morning.", correct: true },
-          { text: "Sorry, I haven't had time to look at it, I'm so behind on emails.", correct: false, feedback: "Admitir estar 'behind on emails' disminuye tu percepción de confiabilidad operativa." }
+          { text: "I haven't had the bandwidth to inspect this properly yet, but at first glance it might look acceptable.", correct: false, feedback: "Emitir una opinión apresurada ('at first glance') compromete tu criterio técnico sin respaldo." },
+          { text: "This was shared with very short notice, so I cannot be expected to have an opinion right now.", correct: false, feedback: "Una postura defensiva sobre los tiempos de envío genera tensión en vez de fijar un plazo formal." }
         ]
       },
 
@@ -1129,7 +1101,8 @@
         strategy: "Reemplaza la vergüenza por rigor metodológico y compromiso formal de entrega.",
         options: [
           { text: "That specific metric is not consolidated here. I will verify it and follow up in writing today.", correct: true },
-          { text: "I'm so sorry, I don't know how I missed that number, what a disaster.", correct: false, feedback: "Autodescalificarte ante el equipo dinamita tu autoridad técnica." }
+          { text: "Off the top of my head, I believe it's around fifteen percent, but don't hold me to that figure.", correct: false, feedback: "Adivinar con advertencias ('don't hold me to that') erosiona la confianza en tu precisión técnica." },
+          { text: "I should know that number by heart, so I will have to look into why it wasn't added to my summary.", correct: false, feedback: "Inculparte por no saberlo de memoria expone una autoexigencia insegura ante el equipo." }
         ]
       },
       {
@@ -1141,7 +1114,8 @@
         strategy: "No duda de su propio análisis; aporta el dato objetivo sin atacar personalmente al presentador.",
         options: [
           { text: "An observation on that metric: cross-referencing our system logs, the verified figure is this.", correct: true },
-          { text: "Sorry if I'm wrong, but I think your slide has a big mistake.", correct: false, feedback: "Abrir con 'Sorry if I'm wrong' le resta peso inmediato a tu corrección técnica." }
+          { text: "I might be mistaken here, but that calculation seems somewhat inconsistent with previous reports.", correct: false, feedback: "Comenzar con 'I might be mistaken' abre la puerta a que desestimen tu corrección técnica." },
+          { text: "The data displayed on slide four is incorrect and needs to be completely re-audited immediately.", correct: false, feedback: "Una corrección dogmática y tajante en público humilla al expositor en lugar de sumar valor." }
         ]
       },
       {
@@ -1153,7 +1127,8 @@
         strategy: "Pasa de la queja a un diagnóstico objetivo acompañado de una alternativa viable.",
         options: [
           { text: "With our current timeline and resources, that scope compromises quality. The viable alternative is this.", correct: true },
-          { text: "Excuse me, but what you are asking for is completely impossible to do.", correct: false, feedback: "Genera choque y rechazo sin brindar una vía técnica de salida." }
+          { text: "We can try our best to accommodate that request, although it will be extremely difficult for us.", correct: false, feedback: "Prometer 'try our best' ante algo inviable garantiza un incumplimiento de calidad futuro." },
+          { text: "That proposal is technically unrealistic and cannot be executed under any circumstances.", correct: false, feedback: "Cerrar la puerta sin plantear una alternativa viable bloquea la negociación comercial." }
         ]
       },
       {
@@ -1165,7 +1140,8 @@
         strategy: "Asume la claridad pedagógica sin denigrar tu propia solvencia profesional.",
         options: [
           { text: "Let's look at this workflow from another angle to ensure the operational impact is fully clear.", correct: true },
-          { text: "Sorry, I explained that terribly, I am so bad at explaining things in English.", correct: false, feedback: "Atacar tu capacidad de comunicación frente al cliente te posiciona en inferioridad." }
+          { text: "Perhaps my phrasing was a bit confusing; let me try to dumb it down slightly.", correct: false, feedback: "Decir 'dumb it down' puede ofender al interlocutor y cuestiona tu capacidad de síntesis." },
+          { text: "This is quite an advanced technical concept, so it often takes people multiple attempts to grasp.", correct: false, feedback: "Un tono paternalista o condescendiente daña la relación de confianza con clientes y pares." }
         ]
       },
       {
@@ -1177,7 +1153,8 @@
         strategy: "Establece que el seguimiento es un deber operativo, no una molestia interpersonal.",
         options: [
           { text: "To keep our final delivery on schedule, I need that input. What time can I expect it today?", correct: true },
-          { text: "Sorry to bother you again and be annoying, but do you have my file?", correct: false, feedback: "Definirte como 'molestia' devalúa la importancia estratégica de tu labor." }
+          { text: "Just checking in whenever you get a free moment; no rush, but it's starting to hold me up.", correct: false, feedback: "Decir 'no rush' cuando la tarea sí te está frenando envía mensajes contradictorios." },
+          { text: "The entire sprint is currently blocked because your department hasn't handed over the file.", correct: false, feedback: "Acusar a otro departamento de 'bloquear todo' desata una guerra de culpas defensivas." }
         ]
       },
       {
@@ -1189,7 +1166,8 @@
         strategy: "Utiliza 'due to' rigurosamente como adjetivo vinculado al sustantivo ('is due to shifts') con causa corporativa neutra.",
         options: [
           { text: "The adjustment in delivery dates is due to unexpected lead-time shifts from our tier-1 vendors.", correct: true },
-          { text: "Sorry we couldn't deliver because of the vendor didn't send anything on time.", correct: false, feedback: "Error gramatical común ('because of' seguido de cláusula completa en vez de sustantivo) y tono quejoso." }
+          { text: "Our delay is due to the vendor failing to deliver the components they promised us.", correct: false, feedback: "Aunque la gramática sea aceptable, personalizar la culpa ('vendor failing') resta sobriedad al informe." },
+          { text: "We experienced a setback due to we couldn't get the supplies on time.", correct: false, feedback: "Error gramatical: 'due to' no puede ir seguido de una cláusula con sujeto y verbo ('due to we couldn't')." }
         ]
       },
       {
@@ -1198,10 +1176,11 @@
         weak: "«We changed the server due to we had high traffic yesterday, sorry...»",
         prompt: "¿Cómo usar 'because of' correctamente para conectar la acción con el motivo?",
         phraseEn: "We migrated the infrastructure because of significant latency spikes observed during peak hours.",
-        strategy: "Aplica 'because of' seguido estrictamente de un sintagma nominal ('because of spikes'), sin disculpas.",
+        strategy: "Aplica 'because of' seguido estrictamente de un sintagma nominal ('because of spikes'), sin justificaciones emocionales.",
         options: [
           { text: "We migrated the infrastructure because of significant latency spikes observed during peak hours.", correct: true },
-          { text: "We changed the setup due to we saw problems, sorry for the sudden change.", correct: false, feedback: "Error gramatical ('due to we saw') y debilidad al disculparse por una decisión de seguridad." }
+          { text: "We switched servers because of the previous system was showing heavy performance degradation.", correct: false, feedback: "Error gramatical frecuente: 'because of' no puede llevar una oración completa ('the previous system was...')." },
+          { text: "The infrastructure change was made because of we felt the servers might fail under pressure.", correct: false, feedback: "Error de construcción ('because of we felt') y argumentación basada en sentimientos subjetivos." }
         ]
       },
       {
@@ -1213,7 +1192,8 @@
         strategy: "Exige rigor empírico y protege el capital del proyecto sin autodescalificarte.",
         options: [
           { text: "Before committing resources to this hypothesis, what empirical data validates this assumption?", correct: true },
-          { text: "Sorry if this is a stupid question, but are you sure that actually works?", correct: false, feedback: "Nunca comiences una intervención calificando tu pregunta como 'stupid'." }
+          { text: "I'm not an expert on this exact module, but are we sure this assumption holds up in real environments?", correct: false, feedback: "Empezar diciendo 'I'm not an expert' invita a que descarten tu objeción de inmediato." },
+          { text: "This hypothesis seems completely baseless unless someone can show me proof right now.", correct: false, feedback: "Tildar la idea de 'baseless' genera una postura defensiva que cierra el análisis técnico." }
         ]
       },
       {
@@ -1225,7 +1205,8 @@
         strategy: "Aporta distinción técnica precisa elevando el estándar metodológico de la reunión.",
         options: [
           { text: "While the data indicates a correlation, it does not demonstrate causality. We require secondary testing.", correct: true },
-          { text: "Sorry, but your analysis makes no sense because correlation isn't cause.", correct: false, feedback: "Atacar el sentido común ajeno genera resistencia defensiva en lugar de acuerdos técnicos." }
+          { text: "I could be misreading these metrics, but correlation and causality are not quite the same thing.", correct: false, feedback: "Decir 'I could be misreading' resta peso a una distinción metodológica elemental." },
+          { text: "These charts are misleading because you cannot assume causation without deeper investigation.", correct: false, feedback: "Calificar los gráficos de 'misleading' suena a acusación de mala fe profesional." }
         ]
       },
       {
@@ -1237,7 +1218,8 @@
         strategy: "Enfoca la recomendación en dos conceptos de alto estatus: deuda técnica y mitigación de riesgos.",
         options: [
           { text: "Maintaining legacy systems introduces high technical debt. Migrating mitigates operational vulnerability.", correct: true },
-          { text: "Sorry guys, but this software is totally obsolete and terrible to use.", correct: false, feedback: "Habla desde el disgusto personal en lugar del impacto financiero y operativo." }
+          { text: "Our current tools feel really outdated compared to what other modern companies are using.", correct: false, feedback: "Basar tu recomendación en lo que 'otras empresas hacen' suena a moda y no a análisis de negocio." },
+          { text: "We need to get rid of this platform immediately because everyone complains about its usability.", correct: false, feedback: "Argumentar que 'everyone complains' es una postura débil frente a un análisis de ROI." }
         ]
       },
       {
@@ -1249,7 +1231,8 @@
         strategy: "Enmarca el pedido en los estándares de control de versiones y auditoría de la empresa.",
         options: [
           { text: "To establish clear version control and auditability, please log this requirement in the ticketing system.", correct: true },
-          { text: "Sorry, I don't trust verbal requests, please write me an email.", correct: false, feedback: "Introducir desconfianza personal dinamita los vínculos de trabajo." }
+          { text: "If it's not too much trouble, could you put that in an email so I don't forget the details?", correct: false, feedback: "Decir 'so I don't forget' traslada una imagen de mala memoria en vez de rigor de trazabilidad." },
+          { text: "Company policy forbids me from taking action on verbal instructions without a paper trail.", correct: false, feedback: "Escudarte en la 'política de la empresa' suena a empleado burocrático sin autonomía." }
         ]
       },
       {
@@ -1261,7 +1244,8 @@
         strategy: "Centra la aclaración en el texto y las condiciones objetivas, sin culpar al lector.",
         options: [
           { text: "To ensure accurate interpretation, the report highlights that risk occurs under condition A, not B.", correct: true },
-          { text: "Sorry, you completely misunderstood my conclusions in the email.", correct: false, feedback: "Confrontar directamente la capacidad lectora del otro cierra el diálogo constructivo." }
+          { text: "I may not have made this sufficiently transparent in my summary, but that wasn't my intent.", correct: false, feedback: "Admitir falta de transparencia debilita la solidez de tu propio informe técnico." },
+          { text: "You missed the main point of the analysis; condition B was explicitly ruled out on page two.", correct: false, feedback: "Decir 'you missed the point' genera choque interpersonal y resistencia cognitiva." }
         ]
       },
       {
@@ -1273,7 +1257,8 @@
         strategy: "Sustituye el miedo subjetivo por el concepto técnico de 'puntos ciegos críticos'.",
         options: [
           { text: "Deploying under current constraints introduces critical blind spots. I recommend a 24-hour validation window.", correct: true },
-          { text: "Sorry, I'm scared we are making a huge mistake by rushing this.", correct: false, feedback: "Expresar 'miedo' debilita el liderazgo técnico en momentos de crisis." }
+          { text: "I feel quite uneasy about rushing this deployment; couldn't we wait just a little longer?", correct: false, feedback: "Expresar sentimientos de intranquilidad ('I feel uneasy') no constituye un argumento técnico de peso." },
+          { text: "Moving forward right now is reckless and disregards basic operational common sense.", correct: false, feedback: "Calificar la decisión del equipo de 'reckless' dinamita puentes de colaboración en plena crisis." }
         ]
       },
       {
@@ -1285,7 +1270,8 @@
         strategy: "Establece el protocolo como un blindaje innegociable de la certificación de la empresa.",
         options: [
           { text: "Compliance with this protocol is non-negotiable to protect our operational certification.", correct: true },
-          { text: "Sorry for being the annoying rule follower, but I have to do my job.", correct: false, feedback: "Autodenominarse 'annoying rule follower' resta valor a la función de control de calidad." }
+          { text: "I know everyone dislikes paperwork, but management requires us to follow these guidelines.", correct: false, feedback: "Presentar el control de calidad como 'paperwork que todos odian' devalúa tu disciplina." },
+          { text: "We cannot cut corners here unless leadership signs off on taking the legal liability.", correct: false, feedback: "Amenazar con deslindar responsabilidad legal suena pasivo-agresivo en lugar de normativo." }
         ]
       },
       {
@@ -1297,7 +1283,8 @@
         strategy: "Erradica la autoflagelación: nombra la causa raíz e introduce el plan de acción correctivo de inmediato.",
         options: [
           { text: "I have identified the root cause of the discrepancy. Here is the corrective action plan implemented.", correct: true },
-          { text: "I am so sorry, I feel so terrible about this stupid mistake I made.", correct: false, feedback: "Centrarse en el sentimiento de vergüenza distrae de la resolución técnica que el negocio espera." }
+          { text: "The miscalculation was an unfortunate oversight on my part; I hope this didn't cause major headaches.", correct: false, feedback: "Minimizarlo como 'unfortunate oversight' esperando que no cause dolor de cabeza resta peso resolutivo." },
+          { text: "This error slipped through due to the intense volume of work we handled this quarter.", correct: false, feedback: "Excusarse en la sobrecarga laboral elude la responsabilidad ejecutiva individual." }
         ]
       },
 
@@ -1311,7 +1298,8 @@
         strategy: "Pone el costo y la responsabilidad de la decisión en quien la pide en vez de asumir culpa personal.",
         options: [
           { text: "Adding that deliverable requires adjusting the timeline or deprioritizing another task. Which do we trade off?", correct: true },
-          { text: "Sorry, I would love to help but I have too much work and I can't.", correct: false, feedback: "Suena a queja de sobrecarga personal en vez de un cálculo estratégico de capacidad." }
+          { text: "My team would love to help, but we simply do not have the manpower to take on more right now.", correct: false, feedback: "Hablar de falta de 'manpower' suena a incapacidad estructural en lugar de gestión de prioridades." },
+          { text: "That request is clearly out of scope according to our signed project charter.", correct: false, feedback: "Un rechazo legalista sin ofrecer opciones de intercambio (trade-off) traba la relación." }
         ]
       },
       {
@@ -1323,7 +1311,8 @@
         strategy: "Enmarca el precio como una inversión con neutralidad financiera; el dinero es un indicador de valor.",
         options: [
           { text: "The investment required to deliver this standard of execution is [Amount].", correct: true },
-          { text: "Sorry to bring up pricing, but our fee would be around [Amount] if that works for you.", correct: false, feedback: "Pedir permiso para cobrar o disculparse por tus tarifas deprecia tu servicio." }
+          { text: "Our estimated rate is [Amount], though we might be able to find some flexibility if needed.", correct: false, feedback: "Ofrecer flexibilidad antes de que objeten el precio debilita de inmediato tu postura negociadora." },
+          { text: "We cannot lower our quote because our overhead costs simply do not allow for discounts.", correct: false, feedback: "Justificar tus honorarios en tus costos internos (overhead) no comunica valor al cliente." }
         ]
       },
       {
@@ -1335,7 +1324,8 @@
         strategy: "Capitaliza la última idea del interlocutor y redirige con elegancia a toda la sala hacia el acuerdo.",
         options: [
           { text: "Building on that last point, let's bring the focus to the decision we need to lock in today.", correct: true },
-          { text: "Excuse me for cutting you off, sorry, but I just wanted to say one thing.", correct: false, feedback: "Interrumpir pidiendo perdón evidencia timidez y diluye la fuerza de tu aporte." }
+          { text: "If I may briefly step in here, I'd like to make sure we hear from others as well.", correct: false, feedback: "Pedir permiso para intervenir ('If I may step in') reduce el impacto de tu liderazgo de facilitación." },
+          { text: "We have heard enough background detail, so let's cut to the chase.", correct: false, feedback: "Una frase agresiva como 'we have heard enough' descalifica al colega frente al grupo." }
         ]
       },
       {
@@ -1347,7 +1337,8 @@
         strategy: "Valida la postura ajena con serenidad pero sostiene la decisión basada en fundamentos técnicos sólidos.",
         options: [
           { text: "I understand your perspective; however, I stand by this technical approach based on these two pillars.", correct: true },
-          { text: "Sorry, please don't get mad at me, but I still think the exact same thing.", correct: false, feedback: "Pedir 'que no se enojen' te infantiliza y destruye tu liderazgo profesional." }
+          { text: "I hear what you are saying, but hopefully you won't take it personally if I disagree.", correct: false, feedback: "Pedir que no se lo tomen como algo personal traslada el debate profesional a un plano afectivo." },
+          { text: "Repeating the same argument will not change the fundamental facts of the situation.", correct: false, feedback: "Una respuesta tajante que desestima al otro genera resentimiento en el equipo." }
         ]
       },
       {
@@ -1359,7 +1350,8 @@
         strategy: "Posiciona el tema como un punto crítico de alto impacto antes de pronunciar la primera palabra.",
         options: [
           { text: "This item directly impacts project viability; I require five minutes of full team focus.", correct: true },
-          { text: "Sorry if this is boring guys, I promise I will be very quick.", correct: false, feedback: "Anunciar que tu presentación es aburrida condiciona negativamente la atención del equipo." }
+          { text: "I know everyone is multitasking, but this next slide is actually fairly important.", correct: false, feedback: "Normalizar que la gente esté distraída ('multitasking') disminuye la autoridad de tu presentación." },
+          { text: "Please close all your laptops and listen carefully to these next figures.", correct: false, feedback: "Dar órdenes escolares ('close your laptops') crea rechazo entre profesionales de alto nivel." }
         ]
       },
       {
@@ -1371,7 +1363,8 @@
         strategy: "Normaliza la respuesta en horario operativo sin rendir cuentas de tu vida privada.",
         options: [
           { text: "I am reviewing this now during operational hours. Here is the status update on the deliverable.", correct: true },
-          { text: "Sorry for not replying last night, I was eating dinner with my family and missed it.", correct: false, feedback: "Disculparte por descansar debilita los límites que protegen tu energía profesional." }
+          { text: "I was unavailable when your ping came through last night, but I can look into it today.", correct: false, feedback: "Explicar que no estabas disponible la noche anterior valida implícitamente la expectativa de respuesta 24/7." },
+          { text: "As a reminder, our service level agreement does not cover inquiries sent after 7:00 PM.", correct: false, feedback: "Citar un acuerdo de nivel de servicio (SLA) para un chat interno resulta excesivamente legalista." }
         ]
       },
       {
@@ -1383,7 +1376,8 @@
         strategy: "El precio no se negocia por caridad: si baja la inversión, baja el alcance con rigor comercial.",
         options: [
           { text: "To match that budget threshold, we can adjust the scope by removing modules B and C. Shall we explore that?", correct: true },
-          { text: "Sorry, but I cannot give you a discount because that would be unfair for my team.", correct: false, feedback: "Introducir nociones morales como 'unfair' desplaza la negociación de su eje comercial." }
+          { text: "Our pricing structure is fixed, so unfortunately we are unable to provide any concessions.", correct: false, feedback: "Una negativa plana sin opciones de renegociación de alcance puede quebrar el acuerdo." },
+          { text: "We might be able to shave off five percent if you commit to signing the contract this week.", correct: false, feedback: "Ceder un descuento inmediato a cambio de un cierre apresurado deprecia el valor del servicio." }
         ]
       },
       {
@@ -1395,7 +1389,8 @@
         strategy: "Agradece la opinión de tu par pero ratifica la potestad final que tu rol confiere.",
         options: [
           { text: "I appreciate the input; as the lead on this architecture, I will make the final determination.", correct: true },
-          { text: "Sorry, but this is my job not yours, so stop telling me what to do.", correct: false, feedback: "La confrontación territorial agresiva denota inseguridad de estatus." }
+          { text: "Thanks for the suggestions; I'll definitely take them into consideration alongside other opinions.", correct: false, feedback: "Decir 'take into consideration' sin marcar quién lidera diluye tu autoridad de decisión." },
+          { text: "This decision falls strictly within my domain, so please allow me to manage it without interference.", correct: false, feedback: "Acusar a un colega de 'interferencia' denota inseguridad territorial en lugar de calma directiva." }
         ]
       },
       {
@@ -1407,7 +1402,8 @@
         strategy: "Identifica la parálisis y obliga a los decisores a votar entre las alternativas reales.",
         options: [
           { text: "We have mapped all considerations. To avoid project paralysis, let's select Option A or Option B now.", correct: true },
-          { text: "Sorry to repeat myself, but we are just going in circles and wasting time.", correct: false, feedback: "La queja de 'dar vueltas' no aporta el marco de cierre que desbloquea la reunión." }
+          { text: "Since we cannot seem to reach consensus, perhaps we should reconvene next week to re-evaluate.", correct: false, feedback: "Patear la decisión a otra reunión posterga el problema y fomenta la parálisis corporativa." },
+          { text: "We are simply rehashing the same arguments over and over without making any real progress.", correct: false, feedback: "La queja de 'repetir lo mismo' describe el síntoma pero no entrega el marco decisorio para cerrar." }
         ]
       },
       {
@@ -1416,10 +1412,11 @@
         weak: "«Perdón que te moleste con este trabajito, te juro que no es mucho...»",
         prompt: "¿Cómo empoderar al colaborador al asignarle una responsabilidad?",
         phraseEn: "I am assigning you the execution of this module based on your technical precision with past deliverables.",
-        strategy: "Asigna la tarea vinculándola a la excelencia demostrada del colaborador en vez de disculparte.",
+        strategy: "Asigna la tarea vinculándola a la excelencia demostrada del colaborador en vez de minimizar el trabajo.",
         options: [
           { text: "I am assigning you the execution of this module based on your technical precision with past deliverables.", correct: true },
-          { text: "Sorry to burden you with extra work, I really hate having to ask you this.", correct: false, feedback: "Pedir perdón por delegar mina tu autoridad directiva frente al equipo." }
+          { text: "Could you take this off my plate if you have some spare capacity? It shouldn't take too long.", correct: false, feedback: "Decir 'take this off my plate' presenta la tarea como un descarte de tu trabajo y no como delegación de valor." },
+          { text: "You have been designated for this task, so please ensure it is completed according to spec.", correct: false, feedback: "Un tono frío y burocrático ('you have been designated') desmotiva al equipo." }
         ]
       },
       {
@@ -1431,7 +1428,8 @@
         strategy: "Protege el ancho de banda del equipo proponiendo una resolución asincrónica eficiente.",
         options: [
           { text: "To optimize team bandwidth, please share the specific questions via email so I can respond asynchronously today.", correct: true },
-          { text: "Sorry, I can't meet because I have too many meetings already.", correct: false, feedback: "Quejarse de tener muchas reuniones suena a desborde en lugar de disciplina operativa." }
+          { text: "My calendar is currently packed, but if it's truly an emergency I can try to squeeze in ten minutes.", correct: false, feedback: "Ofrecer 'squeeze in ten minutes' premia convocatorias desordenadas y desestructura tu foco." },
+          { text: "A sync for this topic is unnecessary; this could easily be handled through a brief chat message.", correct: false, feedback: "Calificar la reunión ajena de 'unnecessary' genera roce en vez de ofrecer la vía de solución." }
         ]
       },
       {
@@ -1443,7 +1441,8 @@
         strategy: "Protege el encuadre profesional y traslada el intercambio a un espacio privado sin reactividad.",
         options: [
           { text: "Let's align on this operational feedback during our dedicated 1-on-1 session this afternoon.", correct: true },
-          { text: "Sorry, could you not criticize me in public? It's very uncomfortable.", correct: false, feedback: "Demuestra fragilidad emocional en público en lugar de gestionar el marco formal del feedback." }
+          { text: "I take note of your comment, though this group meeting might not be the most constructive forum.", correct: false, feedback: "Tildar el foro de 'not constructive' delante de todos traslada la incomodidad a la sala." },
+          { text: "I prefer not to discuss performance critiques in front of the entire team.", correct: false, feedback: "Manifestar preferencia personal ('I prefer not to') suena defensivo en vez de directivo." }
         ]
       },
       {
@@ -1455,7 +1454,8 @@
         strategy: "Despersonaliza la fecha límite conectándola a la cadena de valor y entregables de terceros.",
         options: [
           { text: "The Friday deadline remains firm to uphold our downstream commitments with the testing team.", correct: true },
-          { text: "Sorry, I would give you more time but my boss won't let me.", correct: false, feedback: "Trasladar la culpa a tu superior desmantela tu propia autoridad como líder." }
+          { text: "Extending the deadline is really not ideal for us, so please try your best to hit the date.", correct: false, feedback: "Decir 'is really not ideal' abre la puerta a que asuman que la fecha es negociable." },
+          { text: "We cannot alter the timeline simply because execution is taking longer than initially planned.", correct: false, feedback: "Un tono reprochatorio sobre los tiempos ajenos genera resentimiento sin aportar claridad." }
         ]
       },
       {
@@ -1467,7 +1467,8 @@
         strategy: "Agradece con calidez pero declina con sobriedad y sin justificaciones personales innecesarias.",
         options: [
           { text: "Thank you for the invitation. I will not be able to attend this evening, but I look forward to connecting tomorrow.", correct: true },
-          { text: "I'm so sorry, I feel awful about missing it, I had a family thing come up at the last minute.", correct: false, feedback: "Inventar justificaciones domésticas denota necesidad de aprobación en lugar de autonomía." }
+          { text: "I have prior personal engagements that I cannot break, so unfortunately I must miss the event.", correct: false, feedback: "Dar explicaciones sobre compromisos personales ineludibles suena a justificación forzada." },
+          { text: "I generally don't participate in after-hours events, but have a wonderful time tonight.", correct: false, feedback: "Fijar una regla rígida contra eventos sociales de la empresa puede proyectar desapego del equipo." }
         ]
       },
       {
@@ -1479,12 +1480,23 @@
         strategy: "Ejerce la máxima responsabilidad técnica: el veto formal sustentado en la auditoría de calidad.",
         options: [
           { text: "Based on our quality audit, I officially withhold release approval until security criteria are satisfied.", correct: true },
-          { text: "Sorry to disappoint everyone after all your hard work, but we probably shouldn't launch.", correct: false, feedback: "Disculparse por proteger a la empresa de una falla catastrófica es una contradicción de liderazgo." }
+          { text: "I know everyone put in massive effort, but I don't feel completely confident giving the green light yet.", correct: false, feedback: "Decir 'I don't feel completely confident' fundamenta una decisión crítica en sentimientos y no en datos." },
+          { text: "Releasing this build right now would be irresponsible, so I am stopping the launch immediately.", correct: false, feedback: "Calificar el lanzamiento de 'irresponsable' desata confrontación en vez de apelar a criterios técnicos de veto." }
         ]
       }
     ];
 
     let currentGymFilteredList = GYM_EXERCISES;
+
+    // ALGORITMO DE SHUFFLE (Para que la opción correcta nunca esté fija en el mismo lugar)
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
 
     function renderGym(filter = "all") {
       const container = document.getElementById("gymContainer");
@@ -1493,6 +1505,9 @@
       currentGymFilteredList = filter === "all" ? GYM_EXERCISES : GYM_EXERCISES.filter(e => e.category === filter);
 
       currentGymFilteredList.forEach((ex, idx) => {
+        // Mezclamos las 3 opciones para cada ejercicio en pantalla
+        const shuffledOptions = shuffleArray(ex.options);
+
         const card = document.createElement("div");
         card.className = "exercise-card";
         card.innerHTML = `
@@ -1504,9 +1519,14 @@
             <div class="habit-weak"><strong>⚠️ Hábito sumiso habitual:</strong> ${ex.weak}</div>
             <div class="habit-prompt"><strong>🎯 Desafío de postura:</strong> ${ex.prompt}</div>
           </div>
-          <div class="options-grid">
-            ${ex.options.map((opt, oIdx) => `
-              <button class="option-btn" onclick="checkAnswer(${idx}, ${oIdx}, this)">${opt.text}</button>
+          <div class="options-grid" id="options-grid-${idx}">
+            ${shuffledOptions.map((opt) => `
+              <button class="option-btn" 
+                      data-correct="${opt.correct}" 
+                      data-feedback="${encodeURIComponent(opt.feedback || '')}" 
+                      onclick="checkAnswer(${idx}, this)">
+                ${opt.text}
+              </button>
             `).join("")}
           </div>
           <div id="feedback-${idx}" class="feedback-box"></div>
@@ -1515,18 +1535,21 @@
       });
     }
 
-    function checkAnswer(exIdx, optIdx, btn) {
+    function checkAnswer(exIdx, btn) {
       const ex = currentGymFilteredList[exIdx];
-      const opt = ex.options[optIdx];
+      const isCorrect = btn.getAttribute("data-correct") === "true";
+      const feedbackText = decodeURIComponent(btn.getAttribute("data-feedback") || "");
       const feedback = document.getElementById(`feedback-${exIdx}`);
       const parent = btn.parentElement;
 
       parent.querySelectorAll(".option-btn").forEach(b => {
-        b.classList.remove("correct", "wrong");
         b.disabled = true;
+        if (b.getAttribute("data-correct") === "true") {
+          b.classList.add("correct");
+        }
       });
 
-      if (opt.correct) {
+      if (isCorrect) {
         btn.classList.add("correct");
         feedback.style.display = "block";
         feedback.style.background = "rgba(16, 185, 129, 0.1)";
@@ -1547,7 +1570,10 @@
         feedback.style.background = "rgba(239, 68, 68, 0.1)";
         feedback.style.border = "1px solid var(--accent-ruby)";
         feedback.style.color = "var(--text-main)";
-        feedback.innerHTML = `<strong>✗ Fuga de Autoridad:</strong> ${opt.feedback}`;
+        feedback.innerHTML = `
+          <div><strong>✗ Trampa de Oficina Detectada:</strong> ${feedbackText}</div>
+          <div style="margin-top:0.5rem; font-size:0.82rem; color:var(--text-dim);">La opción destacada en verde representa la formulación ejecutiva con dirección y autoridad.</div>
+        `;
       }
     }
 
