@@ -3,789 +3,893 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PitchFlow | Executive Authority Suite</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>PitchFlow - TalkFlow Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    :root {
+      --bg-dark: #0a0c10;
+      --card-bg: #12161f;
+      --card-border: #1e2638;
+      --accent-gold: #c5a059;
+      --accent-gold-light: #dfba73;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent-emerald: #10b981;
+      --accent-ruby: #ef4444;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-serif: 'Playfair Display', serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    header {
+      background: rgba(10, 12, 16, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
+      color: #000;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+    .logo-text {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: #0f131c;
+      padding: 0.3rem;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+    }
+    .nav-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.5rem 1.1rem;
+      border-radius: 7px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+    .nav-tab.active {
+      background: var(--card-border);
+      color: var(--text-main);
+    }
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: #141a26;
+      border: 1px solid var(--card-border);
+      padding: 0.35rem 0.8rem;
+      border-radius: 20px;
+    }
+    .user-pill span { color: var(--accent-gold); font-weight: 600; }
+    .logout-btn {
+      background: none;
+      border: none;
+      color: var(--accent-ruby);
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 0.25rem;
+    }
+    main {
+      flex: 1;
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+    .section-content { display: none; }
+    .section-content.active { display: block; }
     
-    /* Modal de Acceso Ejecutivo */
+    /* MODAL DE AUTENTICACION */
     .auth-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(2, 6, 23, 0.94);
-      backdrop-filter: blur(10px);
+      background: rgba(5, 7, 10, 0.94);
+      backdrop-filter: blur(14px);
+      z-index: 999;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
-      padding: 1rem;
+      padding: 1.5rem;
     }
     .auth-card {
-      background: #0f172a;
-      border: 1px solid #1e293b;
-      border-radius: 1rem;
-      padding: 2.25rem;
+      background: var(--card-bg);
+      border: 1px solid var(--accent-gold);
+      border-radius: 16px;
       max-width: 440px;
       width: 100%;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      padding: 2.5rem 2rem;
       text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+    .auth-card h2 {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+    .auth-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 1.75rem;
+    }
+    .auth-input {
+      width: 100%;
+      background: #0a0d14;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      color: #fff;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .auth-input:focus { border-color: var(--accent-gold); }
+    .auth-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
+      color: #000;
+      border: none;
+      padding: 0.85rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: opacity 0.2s;
+    }
+    .auth-btn:hover { opacity: 0.92; }
+    .auth-error {
+      color: var(--accent-ruby);
+      font-size: 0.8rem;
+      margin-top: 0.85rem;
+      display: none;
+    }
+
+    /* COMPONENTES GENERALES */
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 650px;
+      line-height: 1.6;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* AUTHORITY FRAME */
+    .grid-editor {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 860px) {
+      .grid-editor { grid-template-columns: 1fr; }
+    }
+    .input-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    textarea {
+      width: 100%;
+      background: #090c12;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1rem;
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      resize: vertical;
+      min-height: 180px;
+      outline: none;
+    }
+    textarea:focus { border-color: var(--accent-gold); }
+    .select-dropdown {
+      width: 100%;
+      background: #090c12;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: #fff;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      outline: none;
+    }
+    .calibrate-btn {
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
+      color: #000;
+      border: none;
+      padding: 0.9rem 1.5rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      margin-top: 1rem;
+    }
+    .calibrate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* CONTENEDORES DE RESULTADO AUTHORITY FRAME */
+    .frame-results {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .diagnostic-box {
+      background: #141721;
+      border: 1px solid #2a3449;
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+    .diagnostic-title {
+      font-weight: 700;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+    }
+    .frame-card {
+      background: #090c12;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .frame-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .frame-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .frame-tag {
+      font-size: 0.7rem;
+      color: var(--accent-gold);
+      background: rgba(197, 160, 89, 0.1);
+      border: 1px solid rgba(197, 160, 89, 0.3);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .frame-quote {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #fff;
+      font-style: normal;
+    }
+    .frame-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+      flex-wrap: wrap;
+    }
+    .action-btn {
+      background: #161c28;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s;
+    }
+    .action-btn:hover { color: #fff; border-color: var(--accent-gold); }
+    .lesson-box {
+      background: rgba(197, 160, 89, 0.05);
+      border: 1px dashed rgba(197, 160, 89, 0.3);
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      color: var(--text-muted);
+    }
+    .lesson-title {
+      color: var(--accent-gold);
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+
+    /* GIMNASIO & BOVEDA */
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .filter-chip {
+      background: #141a26;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .filter-chip.active {
+      background: var(--accent-gold);
+      color: #000;
+      border-color: var(--accent-gold);
+      font-weight: 700;
+    }
+    .exercise-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .exercise-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--accent-gold);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .exercise-prompt {
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+    }
+    .options-grid {
+      display: grid;
+      gap: 0.6rem;
+    }
+    .option-btn {
+      background: #090c12;
+      border: 1px solid var(--card-border);
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      color: var(--text-main);
+      text-align: left;
+      cursor: pointer;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      transition: all 0.2s;
+    }
+    .option-btn:hover { border-color: var(--text-muted); }
+    .option-btn.correct { background: rgba(16, 185, 129, 0.15); border-color: var(--accent-emerald); color: #fff; }
+    .option-btn.wrong { background: rgba(239, 68, 68, 0.15); border-color: var(--accent-ruby); color: #fff; }
+    .feedback-box {
+      margin-top: 1rem;
+      padding: 0.85rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      display: none;
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-400 selection:text-slate-950">
+<body>
 
-  <!-- Header -->
-  <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-40 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-    <div class="flex items-center gap-3">
-      <div class="h-9 w-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-bold text-lg shadow-sm">P</div>
-      <div>
-        <span class="text-xl font-bold tracking-tight text-white">PitchFlow</span>
-        <span class="hidden sm:inline-block text-xs px-2.5 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-amber-400 font-medium ml-2">Executive Edition</span>
-      </div>
+  <!-- MODAL DE ACCESO PRIVADO -->
+  <div id="authOverlay" class="auth-overlay">
+    <div class="auth-card">
+      <div class="logo-badge" style="display:inline-block; margin-bottom: 1rem;">TALKFLOW ACADEMY</div>
+      <h2>Acceso a PitchFlow</h2>
+      <p>Entorno privado de calibración estratégica para miembros autorizados de la comunidad.</p>
+      <input type="email" id="authEmailInput" class="auth-input" placeholder="Ingresá tu correo de miembro" />
+      <button class="auth-btn" onclick="validateMemberAccess()">Acceder al Entorno</button>
+      <div id="authErrorMsg" class="auth-error">Acceso no autorizado. Este correo no figura en la lista de miembros activos.</div>
     </div>
-    
-    <div class="flex items-center gap-3">
-      <nav class="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
-        <button onclick="switchTab('gym')" id="tab-gym" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all">Gimnasio (45)</button>
-        <button onclick="switchTab('rewriter')" id="tab-rewriter" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all">Reescritor IA</button>
-        <button onclick="switchTab('vault')" id="tab-vault" class="px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-1.5">
-          Bóveda <span id="vault-count-badge" class="px-1.5 py-0.2 rounded-full bg-slate-800 text-amber-400 text-xs">0</span>
-        </button>
-        <button onclick="openProfileModal()" title="Editar Perfil" class="p-1.5 text-slate-400 hover:text-amber-400 transition-all">⚙️</button>
-      </nav>
-      
-      <!-- Badge de Sesión del Miembro -->
-      <div id="userNavBadge" class="hidden sm:flex items-center gap-2 text-xs border border-slate-800 bg-slate-900/80 px-3 py-1.5 rounded-lg text-slate-400">
-        <span>Miembro:</span>
-        <span id="badge-email" class="text-amber-400 font-medium truncate max-w-[150px]"></span>
-        <button onclick="logoutUser()" title="Cerrar Sesión" class="text-rose-400 hover:text-rose-300 ml-1 font-semibold">✕</button>
-      </div>
+  </div>
+
+  <header>
+    <div class="logo-container">
+      <div class="logo-badge">ELITE</div>
+      <div class="logo-text">PitchFlow</div>
+    </div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchTab('authority-frame')">Authority Frame</button>
+      <button class="nav-tab" onclick="switchTab('gimnasio')">Gimnasio de Poder</button>
+      <button class="nav-tab" onclick="switchTab('boveda')">Bóveda</button>
+    </div>
+    <div class="user-pill" id="userPill">
+      <span id="userEmailDisplay">...</span>
+      <button class="logout-btn" onclick="logout()" title="Cerrar sesión">✕</button>
     </div>
   </header>
 
-  <!-- Banner de Perfil Activo -->
-  <div class="bg-slate-900/40 border-b border-slate-800/60 px-6 py-2.5 text-xs text-slate-400 flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
-      <span id="profile-display-name">Profesional: No configurado</span>
-      <span class="text-slate-600">|</span>
-      <span id="profile-display-role">Rol: General</span>
-    </div>
-    <button onclick="openProfileModal()" class="text-amber-400 hover:underline">Configurar mi perfil</button>
-  </div>
+  <main>
+    <!-- 1. AUTHORITY FRAME -->
+    <section id="authority-frame" class="section-content active">
+      <h1 class="hero-title">Authority Frame</h1>
+      <p class="hero-subtitle">Elevá tu estatus ejecutivo eliminando disculpas, vacilaciones y rodeos. Estructurá intervenciones directas con dirección, impacto y límites claros.</p>
+      
+      <div class="card">
+        <label class="input-label">Seleccioná el Escenario Táctico</label>
+        <select id="scenarioSelect" class="select-dropdown" onchange="loadPresetExample()">
+          <option value="claridad">Claridad Estratégica (Oficina & Calls) - Frenar ruido / Clarificar sin pedir perdón</option>
+          <option value="decision">Decisión Estratégica / Dirección - Asumir postura firme ante el equipo</option>
+          <option value="reunion">Presentación / Estatus - Reportar avances sin dar rodeos</option>
+          <option value="negociacion">Negociación de Tarifas / Recursos - Defender números con solidez</option>
+          <option value="entrevista">Entrevista de Carrera / Liderazgo - Demostrar autoridad técnica</option>
+        </select>
 
-  <!-- Contenedor Central -->
-  <main class="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-6 md:p-10 space-y-6">
-
-    <!-- SECCIÓN 1: GIMNASIO DE PODER -->
-    <div id="view-gym" class="space-y-6">
-      <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4 shadow-lg">
-        <div>
-          <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Rango Ejecutivo</span>
-          <h2 id="gym-rank" class="text-lg font-bold text-white">Strategic Leader (Nivel A2/B1)</h2>
-        </div>
-        <div class="flex items-center gap-6">
-          <div class="text-right">
-            <span class="text-xs text-slate-400">Racha</span>
-            <p class="text-lg font-bold text-white flex items-center gap-1 justify-end">⚡ <span id="gym-streak">1</span> d</p>
-          </div>
-          <div class="text-right">
-            <span class="text-xs text-slate-400">Completados</span>
-            <p id="gym-counter" class="text-lg font-bold text-amber-400">1 / 45</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
-        <div class="space-y-2 border-b border-slate-800/80 pb-5">
-          <div class="flex items-center gap-2">
-            <span id="q-category" class="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-full"></span>
-          </div>
-          <p id="q-situation" class="text-slate-300 text-sm leading-relaxed font-medium"></p>
-        </div>
-
-        <div class="py-2">
-          <p class="text-xs uppercase tracking-wider font-semibold text-slate-400 mb-2">Intervención en Reunión:</p>
-          <div class="bg-slate-950 border border-slate-800 rounded-xl p-5 text-base sm:text-lg font-medium text-slate-200 leading-relaxed">
-            <span id="q-before"></span>
-            <span id="q-slot" class="inline-block px-3 py-1 mx-1 border-2 border-dashed border-amber-400/60 rounded-lg text-amber-300 bg-amber-400/5 font-semibold transition-all">[ Selecciona tu postura ]</span>
-            <span id="q-after"></span>
-          </div>
-        </div>
-
-        <div class="space-y-3">
-          <p class="text-xs uppercase tracking-wider font-semibold text-slate-400">Elige la opción ejecutiva:</p>
-          <div id="q-options" class="grid grid-cols-1 gap-2.5"></div>
-        </div>
-
-        <div id="q-feedback" class="hidden rounded-xl p-5 border transition-all text-sm leading-relaxed">
-          <div id="feedback-badge" class="font-bold text-xs uppercase tracking-wider mb-1.5"></div>
-          <p id="feedback-text" class="text-slate-200"></p>
-        </div>
-
-        <div class="pt-2 flex items-center justify-between">
-          <button id="btn-save-gym" onclick="saveCurrentGymToVault()" class="hidden px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-amber-300 hover:bg-slate-700 transition-all border border-slate-700">
-            ★ Guardar en mi Bóveda
-          </button>
-          <button id="btn-next" onclick="nextQuestion()" class="hidden px-6 py-2.5 rounded-xl font-semibold bg-white text-slate-950 hover:bg-slate-200 transition-all text-sm cursor-pointer shadow-md ml-auto">
-            Siguiente Ejercicio →
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- SECCIÓN 2: REESCRITURA DE AUTORIDAD VÍA WORKER -->
-    <div id="view-rewriter" class="hidden space-y-6">
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
-        
-        <div>
-          <h2 class="text-xl font-bold text-white mb-1">Estructurador Estratégico</h2>
-          <p class="text-sm text-slate-400">Escribe cualquier frase real. La IA detectará fugas de estatus y la blindará manteniendo tu contexto de negocio exacto.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid-editor">
           <div>
-            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Escenario de Comunicación</label>
-            <select id="rw-scenario" onchange="updateScenarioPrompts()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
-              <option value="entrevista">Entrevista Laboral / Carrera</option>
-              <option value="decision">Decisión Estratégica / Dirección</option>
-              <option value="reunion">Presentación / Reunión de Estatus</option>
-              <option value="pitch">Elevator Pitch / Venta de Valor</option>
-              <option value="negociacion">Negociación de Tarifas / Recursos</option>
-            </select>
+            <label class="input-label">Borrador o Mensaje a Calibrar</label>
+            <textarea id="inputText" placeholder="Escribí lo que querés decir o cómo te lo plantearon (en español o inglés rústico)..."></textarea>
+            <button class="calibrate-btn" id="calibrateBtn" onclick="runCalibration()">
+              <span>⚡ Calibrar Postura</span>
+            </button>
           </div>
+          
           <div>
-            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Preguntas o Retos Típicos</label>
-            <select id="rw-preset-prompt" onchange="applyPresetPrompt()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Tu borrador actual (cualquier frase en inglés o spanglish):</label>
-          <textarea id="rw-input" rows="4" placeholder="Escribe aquí tu frase tal cual la dirías..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-200 focus:outline-none focus:border-amber-400"></textarea>
-        </div>
-
-        <button id="btn-process" onclick="processRewriter()" class="w-full py-3.5 rounded-xl font-semibold bg-amber-400 text-slate-950 hover:bg-amber-300 transition-all text-sm shadow-md cursor-pointer flex items-center justify-center gap-2">
-          <span>Calibrar Frase de Autoridad con IA</span>
-        </button>
-
-        <div id="rw-result" class="hidden space-y-4 pt-4 border-t border-slate-800">
-          <div>
-            <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Versión Ejecutiva (Inglés):</span>
-            <div class="mt-2 bg-slate-950 border border-slate-800 rounded-xl p-4 text-base font-semibold text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <span id="rw-output-text"></span>
-              <div class="flex items-center gap-2 self-end sm:self-auto shrink-0">
-                <button onclick="copyOutput()" id="btn-copy" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700">Copiar</button>
-                <button onclick="saveRewriterToVault()" id="btn-save-rewriter" class="text-xs bg-amber-400/10 hover:bg-amber-400/20 text-amber-400 border border-amber-400/30 px-3 py-1.5 rounded-lg">★ Guardar en Bóveda</button>
+            <label class="input-label">Resultado Authority Frame</label>
+            <div id="resultsWrapper" class="frame-results">
+              
+              <!-- Diagnóstico -->
+              <div class="diagnostic-box">
+                <div class="diagnostic-title">🔍 Diagnóstico de Postura</div>
+                <div id="diagHabit">⚠️ Hábito detectado: Esperando calibración de mensaje...</div>
               </div>
+
+              <!-- Opción 1: Direct & Firm -->
+              <div class="frame-card">
+                <div class="frame-header">
+                  <span class="frame-title">Opción 1: Direct & Firm</span>
+                  <span class="frame-tag" id="tagOpt1">Foco en Dirección</span>
+                </div>
+                <div class="frame-quote" id="textOpt1">"The executive response will appear here with maximum directness."</div>
+                <div class="frame-actions">
+                  <button class="action-btn" onclick="copyPhrase('textOpt1')">📋 Copiar</button>
+                  <button class="action-btn" onclick="speakPhrase('textOpt1')">🔊 Escuchar pronunciación</button>
+                  <button class="action-btn" onclick="saveSpecificToVault('textOpt1')">💾 Guardar en Bóveda</button>
+                </div>
+              </div>
+
+              <!-- Opción 2: Collaborative & Poised -->
+              <div class="frame-card">
+                <div class="frame-header">
+                  <span class="frame-title">Opción 2: Collaborative & Poised</span>
+                  <span class="frame-tag" id="tagOpt2">Autoridad Serena</span>
+                </div>
+                <div class="frame-quote" id="textOpt2">"The poised alternative will appear here maintaining firm boundaries."</div>
+                <div class="frame-actions">
+                  <button class="action-btn" onclick="copyPhrase('textOpt2')">📋 Copiar</button>
+                  <button class="action-btn" onclick="speakPhrase('textOpt2')">🔊 Escuchar pronunciación</button>
+                  <button class="action-btn" onclick="saveSpecificToVault('textOpt2')">💾 Guardar en Bóveda</button>
+                </div>
+              </div>
+
+              <!-- Micro-lección -->
+              <div class="lesson-box">
+                <div class="lesson-title">💡 Micro-lección de Impacto</div>
+                <div id="lessonText">Completá el borrador a la izquierda para analizar la ganancia estratégica de tu comunicación.</div>
+              </div>
+
             </div>
           </div>
-          <div class="bg-amber-400/5 border border-amber-400/20 rounded-xl p-4 text-sm text-slate-300">
-            <span class="text-xs font-bold uppercase tracking-wider text-amber-400 block mb-1">💡 Análisis de Postura & Eliminación de Fugas:</span>
-            <div id="rw-output-analysis" class="space-y-1"></div>
-          </div>
         </div>
-
       </div>
-    </div>
+    </section>
 
-    <!-- SECCIÓN 3: BÓVEDA PERSONAL -->
-    <div id="view-vault" class="hidden space-y-6">
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
-        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-5">
-          <div>
-            <h2 class="text-xl font-bold text-white mb-1">Bóveda de Frases de Poder (My Vault)</h2>
-            <p class="text-sm text-slate-400">Tu repertorio personal acumulado para reuniones, entrevistas y negociaciones.</p>
-          </div>
-          <button onclick="clearVault()" class="text-xs text-rose-400 hover:underline">Vaciar bóveda</button>
-        </div>
-
-        <div class="flex flex-wrap gap-2" id="vault-filters">
-          <button onclick="filterVault('all')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-amber-400 text-slate-950">Todos</button>
-          <button onclick="filterVault('Entrevista')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">Entrevista</button>
-          <button onclick="filterVault('Decisión')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">Decisión</button>
-          <button onclick="filterVault('Reunión')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">Reunión</button>
-          <button onclick="filterVault('Negociación')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">Negociación</button>
-          <button onclick="filterVault('Límites')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:text-white">Límites</button>
-        </div>
-
-        <div id="vault-list" class="space-y-3"></div>
+    <!-- 2. GIMNASIO DE PODER -->
+    <section id="gimnasio" class="section-content">
+      <h1 class="hero-title">Gimnasio de Poder</h1>
+      <p class="hero-subtitle">Entrená el reflejo automático para responder con jerarquía en situaciones de alta presión, tanto en la oficina presencial como en llamadas virtuales.</p>
+      
+      <div class="filter-bar">
+        <button class="filter-chip active" onclick="filterGym('all', this)">Todos</button>
+        <button class="filter-chip" onclick="filterGym('Claridad Estratégica', this)">Claridad Estratégica</button>
+        <button class="filter-chip" onclick="filterGym('Decisión', this)">Decisión</button>
+        <button class="filter-chip" onclick="filterGym('Límites', this)">Límites</button>
+        <button class="filter-chip" onclick="filterGym('Negociación', this)">Negociación</button>
       </div>
-    </div>
 
+      <div id="gymContainer"></div>
+    </section>
+
+    <!-- 3. BOVEDA -->
+    <section id="boveda" class="section-content">
+      <h1 class="hero-title">Bóveda de Recursos</h1>
+      <p class="hero-subtitle">Tus frases de rescate táctico y fórmulas calibradas para consultar en 10 segundos antes de una reunión o conversación decisiva.</p>
+      
+      <div class="filter-bar">
+        <button class="filter-chip active" onclick="filterVault('all', this)">Todos</button>
+        <button class="filter-chip" onclick="filterVault('Claridad Estratégica', this)">Claridad Estratégica</button>
+        <button class="filter-chip" onclick="filterVault('Decisión', this)">Decisión</button>
+        <button class="filter-chip" onclick="filterVault('Negociación', this)">Negociación</button>
+      </div>
+
+      <div id="vaultContainer"></div>
+    </section>
   </main>
 
-  <!-- MODAL DE ACCESO / VALIDACIÓN DE CORREO -->
-  <div id="authModal" class="auth-overlay">
-    <div class="auth-card">
-      <div class="h-10 w-10 mx-auto mb-3 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-bold text-xl shadow-lg">P</div>
-      <h2 class="text-xl font-bold text-white tracking-tight mb-1">PitchFlow</h2>
-      <p class="text-xs text-slate-400 mb-6">Suite de Calibración de Autoridad<br><span class="text-amber-400 font-semibold">Exclusivo TalkFlow Academy</span></p>
-      
-      <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
-        <div class="text-left">
-          <label class="block text-xs uppercase tracking-wider font-semibold text-slate-400 mb-1.5">Correo de Miembro</label>
-          <input type="email" id="authEmailInput" placeholder="tu_correo@ejemplo.com" required autocomplete="email" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-sm text-slate-200 focus:outline-none focus:border-amber-400 transition-all" />
-          <p id="authErrorMsg" class="hidden text-rose-400 text-xs mt-1.5"></p>
-        </div>
-        <button type="submit" class="w-full py-3.5 rounded-xl font-bold bg-amber-400 text-slate-950 hover:bg-amber-300 transition-all text-sm shadow-md cursor-pointer">
-          Acceder al Entorno
-        </button>
-      </form>
-      <p class="text-[11px] text-slate-500 mt-5">Acceso profesional restringido a la comunidad ejecutiva.</p>
-    </div>
-  </div>
-
-  <!-- MODAL DE PERFIL -->
-  <div id="profile-modal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 max-w-md w-full space-y-5 shadow-2xl">
-      <div>
-        <h3 class="text-lg font-bold text-white">Tu Perfil Ejecutivo</h3>
-        <p class="text-xs text-slate-400 mt-1">PitchFlow adapta los ejercicios y la memoria según tu contexto profesional.</p>
-      </div>
-
-      <div class="space-y-3">
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Nombre o Apodo</label>
-          <input id="user-name" type="text" placeholder="Ej: Ana" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
-        </div>
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Rol / Industria</label>
-          <input id="user-role" type="text" placeholder="Ej: Tech Lead, Operations Manager, Consultant" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
-        </div>
-        <div>
-          <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Nivel Actual</label>
-          <select id="user-level" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-amber-400">
-            <option value="A2">A2 (Comprendo contexto técnico pero dudo al intervenir)</option>
-            <option value="B1" selected>B1 (Comunico pero caigo en muletillas o disculpas)</option>
-            <option value="B2">B2 (Fluido pero busco mayor autoridad y síntesis)</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-end gap-3 pt-2">
-        <button onclick="closeProfileModal()" class="px-4 py-2 text-xs text-slate-400 hover:text-white">Cancelar</button>
-        <button onclick="saveProfile()" class="px-5 py-2 text-xs font-semibold bg-amber-400 text-slate-950 rounded-xl hover:bg-amber-300 transition-all">Guardar Datos</button>
-      </div>
-    </div>
-  </div>
-
   <script>
-    const WORKER_URL = "https://pitchflow-api.anacavea55.workers.dev";
+    const WORKER_ENDPOINT = "https://pitchflow-api.anacavea55.workers.dev";
 
-    // --- GESTIÓN DE ACCESO Y MEMBRESÍA CON LISTA BLANCA ---
-    function checkAuthStatus() {
-      const userEmail = localStorage.getItem('pitchflow_user_email');
-      const authModal = document.getElementById('authModal');
-      const navBadge = document.getElementById('userNavBadge');
-      const badgeEmail = document.getElementById('badge-email');
-      
-      if (userEmail && userEmail.includes('@')) {
-        if (authModal) authModal.style.display = 'none';
-        if (navBadge) navBadge.classList.remove('hidden');
-        if (badgeEmail) badgeEmail.textContent = userEmail;
+    // 1. AUTENTICACIÓN
+    function checkAuth() {
+      const email = localStorage.getItem("pitchflow_user");
+      if (email) {
+        document.getElementById("authOverlay").style.display = "none";
+        document.getElementById("userEmailDisplay").innerText = email;
       } else {
-        if (authModal) authModal.style.display = 'flex';
-        if (navBadge) navBadge.classList.add('hidden');
+        document.getElementById("authOverlay").style.display = "flex";
       }
     }
 
-    async function handleAuthSubmit(e) {
-      e.preventDefault();
-      const emailInput = document.getElementById('authEmailInput');
-      const errorMsg = document.getElementById('authErrorMsg');
-      const submitBtn = e.target.querySelector('button[type="submit"]');
-      const email = emailInput.value.trim().toLowerCase();
+    async function validateMemberAccess() {
+      const emailInput = document.getElementById("authEmailInput").value.trim().toLowerCase();
+      const errorMsg = document.getElementById("authErrorMsg");
+      errorMsg.style.display = "none";
 
-      if (!email || !email.includes('@') || !email.includes('.')) {
-        errorMsg.textContent = "Ingrese un correo electrónico válido.";
-        errorMsg.classList.remove('hidden');
-        return;
-      }
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Verificando membresía...";
-      errorMsg.classList.add('hidden');
+      if (!emailInput) return;
 
       try {
-        const response = await fetch(WORKER_URL, {
+        const res = await fetch(`${WORKER_ENDPOINT}/auth-check`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ action: "verify_member", email: email })
+          body: JSON.stringify({ email: emailInput })
         });
+        const data = await res.json();
 
-        const result = await response.json();
-
-        if (result.authorized) {
-          localStorage.setItem('pitchflow_user_email', email);
-          checkAuthStatus();
+        if (data.authorized) {
+          localStorage.setItem("pitchflow_user", emailInput);
+          checkAuth();
         } else {
-          errorMsg.textContent = "Este correo no figura como miembro activo de TalkFlow Academy. Si ya tienes acceso, contacta a soporte.";
-          errorMsg.classList.remove('hidden');
+          errorMsg.style.display = "block";
         }
       } catch (err) {
-        errorMsg.textContent = "Error de conexión al validar membresía. Intenta nuevamente.";
-        errorMsg.classList.remove('hidden');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Acceder al Entorno";
+        errorMsg.innerText = "Error validando credenciales. Intentá nuevamente.";
+        errorMsg.style.display = "block";
       }
     }
 
-    function logoutUser() {
-      if (confirm('¿Deseas cerrar tu sesión actual en PitchFlow?')) {
-        localStorage.removeItem('pitchflow_user_email');
-        location.reload();
-      }
+    function logout() {
+      localStorage.removeItem("pitchflow_user");
+      checkAuth();
     }
 
-    const SCENARIO_PRESETS = {
-      entrevista: [
-        { label: "Tell me about yourself (Presentación de impacto)", prompt: "In the past years, I am focused on handling tasks and I think I can help your team." },
-        { label: "What is your greatest weakness? (Debilidad sin disculpas)", prompt: "Sorry, I am sometimes too focused on details and I think that is bad." },
-        { label: "Salary expectations (Defensa de rango)", prompt: "I hope you can give me around 95k, but maybe we can negotiate if you want." }
-      ],
-      decision: [
-        { label: "Definir camino técnico o de negocio", prompt: "I think we can change the vendor because we have a big problem with delivery." },
-        { label: "Acelerar decisión trabada por debates", prompt: "Maybe we could wait and see what other people think." }
-      ],
-      reunion: [
-        { label: "Reportar cuello de botella o demora", prompt: "Sorry, we have a big problem with the release and we will try to finish tomorrow." },
-        { label: "Retomar el foco de la llamada", prompt: "Sorry to interrupt, but maybe we are losing time with this topic." }
-      ],
-      pitch: [
-        { label: "Elevator Pitch / Qué aporte ofrecés", prompt: "I work doing marketing and I try to help companies get more clients." },
-        { label: "Diferenciación de valor", prompt: "We are cheaper than others and we try very hard to do good work." }
-      ],
-      negociacion: [
-        { label: "Defender tarifa ante objeción de precio", prompt: "Our fee is high because we have many costs, sorry about that." },
-        { label: "Frenar tareas fuera de alcance (Scope Creep)", prompt: "We cannot do this new feature now, sorry, it is impossible for us." }
-      ]
+    // 2. NAVEGACIÓN
+    function switchTab(tabId) {
+      document.querySelectorAll(".nav-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".section-content").forEach(s => s.classList.remove("active"));
+      event.target.classList.add("active");
+      document.getElementById(tabId).classList.add("active");
+    }
+
+    // 3. AUTHORITY FRAME
+    const PRESETS = {
+      claridad: "El cliente/director habló durante tres minutos muy rápido, usó términos raros y no entendí bien qué me pide. Quiero pedirle que defina el objetivo puntual sin disculparme por mi inglés.",
+      decision: "Creo que tal vez deberíamos esperar un poco antes de lanzar la campaña porque quizás no todos los miembros revisaron los datos.",
+      reunion: "Disculpen que interrumpa, solo quería decir que mi equipo ya terminó casi todo lo que nos tocaba hacer esta semana.",
+      negociacion: "No sé si les parezca bien este precio, si les parece alto podemos bajarlo un poco para ajustarnos a su presupuesto.",
+      entrevista: "Tengo mucha experiencia en calidad pero a veces me cuesta explicar todo lo que sé en inglés, perdón por mi nivel."
     };
 
-    const EXERCISES = [
-      { id: 1, categoria: "Poner Límites", situacion: "Un cliente o director pide adelantar una entrega crítica sin margen de tiempo.", frase: "To maintain operational quality, ______ integrate this into our next milestone.", opciones: ["we can definitely", "I think maybe we will try to", "we cannot"], correcta: "we can definitely", feedback_acierto: "Al usar 'we can definitely integrate this into our next milestone', no te disculpas ni cierras la puerta; marcas un límite profesional protegiendo la calidad y diriges la conversación al siguiente ciclo.", feedback_error: "Decir 'will try to' transmite que no tienes el control del proceso técnico y habilita a que te sigan presionando." },
-      { id: 2, categoria: "Reporte de Crisis", situacion: "Hay un retraso en la operación y tienes que informarlo en la llamada de equipo.", frase: "______ a technical bottleneck in the pipeline. Here is our mitigation plan.", opciones: ["We have identified", "Sorry, but we have a big problem with", "It seems like there is"], correcta: "We have identified", feedback_acierto: "'We have identified' demuestra diagnóstico profesional y dominio de la situación. Pasas de pedir perdón por una falla a liderar el plan de contingencia.", feedback_error: "Comenzar con 'Sorry, but we have a big problem' genera alarma innecesaria y te posiciona como el responsable culpable del imprevisto." },
-      { id: 3, categoria: "Toma de Decisiones", situacion: "En una reunión técnica, tienes que definir cuál es el camino a seguir.", frase: "Based on the performance metrics, ______ migrating to the new infrastructure today.", opciones: ["I recommend", "maybe we could think about", "I guess it is better"], correcta: "I recommend", feedback_acierto: "'I recommend' respaldado por datos ('Based on the performance metrics') es la fórmula exacta del liderazgo técnico. Fijas postura clara.", feedback_error: "'Maybe we could think about' diluye tu criterio y le da pie a perfiles con menos experiencia a descartar tu idea." },
-      { id: 4, categoria: "Control de Conversación", situacion: "Te hacen una consulta compleja en plena llamada y necesitas 10 segundos para procesar sin dudar.", frase: "______ Let me pull up the exact data so we can address the root cause.", opciones: ["That is a strategic point.", "I don't know, sorry.", "Wait, my English is bad."], correcta: "That is a strategic point.", feedback_acierto: "Calificar la intervención ajena ('That is a strategic point') te da control inmediato de la conversación, compra tiempo y te permite buscar datos con aplomo.", feedback_error: "Decir 'I don't know' o justificarte con el idioma te deja de inmediato en posición de subordinación." },
-      { id: 5, categoria: "Negociación", situacion: "Te ofrecen un presupuesto por debajo de la complejidad del trabajo.", frase: "To deliver the expected business outcome, ______ an allocation of three senior specialists.", opciones: ["this scope requires", "I would like to ask if possible", "maybe we will need"], correcta: "this scope requires", feedback_acierto: "'This scope requires' despersonaliza la petición: es el proyecto técnico exigiendo los recursos que corresponden para tener éxito.", feedback_error: "'I would like to ask if possible' suena a pedir favores en lugar de presupuestar con criterio profesional." },
-      { id: 6, categoria: "Posicionamiento", situacion: "Entrevista laboral o presentación de consultoría ante un comité directivo.", frase: "My focus is not just execution; ______ optimize your operational margins from quarter one.", opciones: ["I am positioned to", "I will try my best to", "I hope I can"], correcta: "I am positioned to", feedback_acierto: "'I am positioned to optimize' habla desde la certeza y la contribución de valor al negocio, diferenciándote de quienes solo ofrecen trabajar duro.", feedback_error: "'I hope I can' o 'I will try' transmiten dudas sobre tu propia capacidad de entrega." },
-      { id: 7, categoria: "Gestión de Cronograma", situacion: "Una variable externa retrasa la fecha de entrega y debes comunicarlo sin generar desconfianza.", frase: "Due to external dependencies, ______ deliver the final report by Friday afternoon.", opciones: ["we are scheduled to", "we hope we can", "we will see if we"], correcta: "we are scheduled to", feedback_acierto: "'We are scheduled to' transmite control y reprogramación estructurada, no una promesa improvisada.", feedback_error: "'We hope we can' denota que dependes de la suerte en lugar de gestionar activamente el cronograma." },
-      { id: 8, categoria: "Manejo de Desacuerdos", situacion: "En una llamada, un colega propone un método ineficiente para el proyecto.", frase: "______ alternative pathways that optimize our execution budget.", opciones: ["The data points to", "I feel you are wrong about", "Maybe it's just my opinion, but"], correcta: "The data points to", feedback_acierto: "'The data points to' saca la emoción del debate y apoya tu argumento en hechos verificables, cuidando las relaciones laborales.", feedback_error: "'It's just my opinion' debilita tu criterio antes de que termines de formular tu argumento." },
-      { id: 9, categoria: "Facilitación", situacion: "La llamada se fue por las ramas con temas secundarios y debes retomar el objetivo.", frase: "To respect everyone's agenda, ______ the core deliverable.", opciones: ["let's realign on", "excuse me, can you stop and look at", "sorry to interrupt, but maybe"], correcta: "let's realign on", feedback_acierto: "'Let's realign on' lidera la reunión con elegancia ejecutiva, justificando el corte por el valor del tiempo de todos.", feedback_error: "Pedir disculpas por reenfocar una reunión te hace ver como un intruso en lugar de un facilitador profesional." },
-      { id: 10, categoria: "Poner Límites", situacion: "El cliente añade requerimientos nuevos sin ampliar el presupuesto acordado.", frase: "This new requirement falls outside the current agreement; ______ scope an amendment.", opciones: ["we can definitely", "we don't really want to", "I am afraid we can't"], correcta: "we can definitely", feedback_acierto: "Unir 'we can definitely' con 'scope an amendment' convierte un conflicto de límites en una oportunidad comercial clara.", feedback_error: "'I am afraid' te coloca en posición de debilidad antes de plantear la realidad del contrato." },
-      { id: 11, categoria: "Gestión del Tiempo", situacion: "Te invitan a una reunión sin agenda clara que interrumpe tu entrega operativa.", frase: "To keep focus on critical deliverables, ______ updates via email today.", opciones: ["I will provide", "I am too busy to attend, sorry for", "I don't think I can come to"], correcta: "I will provide", feedback_acierto: "'I will provide updates via email' protege tu tiempo y ofrece una alternativa de valor sin pedir perdón.", feedback_error: "Decir que estás 'demasiado ocupado' suena a desorganización; liderar de forma asincrónica proyecta alta eficiencia." },
-      { id: 12, categoria: "Negociación", situacion: "Cuestionan tus números diciendo que hay alternativas más baratas en el mercado.", frase: "Our fee structure ______ our proven track record in risk mitigation.", opciones: ["directly reflects", "is expensive because", "can be reduced if you"], correcta: "directly reflects", feedback_acierto: "'Directly reflects' ancla tu precio al valor y la seguridad que aportas, eliminando el debate sobre costos operativos.", feedback_error: "Descontar de inmediato o justificar que eres 'caro' destruye tu margen y tu jerarquía técnica." },
-      { id: 13, categoria: "Gestión de Recursos", situacion: "Necesitas dos ingenieros más para cumplir con el objetivo del trimestre.", frase: "To safeguard our delivery target, ______ adding two dedicated resources.", opciones: ["I recommend", "I was wondering if maybe we could", "please, we really need"], correcta: "I recommend", feedback_acierto: "'I recommend adding' formula la necesidad como una decisión estratégica respaldada por el objetivo de entrega.", feedback_error: "'I was wondering if maybe' invita al interlocutor a rechazar la propuesta sin analizarla." },
-      { id: 14, categoria: "Poner Límites", situacion: "La dirección pide recortar dos semanas sin recortar funciones ni alcance.", frase: "Compressing the timeline ______ reducing the scope or increasing head count.", opciones: ["requires either", "is impossible, sorry", "makes me feel worried about"], correcta: "requires either", feedback_acierto: "'Requires either' plantea un dilema de gestión objetivo: si buscan velocidad, deben elegir qué variable ajustar.", feedback_error: "Responder 'is impossible' genera fricción; responder con 'makes me feel' resta peso técnico al argumento." },
-      { id: 15, categoria: "Liderazgo Operativo", situacion: "La falta de aprobación de un superior tiene frenado al equipo de trabajo.", frase: "To avoid deployment bottlenecks, ______ confirmation on the architecture by noon.", opciones: ["we require", "just checking if you have time for", "please don't forget to give"], correcta: "we require", feedback_acierto: "'We require confirmation' marca la necesidad del proyecto con firmeza y fija un plazo claro.", feedback_error: "'Just checking' disminuye la urgencia real y te muestra dependiente e inseguro." },
-      { id: 16, categoria: "Negociación", situacion: "Te presentan una propuesta que no convence y exigen una respuesta inmediata.", frase: "______ this proposal internally and return with our counter-framework tomorrow.", opciones: ["We will evaluate", "I don't know what to say about", "Give me time because my English is"], correcta: "We will evaluate", feedback_acierto: "'We will evaluate' demuestra que no actúas bajo presión externa y que tienes un proceso de decisión sólido.", feedback_error: "Titubear o admitir parálisis te deja en desventaja directa en la mesa de negociación." },
-      { id: 17, categoria: "Manejo de Conflictos", situacion: "En una llamada elevan el tono o hacen comentarios despectivos sobre un error técnico.", frase: "______ solving the system discrepancy efficiently.", opciones: ["Let's keep our focus on", "Don't talk to me like that, sorry", "I think you are being unfair with"], correcta: "Let's keep our focus on", feedback_acierto: "'Let's keep our focus on' desactiva el conflicto personal y redirige la conversación a la solución técnica.", feedback_error: "Entrar en discusiones emocionales o quejas destruye la jerarquía técnica en entornos corporativos." },
-      { id: 18, categoria: "Cierre de Acuerdos", situacion: "Ambas partes están conformes de palabra y necesitas dejarlo asentado por escrito.", frase: "To ensure full alignment, ______ summarize the agreed action items in writing.", opciones: ["I will", "maybe I can try to", "let me know if you want me to"], correcta: "I will", feedback_acierto: "'I will summarize' toma la iniciativa y el control del registro de compromisos, asegurando que nada se desvirtúe.", feedback_error: "'Maybe I can try' deja en el aire una tarea que requiere precisión inmediata." },
-      { id: 19, categoria: "Entrevista - Presentación de Valor", situacion: "Te preguntan 'Tell me about yourself' y debes enfocarte en impacto de negocio, no en tu biografía.", frase: "Over the past eight years, ______ scaling distributed systems that reduce operational latency.", opciones: ["I have specialized in", "I was just working on", "I think I know about"], correcta: "I have specialized in", feedback_acierto: "'I have specialized in' define autoridad de nicho y trayectoria deliberada desde la primera frase.", feedback_error: "'I was just working on' minimiza tu experiencia y reduce tu carrera a una tarea operativa sin peso." },
-      { id: 20, categoria: "Entrevista - Hablar de Debilidades", situacion: "Te preguntan por tu mayor debilidad sin caer en clichés ni pedir disculpas.", frase: "I tend to scrutinize granular details; therefore, ______ automated checkpoints to maintain team velocity.", opciones: ["I implement", "I try to change that because", "sorry, I know that is bad so"], correcta: "I implement", feedback_acierto: "'I implement' transforma una debilidad en un proceso activo de gestión y autoliderazgo.", feedback_error: "Pedir perdón o decir 'I know that is bad' te infantiliza ante el entrevistador." },
-      { id: 21, categoria: "Entrevista - Expectativas Salariales", situacion: "Te preguntan por tu aspiración económica y debes fijar un rango sin titubeos.", frase: "Based on market benchmarks for this leadership level, ______ within the 95k to 110k bracket.", opciones: ["my expectations align", "maybe I would like to get", "I hope you can give me"], correcta: "my expectations align", feedback_acierto: "'My expectations align' despersonaliza la cifra y la ata a estándares objetivos de mercado.", feedback_error: "'I hope you can give me' o 'maybe I would like' suena a pedir una concesión en lugar de negociar una tarifa técnica." },
-      { id: 22, categoria: "Entrevista - Motivo de Cambio Laboral", situacion: "Te consultan por qué dejás tu posición actual sin hablar mal de la empresa previa.", frase: "My current role reached a natural ceiling; ______ larger scale infrastructure challenges.", opciones: ["I am targeting", "I hate my previous boss and", "I just want to leave because"], correcta: "I am targeting", feedback_acierto: "'I am targeting' muestra ambición estratégica y dirección profesional sin quejas del pasado.", feedback_error: "Mencionar quejas personales o decir 'I just want to leave' enciende alarmas en recursos humanos." },
-      { id: 23, categoria: "Entrevista - Gestión de Crisis Pasada", situacion: "Te piden describir un proyecto que fracasó o enfrentó un bloqueo crítico.", frase: "When the third-party API crashed, ______ an immediate fallback protocol that secured 98% of transactions.", opciones: ["I orchestrated", "I panicked a little bit, but", "it wasn't my fault because"], correcta: "I orchestrated", feedback_acierto: "'I orchestrated' destaca tu capacidad de reacción ejecutiva y liderazgo ante la contingencia.", feedback_error: "Decir 'it wasn't my fault' te muestra a la defensiva e incapaz de asumir la resolución del problema." },
-      { id: 24, categoria: "Liderazgo - Delegación Clara", situacion: "Asignas un entregable clave a un miembro del equipo fijando responsabilidad puntual.", frase: "Please ______ ownership of the cloud migration report by Thursday 3 PM.", opciones: ["assume full", "try if you can have", "see if maybe you can take"], correcta: "assume full", feedback_acierto: "'Assume full ownership' transfiere autoridad y responsabilidad sin ambigüedades ni micro-gestión.", feedback_error: "'Try if you can' habilita excusas y diluye la rendición de cuentas operativa." },
-      { id: 25, categoria: "Liderazgo - Frenar Especulaciones", situacion: "El equipo debate rumores o suposiciones sin base técnica durante una llamada.", frase: "Rather than speculating, ______ validate the telemetry logs before making assumptions.", opciones: ["let's strictly", "maybe we could see if", "I don't know, but we might"], correcta: "let's strictly", feedback_acierto: "'Let's strictly validate' ancla al equipo en hechos verificables y corta la pérdida de tiempo.", feedback_error: "'Maybe we could see if' no tiene la fuerza necesaria para reencauzar una discusión improductiva." },
-      { id: 26, categoria: "Intervención - Validar y Corregir", situacion: "Un par propone una idea que omitió un riesgo legal o de seguridad crítico.", frase: "While that approach accelerates speed, ______ critical vulnerabilities in data compliance.", opciones: ["it introduces", "I think it's kind of bad because", "sorry to say this, but"], correcta: "it introduces", feedback_acierto: "'It introduces' señala el riesgo técnico con objetividad pura, separando el problema de la persona.", feedback_error: "Pedir disculpas o usar términos vagos como 'kind of bad' debilita tu advertencia técnica." },
-      { id: 27, categoria: "Gestión de Expectativas", situacion: "Un stakeholder consulta si una funcionalidad compleja puede estar lista 'para mañana'.", frase: "Quality testing cannot be bypassed; ______ the feature for Monday's staging environment.", opciones: ["we will release", "maybe we can see tomorrow", "I will try to work tonight and"], correcta: "we will release", feedback_acierto: "'We will release' fija una fecha viable y firme, protegiendo los estándares de entrega.", feedback_error: "Ofrecerte a 'trabajar toda la noche' degrada tu posicionamiento y sienta un precedente peligroso de explotación." },
-      { id: 28, categoria: "Comunicación Asincrónica", situacion: "Cierras un correo técnico donde se requieren decisiones antes de continuar.", frase: "To proceed without blocking the sprint, ______ your input by end of day.", opciones: ["we look forward to", "please reply if you have five minutes", "sorry to bother you, but"], correcta: "we look forward to", feedback_acierto: "'We look forward to' transmite profesionalismo y expectativa ejecutiva de respuesta.", feedback_error: "'Sorry to bother you' rebaja tu mensaje de trabajo al nivel de una molestia insignificante." },
-      { id: 29, categoria: "Reunión de Estatus - Resumen Ejecutivo", situacion: "Inicias tu turno de palabra en la call general y debes sintetizar el avance en una frase.", frase: "Over the past cycle, ______ 92% of our sprint goals ahead of schedule.", opciones: ["our team secured", "we kind of reached", "I think we did some things like"], correcta: "our team secured", feedback_acierto: "'Our team secured' comunica logro y solidez con métricas concretas que demuestran liderazgo.", feedback_error: "'We kind of reached' destruye el mérito del trabajo realizado mediante dudas innecesarias." },
-      { id: 30, categoria: "Control de Conversación - Redirigir Preguntas", situacion: "Te hacen una pregunta sobre un área ajena a tu responsabilidad técnica.", frase: "That falls under infrastructure governance; ______ connect with David for exact specifications.", opciones: ["I recommend you", "I have no idea, sorry", "not my problem, you can"], correcta: "I recommend you", feedback_acierto: "'I recommend you connect with' orienta al interlocutor con cortesía ejecutiva sin asumir cargas que no te corresponden.", feedback_error: "Decir 'I have no idea' proyecta ignorancia; decir 'not my problem' genera fricción innecesaria." },
-      { id: 31, categoria: "Negociación - Rechazar Descuentos", situacion: "Un cliente presiona diciendo que el presupuesto excede lo que pensaba invertir.", frase: "To preserve the technical rigor of this architecture, ______ negotiate below this baseline.", opciones: ["we cannot", "we are so sorry that we can't", "maybe we could ask if"], correcta: "we cannot", feedback_acierto: "'We cannot negotiate below this baseline' fija un límite firme y sobrio sustentado en la calidad técnica.", feedback_error: "Pedir 'perdón' por sostener tu tarifa profesional destruye la credibilidad del servicio." },
-      { id: 32, categoria: "Gestión de Crisis - Error Interno", situacion: "Un bug creado por tu equipo llegó a producción y debes dar la cara.", frase: "We have contained the patch; ______ our root-cause analysis and preventive safeguards.", opciones: ["here is", "sorry, we made a terrible mistake and", "please don't get mad, here is"], correcta: "here is", feedback_acierto: "'Here is our root-cause analysis' muestra madurez corporativa: contuviste el problema y presentas la solución preventiva.", feedback_error: "Dramatizar con 'terrible mistake' o pedir 'don't get mad' agrava la percepción de incompetencia." },
-      { id: 33, categoria: "Poner Límites - Comunicación Fuera de Hora", situacion: "Te escriben un viernes a la noche pidiendo cambios no urgentes.", frase: "Received. ______ review this first thing Monday morning during our planning session.", opciones: ["I will", "sorry I am not working now, maybe", "I will try to open my laptop if"], correcta: "I will", feedback_acierto: "'Received. I will review this Monday' acusa recibo, fija el límite con serenidad y descarta urgencias ficticias.", feedback_error: "Dar justificaciones personales sobre tu vida privada debilita el límite profesional." },
-      { id: 34, categoria: "Toma de Decisiones - Priorización", situacion: "Hay demasiadas iniciativas abiertas y debes forzar al equipo a elegir una prioridad.", frase: "To maximize impact this sprint, ______ allocating 80% of our capacity to the payment gateway.", opciones: ["we are", "maybe it's a good idea if we are", "I wonder if we should be"], correcta: "we are", feedback_acierto: "'We are allocating' expresa una decisión ya tomada y en curso, reduciendo debates interminables.", feedback_error: "'I wonder if we should' abre a votación algo que requiere criterio de dirección ejecutiva." },
-      { id: 35, categoria: "Entrevista - Preguntas al Entrevistador", situacion: "Al final de la entrevista te dicen 'Do you have any questions for us?' y quieres evaluar su madurez técnica.", frase: "How does your leadership team ______ technical debt against commercial feature delivery?", opciones: ["prioritize", "deal with the bad", "try to fix"], correcta: "prioritize", feedback_acierto: "'How does your leadership team prioritize technical debt' te coloca al nivel de un evaluador estratégico y no de un postulante pasivo.", feedback_error: "Preguntar 'how do you deal with the bad things' carece de vocabulario de negocio." },
-      { id: 36, categoria: "Facilitación - Cortar Monólogos", situacion: "Un participante lleva diez minutos repitiendo lo mismo sin llegar a un punto concreto.", frase: "Understood. ______ transform that feedback into an actionable requirement.", opciones: ["Let's", "Sorry for cutting you off, but", "Can you please stop talking so"], correcta: "Let's", feedback_acierto: "'Understood. Let's transform that into an actionable requirement' corta la repetición con elegancia y la convierte en trabajo útil.", feedback_error: "Disculparte por moderar una reunión debilita tu autoridad como facilitador." },
-      { id: 37, categoria: "Negociación - Términos de Pago", situacion: "Estableces las condiciones de desembolso antes de iniciar la consultoría.", frase: "Project onboarding initiates ______ the initial invoice clearance.", opciones: ["upon", "if maybe you can pay", "when you have time for"], correcta: "upon", feedback_acierto: "'Initiates upon the initial invoice clearance' establece una regla de negocio objetiva sin sonar agresivo ni inseguro.", feedback_error: "'If maybe you can pay' suena a favor optativo en lugar de una condición contractual básica." },
-      { id: 38, categoria: "Posicionamiento - Defender Criterio Técnico", situacion: "Un gerente no técnico quiere aplicar una solución rápida que dañará la base de datos.", frase: "While that shortcut offers immediate visibility, ______ architectural stability over the next two quarters.", opciones: ["it compromises", "I don't think it's very nice for", "it makes me feel sad about"], correcta: "it compromises", feedback_acierto: "'It compromises architectural stability' habla en términos de riesgo financiero y operativo a futuro.", feedback_error: "Usar argumentos emotivos ('makes me feel') permite que el interlocutor los desestime con facilidad." },
-      { id: 39, categoria: "Liderazgo - Reconocimiento y Visibilidad", situacion: "Presentas los resultados de un proyecto destacando la labor del equipo ante directores.", frase: "This milestone was achieved because ______ our operational frameworks with zero deviations.", opciones: ["the engineering team executed", "they worked very hard, poor guys, and", "we got lucky that"], correcta: "the engineering team executed", feedback_acierto: "'The team executed our frameworks with zero deviations' premia el método y la disciplina profesional.", feedback_error: "Atribuir el éxito a 'la suerte' o victimizar al equipo ('poor guys') resta seriedad al logro." },
-      { id: 40, categoria: "Control de Conversación - Aclarar Supuestos", situacion: "Te dan una instrucción vaga o contradictoria y necesitas confirmación por escrito.", frase: "To ensure exact compliance, ______ this requirement before committing resources.", opciones: ["let's document", "I am confused, sorry, can you", "I didn't understand your English, so"], correcta: "let's document", feedback_acierto: "'Let's document this requirement' protege la operación exigiendo claridad formal sin culpar a nadie.", feedback_error: "Culpar a tu comprensión ('I am confused' / 'didn't understand your English') regala tu estatus innecesariamente." },
-      { id: 41, categoria: "Gestión de Recursos - Pedir Presupuesto de Herramientas", situacion: "Necesitas adquirir licencias de software para acelerar la entrega del equipo.", frase: "Acquiring these licenses ______ manual deployment hours by 40% immediately.", opciones: ["reduces", "might maybe help a little to lower", "is something I wish we had to reduce"], correcta: "reduces", feedback_acierto: "'Reduces manual deployment hours by 40%' presenta la compra como un retorno de inversión indiscutible.", feedback_error: "Decir 'might maybe help a little' hace parecer la herramienta como un gasto prescindible." },
-      { id: 42, categoria: "Manejo de Desacuerdos - Alternativas Viables", situacion: "Debes frenar una propuesta inviable ofreciendo una alternativa realista al instante.", frase: "Deploying on Friday introduces unacceptable risk; ______ our deployment window for Tuesday at 6 AM.", opciones: ["we have secured", "I suggest we pray and see if", "we can try if you really want, but"], correcta: "we have secured", feedback_acierto: "'Deploying introduces unacceptable risk; we have secured Tuesday' frena el error y aporta la solución ya coordinada.", feedback_error: "'We can try if you really want' cede ante la presión operativa sabiendo que el sistema fallará." },
-      { id: 43, categoria: "Posicionamiento - Autonomía y Supervisión", situacion: "Un cliente quiere micro-gestionar cada paso de tu consultoría técnica.", frase: "To deliver peak efficiency, ______ milestone reviews every Friday in place of daily syncs.", opciones: ["we establish", "please don't watch me every day, sorry", "maybe you can trust us to do"], correcta: "we establish", feedback_acierto: "'We establish milestone reviews' estructura la metodología de trabajo protegiendo el tiempo de ejecución.", feedback_error: "Pedir 'please trust us' denota inseguridad y suele generar todavía más micro-gestión." },
-      { id: 44, categoria: "Cierre de Negociación - Próximos Pasos", situacion: "Finaliza una reunión con un cliente potencial y debes marcar el siguiente hito con firmeza.", frase: "Following this alignment, ______ the final statement of work by 5 PM tomorrow.", opciones: ["I will deliver", "I hope I can send you", "maybe someone from my team will try to write"], correcta: "I will deliver", feedback_acierto: "'I will deliver the statement of work' asume el control del cierre comercial con fecha y hora puntual.", feedback_error: "'I hope I can send' deja una sensación de duda e informalidad al momento de cerrar una venta." },
-      { id: 45, categoria: "Liderazgo - Cierre de Sprint con Autoridad", situacion: "Cierras la reunión trimestral consolidando la posición del equipo de cara al próximo ciclo.", frase: "Having stabilized core infrastructure, ______ scaling capacity to absorb peak fourth-quarter traffic.", opciones: ["our strategic priority is", "we will try to see if we can do", "I guess maybe next we should look at"], correcta: "our strategic priority is", feedback_acierto: "'Our strategic priority is' define foco, visión y liderazgo ejecutivo para todo el equipo.", feedback_error: "'I guess maybe next' diluye el plan de acción en especulaciones sin rumbo." }
-    ];
-
-    let currentIdx = 0;
-    let answered = false;
-
-    document.addEventListener("DOMContentLoaded", () => {
-      checkAuthStatus();
-      loadProfile();
-      updateScenarioPrompts();
-      renderQuestion();
-      loadVault();
-    });
-
-    function loadProfile() {
-      const saved = localStorage.getItem('pitchflow_profile');
-      if (saved) {
-        const p = JSON.parse(saved);
-        document.getElementById('profile-display-name').textContent = `Profesional: ${p.name || 'Ana'}`;
-        document.getElementById('profile-display-role').textContent = `Rol: ${p.role || 'Senior'}`;
-        document.getElementById('gym-rank').textContent = `Nivel: ${p.level || 'B1'} Leader`;
-      }
+    function loadPresetExample() {
+      const val = document.getElementById("scenarioSelect").value;
+      document.getElementById("inputText").value = PRESETS[val] || "";
     }
 
-    function openProfileModal() {
-      const saved = localStorage.getItem('pitchflow_profile');
-      if (saved) {
-        const p = JSON.parse(saved);
-        document.getElementById('user-name').value = p.name || '';
-        document.getElementById('user-role').value = p.role || '';
-        document.getElementById('user-level').value = p.level || 'B1';
-      }
-      document.getElementById('profile-modal').classList.remove('hidden');
-    }
+    async function runCalibration() {
+      const btn = document.getElementById("calibrateBtn");
+      const text = document.getElementById("inputText").value.trim();
+      const scenario = document.getElementById("scenarioSelect").value;
+      const user = localStorage.getItem("pitchflow_user");
 
-    function closeProfileModal() {
-      document.getElementById('profile-modal').classList.add('hidden');
-    }
+      if (!text) return;
 
-    function saveProfile() {
-      const profile = {
-        name: document.getElementById('user-name').value.trim() || 'Ana',
-        role: document.getElementById('user-role').value.trim() || 'Senior Professional',
-        level: document.getElementById('user-level').value
-      };
-      localStorage.setItem('pitchflow_profile', JSON.stringify(profile));
-      loadProfile();
-      closeProfileModal();
-    }
-
-    function updateScenarioPrompts() {
-      const scenario = document.getElementById('rw-scenario').value;
-      const select = document.getElementById('rw-preset-prompt');
-      select.innerHTML = '';
-
-      const presets = SCENARIO_PRESETS[scenario] || [];
-      presets.forEach(p => {
-        const opt = document.createElement('option');
-        opt.value = p.prompt;
-        opt.textContent = p.label;
-        select.appendChild(opt);
-      });
-
-      applyPresetPrompt();
-    }
-
-    function applyPresetPrompt() {
-      const promptVal = document.getElementById('rw-preset-prompt').value;
-      document.getElementById('rw-input').value = promptVal;
-    }
-
-    function renderQuestion() {
-      answered = false;
-      const q = EXERCISES[currentIdx];
-      
-      document.getElementById('gym-counter').textContent = `${currentIdx + 1} / ${EXERCISES.length}`;
-      document.getElementById('q-category').textContent = q.categoria;
-      document.getElementById('q-situation').textContent = q.situacion;
-
-      const parts = q.frase.split('______');
-      document.getElementById('q-before').textContent = parts[0];
-      document.getElementById('q-slot').textContent = '[ Selecciona tu postura ]';
-      document.getElementById('q-slot').className = 'inline-block px-3 py-1 mx-1 border-2 border-dashed border-amber-400/60 rounded-lg text-amber-300 bg-amber-400/5 font-semibold transition-all';
-      document.getElementById('q-after').textContent = parts[1] || '';
-
-      const container = document.getElementById('q-options');
-      container.innerHTML = '';
-
-      const shuffled = [...q.opciones].sort(() => Math.random() - 0.5);
-      shuffled.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.textContent = opt;
-        btn.className = 'w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950/70 hover:border-amber-400/50 hover:bg-slate-900 text-slate-200 font-medium text-sm transition-all cursor-pointer';
-        btn.onclick = () => selectOption(opt, btn);
-        container.appendChild(btn);
-      });
-
-      document.getElementById('q-feedback').className = 'hidden';
-      document.getElementById('btn-next').className = 'hidden';
-      document.getElementById('btn-save-gym').className = 'hidden';
-    }
-
-    function selectOption(opt, btn) {
-      if (answered) return;
-      const q = EXERCISES[currentIdx];
-      const slot = document.getElementById('q-slot');
-      const feedback = document.getElementById('q-feedback');
-      const badge = document.getElementById('feedback-badge');
-      const text = document.getElementById('feedback-text');
-      const nextBtn = document.getElementById('btn-next');
-      const saveBtn = document.getElementById('btn-save-gym');
-
-      slot.textContent = opt;
-
-      if (opt === q.correcta) {
-        answered = true;
-        slot.className = 'inline-block px-3 py-1 mx-1 border border-emerald-500/50 rounded-lg text-emerald-400 bg-emerald-500/10 font-bold';
-        btn.className = 'w-full text-left p-3.5 rounded-xl border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 font-semibold text-sm';
-        
-        feedback.className = 'rounded-xl p-5 border border-emerald-500/30 bg-emerald-500/10 text-emerald-200 text-sm';
-        badge.textContent = '✔️ Impacto Ejecutivo Confirmado';
-        badge.className = 'font-bold text-xs uppercase tracking-wider text-emerald-400 mb-1';
-        text.textContent = q.feedback_acierto;
-        
-        nextBtn.className = 'px-6 py-2.5 rounded-xl font-semibold bg-white text-slate-950 hover:bg-slate-200 transition-all text-sm cursor-pointer shadow-md ml-auto';
-        saveBtn.className = 'px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-amber-300 hover:bg-slate-700 transition-all border border-slate-700 cursor-pointer';
-      } else {
-        slot.className = 'inline-block px-3 py-1 mx-1 border border-rose-500/50 rounded-lg text-rose-400 bg-rose-500/10 font-semibold';
-        btn.className = 'w-full text-left p-3.5 rounded-xl border border-rose-500/50 bg-rose-500/10 text-rose-300 text-sm font-medium';
-        
-        feedback.className = 'rounded-xl p-5 border border-rose-500/30 bg-rose-500/10 text-rose-200 text-sm';
-        badge.textContent = '❌ Fuga de Autoridad Detectada';
-        badge.className = 'font-bold text-xs uppercase tracking-wider text-rose-400 mb-1';
-        text.textContent = q.feedback_error;
-      }
-    }
-
-    function nextQuestion() {
-      currentIdx = (currentIdx + 1) % EXERCISES.length;
-      renderQuestion();
-    }
-
-    // PROCESAMIENTO VÍA CLOUDFLARE WORKER
-    async function processRewriter() {
-      const rawInput = document.getElementById('rw-input').value.trim();
-      if (!rawInput) {
-        alert('Por favor escribe o selecciona un borrador para calibrar.');
-        return;
-      }
-
-      const scenario = document.getElementById('rw-scenario').value;
-      const btn = document.getElementById('btn-process');
-      const userEmail = localStorage.getItem('pitchflow_user_email') || 'anonymous@member.com';
-
-      btn.innerHTML = `<span class="animate-spin inline-block">⏳</span> <span>Calibrando con IA...</span>`;
       btn.disabled = true;
+      btn.innerHTML = "<span>⚡ Calibrando Postura...</span>";
 
       try {
-        const response = await fetch(WORKER_URL, {
+        const res = await fetch(`${WORKER_ENDPOINT}/calibrate`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: rawInput, scenario: scenario, email: userEmail })
+          body: JSON.stringify({ text, scenario, user })
         });
+        const data = await res.json();
 
-        if (!response.ok) {
-          throw new Error("El Worker reportó un error al procesar.");
+        if (data.diagnostic) {
+          document.getElementById("diagHabit").innerText = "⚠️ " + data.diagnostic;
+          document.getElementById("textOpt1").innerText = data.primaryFrame || data.result;
+          document.getElementById("textOpt2").innerText = data.poisedAlternative || "";
+          document.getElementById("lessonText").innerText = data.microLesson || "Enfoque ejecutado con dirección y autoridad.";
+        } else if (data.result) {
+          // Fallback en caso de string simple
+          document.getElementById("textOpt1").innerText = data.result;
+          document.getElementById("textOpt2").innerText = data.result;
         }
-
-        const parsed = await response.json();
-
-        document.getElementById('rw-output-text').textContent = parsed.version_ejecutiva;
-        document.getElementById('rw-output-analysis').innerHTML = `
-          <span class="text-amber-400 font-bold block mb-1">Fugas eliminadas: ${parsed.fugas_detectadas}</span>
-          <div>${parsed.analisis.replace(/\n/g, '<br>')}</div>
-        `;
-        document.getElementById('rw-result').classList.remove('hidden');
-
       } catch (err) {
-        alert("Aviso: " + err.message + ". Ejecutando calibración con motor de reglas local.");
-        runFallbackRewriter(rawInput, scenario);
+        document.getElementById("diagHabit").innerText = "Error de conexión con el Worker.";
       } finally {
-        btn.innerHTML = `<span>Calibrar Frase de Autoridad con IA</span>`;
         btn.disabled = false;
+        btn.innerHTML = "<span>⚡ Calibrar Postura</span>";
       }
     }
 
-    // MOTOR DE RESPALDO LOCAL
-    function runFallbackRewriter(rawInput, scenario) {
-      let text = rawInput;
-      let detectedWeakness = [];
-      let explanation = [];
-
-      if (/^(sorry|perd[oó]n|disculp[aá]|i am sorry|so sorry)[,\.\s]*/i.test(text)) {
-        text = text.replace(/^(sorry|perd[oó]n|disculp[aá]|i am sorry|so sorry)[,\.\s]*/i, '');
-        detectedWeakness.push("disculpa innecesaria ('sorry')");
-        explanation.push("• Se eliminó el pedido de disculpas inicial.");
-      }
-
-      if (scenario === 'entrevista') {
-        if (/\b(in the past years|in recent years|in the last years)\b/i.test(text)) {
-          text = text.replace(/\b(in the past years|in recent years|in the last years)[,\s]*(i am focused on|i focused on|i have been focused on)?\b/gi, "Over the past years, I have specialized in");
-          detectedWeakness.push("narración pasiva de trayectoria");
-          explanation.push("• Se sustituyó por 'Over the past years, I have specialized in' para proyectar autoridad de nicho.");
-        }
-        if (/\b(handling tasks|doing tasks|working on tasks|doing daily work)\b/i.test(text)) {
-          text = text.replace(/\b(handling tasks|doing tasks|working on tasks|doing daily work)\b/gi, "optimizing key operations");
-          detectedWeakness.push("lenguaje operativo básico ('handling tasks')");
-          explanation.push("• Se reemplazó por 'optimizing key operations' para pasar de ejecutor a estratega.");
-        }
-        if (/\b(and\s+)?(i think i can help your team|i think i can help you|i think i can help)\b/gi.test(text)) {
-          text = text.replace(/\b(and\s+)?(i think i can help your team|i think i can help you|i think i can help)\b/gi, ", and I am positioned to drive measurable value for your team");
-          detectedWeakness.push("postura tentativa ('I think I can help')");
-          explanation.push("• Sustituido por 'I am positioned to drive measurable value' (retorno de inversión).");
-        }
-      }
-
-      const generalRules = [
-        { regex: /\bbecause\s+(we have a big problem with|there is a big problem with|a big problem)\b/gi, replace: "due to an operational bottleneck in", name: "'because a big problem'", fix: "• Sustituido por 'due to an operational bottleneck in'." },
-        { regex: /\b(we have a big problem with|there is a big problem with|a big problem)\b/gi, replace: "an operational bottleneck in", name: "'big problem'", fix: "• Sustituido por 'operational bottleneck'." },
-        { regex: /\b(i think we can|i think we could|i think we should)\b/gi, replace: "I recommend we", name: "'I think we can/should'", fix: "• Reemplazado por 'I recommend we'." },
-        { regex: /\b(we will try to|we can try to|i will try to)\b/gi, replace: "we are scheduled to", name: "'try to'", fix: "• Cambiado por 'we are scheduled to'." },
-        { regex: /\b(maybe we can|maybe we could)\b/gi, replace: "we are positioned to", name: "'maybe we can'", fix: "• Reemplazado por 'we are positioned to'." }
-      ];
-
-      generalRules.forEach(rule => {
-        if (rule.regex.test(text)) {
-          text = text.replace(rule.regex, rule.replace);
-          detectedWeakness.push(rule.name);
-          explanation.push(rule.fix);
-        }
-      });
-
-      text = text.replace(/\s+/g, ' ').trim();
-      text = text.charAt(0).toUpperCase() + text.slice(1);
-
-      document.getElementById('rw-output-text').textContent = text;
-      document.getElementById('rw-output-analysis').innerHTML = `
-        <span class="text-amber-400 font-bold block mb-1">Fugas eliminadas: ${detectedWeakness.length > 0 ? detectedWeakness.join(", ") : "Ninguna"}</span>
-        <div class="space-y-1">${explanation.map(item => `<div>${item}</div>`).join("")}</div>
-      `;
-      document.getElementById('rw-result').classList.remove('hidden');
-    }
-
-    function copyOutput() {
-      const text = document.getElementById('rw-output-text').textContent;
+    // BOTONES DE ACCIÓN: COPIAR Y ESCUCHAR PRONUNCIACIÓN
+    function copyPhrase(elementId) {
+      const text = document.getElementById(elementId).innerText.replace(/^"|"$/g, '');
       navigator.clipboard.writeText(text);
-      const btn = document.getElementById('btn-copy');
-      btn.textContent = '¡Copiado!';
-      btn.className = 'text-xs bg-emerald-600 text-white px-3 py-1.5 rounded-lg shrink-0';
-      setTimeout(() => {
-        btn.textContent = 'Copiar';
-        btn.className = 'text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 shrink-0';
-      }, 2000);
+      alert("Frase copiada al portapapeles.");
     }
 
-    function getVaultData() {
-      return JSON.parse(localStorage.getItem('pitchflow_vault') || '[]');
-    }
-
-    function saveVaultData(data) {
-      localStorage.setItem('pitchflow_vault', JSON.stringify(data));
-      loadVault();
-    }
-
-    function saveRewriterToVault() {
-      const text = document.getElementById('rw-output-text').textContent;
-      const scenario = document.getElementById('rw-scenario');
-      const categoryName = scenario.options[scenario.selectedIndex].text.split('/')[0].trim();
-
-      const vault = getVaultData();
-      if (!vault.some(item => item.phrase === text)) {
-        vault.unshift({
-          id: Date.now(),
-          category: categoryName,
-          phrase: text,
-          date: new Date().toLocaleDateString()
-        });
-        saveVaultData(vault);
-        alert('Frase guardada en tu Bóveda Personal.');
-      } else {
-        alert('Esta frase ya está en tu Bóveda.');
-      }
-    }
-
-    function saveCurrentGymToVault() {
-      const q = EXERCISES[currentIdx];
-      const fullPhrase = q.frase.replace('______', q.correcta);
-
-      const vault = getVaultData();
-      if (!vault.some(item => item.phrase === fullPhrase)) {
-        vault.unshift({
-          id: Date.now(),
-          category: q.categoria,
-          phrase: fullPhrase,
-          date: new Date().toLocaleDateString()
-        });
-        saveVaultData(vault);
-        alert('¡Ejercicio guardado en tu Bóveda!');
-      } else {
-        alert('Este ejercicio ya fue guardado en tu Bóveda.');
-      }
-    }
-
-    function loadVault(filter = 'all') {
-      const vault = getVaultData();
-      document.getElementById('vault-count-badge').textContent = vault.length;
-
-      const container = document.getElementById('vault-list');
-      container.innerHTML = '';
-
-      const filtered = filter === 'all' 
-        ? vault 
-        : vault.filter(item => item.category.toLowerCase().includes(filter.toLowerCase()));
-
-      if (filtered.length === 0) {
-        container.innerHTML = `
-          <div class="text-center py-10 text-slate-500 border border-dashed border-slate-800 rounded-xl">
-            Tu bóveda está vacía. Guarda frases desde el Reescritor o aciertos del Gimnasio.
-          </div>
-        `;
+    function speakPhrase(elementId) {
+      const text = document.getElementById(elementId).innerText.replace(/^"|"$/g, '');
+      if (!window.speechSynthesis) {
+        alert("Tu navegador no soporta síntesis de voz.");
         return;
       }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-US";
+      utterance.rate = 0.95; // Cadencia serena y ejecutiva
+      
+      const voices = window.speechSynthesis.getVoices();
+      const usVoice = voices.find(v => v.lang.startsWith("en-US") || v.lang.startsWith("en"));
+      if (usVoice) utterance.voice = usVoice;
 
-      filtered.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3';
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function saveSpecificToVault(elementId) {
+      const text = document.getElementById(elementId).innerText.replace(/^"|"$/g, '');
+      const scenario = document.getElementById("scenarioSelect").value;
+      let vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
+      vault.push({ 
+        text, 
+        category: scenario === "claridad" ? "Claridad Estratégica" : "General", 
+        date: new Date().toLocaleDateString() 
+      });
+      localStorage.setItem("pitchflow_vault", JSON.stringify(vault));
+      renderVault();
+      alert("Guardado en tu Bóveda de Recursos.");
+    }
+
+    // 4. GIMNASIO DE PODER
+    const GYM_EXERCISES = [
+      {
+        category: "Claridad Estratégica",
+        scenario: "Oficina Presencial: Un colega pasa apurado por tu escritorio, habla rápido y te pide una tarea sin contexto claro.",
+        prompt: "To make sure we execute this accurately, ______ the primary deliverable before I begin?",
+        options: [
+          { text: "could you define", correct: true, feedback: "'Could you define the primary deliverable' frena el apuro del otro con elegancia. Establece que tu tiempo operativo requiere precisión sin exponerte." },
+          { text: "sorry, you speak too fast for me to understand", correct: false, feedback: "Decir que tu inglés es malo o que el otro habla rápido te pone en sumisión frente a tu par." },
+          { text: "I didn't get that because my English is bad, so", correct: false, feedback: "Dinamita tu autoridad inmediatamente justificándote en el idioma." }
+        ]
+      },
+      {
+        category: "Claridad Estratégica",
+        scenario: "Sala de Juntas: En plena reunión usan una jerga enredada o siglas internas y necesitás entender el fondo sin exponerte.",
+        prompt: "______ the business implication behind that approach?",
+        options: [
+          { text: "Could you clarify", correct: true, feedback: "'Could you clarify the business implication' eleva la discusión: obligás al otro a salir del tecnicismo o la confusión y hablar de impacto." },
+          { text: "Sorry, I am lost and don't know what you are saying", correct: false, feedback: "Decir 'I am lost' transmite descontrol ante la mirada de todo el equipo en la sala." },
+          { text: "Wait, what does that mean? I don't understand", correct: false, feedback: "Suena reactivo e inseguro. Es mejor enfocar la pregunta en el impacto de negocio." }
+        ]
+      },
+      {
+        category: "Claridad Estratégica",
+        scenario: "Reunión 1 a 1: Tu superior te da instrucciones que chocan con lo acordado ayer.",
+        prompt: "To align with yesterday's baseline, ______ prioritizing speed over scope validation?",
+        options: [
+          { text: "are we officially", correct: true, feedback: "'Are we officially prioritizing' pide una definición de dirección formal sin confrontar ni sonar a queja personal." },
+          { text: "you are confusing me, sorry, what do you want?", correct: false, feedback: "Te coloca como víctima de la confusión en lugar de socia estratégica que audita el proceso." },
+          { text: "I think you said something completely different yesterday", correct: false, feedback: "Genera fricción personal en vez de enfocarse en la decisión técnica." }
+        ]
+      },
+      {
+        category: "Claridad Estratégica",
+        scenario: "Pasillo / Café: En una charla rápida con ruido ambiente no captaste la última parte de su pregunta.",
+        prompt: "______ the second part of that question so I can give you an accurate answer?",
+        options: [
+          { text: "Could you restate", correct: true, feedback: "'Could you restate the second part' demuestra escucha activa y profesionalismo enfocado en responder con precisión." },
+          { text: "Sorry, what? My English is not good today", correct: false, feedback: "Disculparte por tu idioma en una charla informal destruye tu autoridad sin necesidad." },
+          { text: "I don't understand, can you say it again slower?", correct: false, feedback: "Te posiciona como estudiante en vez de como ejecutiva par." }
+        ]
+      },
+      {
+        category: "Claridad Estratégica",
+        scenario: "Presentación en Vivo: Una pregunta del público es desordenada, larga o capciosa.",
+        prompt: "To address your core concern directly, ______ the specific risk you want to mitigate?",
+        options: [
+          { text: "could you isolate", correct: true, feedback: "'Could you isolate the specific risk' desactiva el desorden, devuelve el foco al interlocutor y te da el control de la sala." },
+          { text: "Sorry, I didn't understand your point at all", correct: false, feedback: "Expone una supuesta falta de comprensión propia frente a toda la audiencia." },
+          { text: "That was very confusing, what do you mean?", correct: false, feedback: "Confrontar agresivamente debilita tu compostura ejecutiva." }
+        ]
+      },
+      {
+        category: "Decisión",
+        scenario: "Definir postura técnica sobre un lanzamiento postergado.",
+        prompt: "Based on our quality audit, I ______ proceeding until all validation checks pass.",
+        options: [
+          { text: "strongly advise against", correct: true, feedback: "'Strongly advise against' refleja juicio experto y firmeza técnica." },
+          { text: "think maybe we should not", correct: false, feedback: "Transmite duda y falta de convicción." },
+          { text: "am afraid we can't", correct: false, feedback: "Introduce debilidad emocional innecesaria." }
+        ]
+      },
+      {
+        category: "Límites",
+        scenario: "Frenar un pedido fuera de hora sin pedir perdón.",
+        prompt: "I am currently offline. I will ______ tomorrow morning during working hours.",
+        options: [
+          { text: "review this first thing", correct: true, feedback: "Fija el límite con autoridad y enfoque en el entregable." },
+          { text: "try to look at it if I have time, sorry", correct: false, feedback: "Pide disculpas por respetar tus propios horarios." }
+        ]
+      }
+    ];
+
+    function renderGym(filter = "all") {
+      const container = document.getElementById("gymContainer");
+      container.innerHTML = "";
+      
+      const filtered = filter === "all" ? GYM_EXERCISES : GYM_EXERCISES.filter(e => e.category === filter);
+
+      filtered.forEach((ex, idx) => {
+        const card = document.createElement("div");
+        card.className = "exercise-card";
         card.innerHTML = `
-          <div>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded">${item.category}</span>
-            <p class="text-sm font-semibold text-white mt-1.5">${item.phrase}</p>
+          <span class="exercise-tag">${ex.category}</span>
+          <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:0.5rem;">${ex.scenario}</p>
+          <p class="exercise-prompt"><strong>${ex.prompt}</strong></p>
+          <div class="options-grid">
+            ${ex.options.map((opt, oIdx) => `
+              <button class="option-btn" onclick="checkAnswer(${idx}, ${oIdx}, this)">${opt.text}</button>
+            `).join("")}
           </div>
-          <div class="flex items-center gap-2 self-end sm:self-auto shrink-0">
-            <button onclick="navigator.clipboard.writeText('${item.phrase}'); alert('Copiado');" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded border border-slate-700">Copiar</button>
-            <button onclick="deleteVaultItem(${item.id})" class="text-xs text-rose-400 hover:text-rose-300 p-1">✕</button>
-          </div>
+          <div id="feedback-${idx}" class="feedback-box"></div>
         `;
         container.appendChild(card);
       });
     }
 
-    function deleteVaultItem(id) {
-      const vault = getVaultData().filter(item => item.id !== id);
-      saveVaultData(vault);
-    }
+    function checkAnswer(exIdx, optIdx, btn) {
+      const ex = GYM_EXERCISES[exIdx];
+      const opt = ex.options[optIdx];
+      const feedback = document.getElementById(`feedback-${exIdx}`);
+      const parent = btn.parentElement;
 
-    function clearVault() {
-      if (confirm('¿Deseas vaciar todas las frases guardadas en tu Bóveda?')) {
-        saveVaultData([]);
-      }
-    }
+      parent.querySelectorAll(".option-btn").forEach(b => {
+        b.classList.remove("correct", "wrong");
+        b.disabled = true;
+      });
 
-    function filterVault(cat) {
-      loadVault(cat);
-    }
-
-    function switchTab(tab) {
-      document.getElementById('view-gym').classList.add('hidden');
-      document.getElementById('view-rewriter').classList.add('hidden');
-      document.getElementById('view-vault').classList.add('hidden');
-
-      document.getElementById('tab-gym').className = 'px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all';
-      document.getElementById('tab-rewriter').className = 'px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all';
-      document.getElementById('tab-vault').className = 'px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-1.5';
-
-      if (tab === 'gym') {
-        document.getElementById('view-gym').classList.remove('hidden');
-        document.getElementById('tab-gym').className = 'px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all';
-      } else if (tab === 'rewriter') {
-        document.getElementById('view-rewriter').classList.remove('hidden');
-        document.getElementById('tab-rewriter').className = 'px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all';
+      if (opt.correct) {
+        btn.classList.add("correct");
+        feedback.style.display = "block";
+        feedback.style.background = "rgba(16, 185, 129, 0.1)";
+        feedback.style.border = "1px solid var(--accent-emerald)";
+        feedback.style.color = "var(--text-main)";
+        feedback.innerHTML = `<strong>✓ Impecable:</strong> ${opt.feedback}`;
       } else {
-        document.getElementById('view-vault').classList.remove('hidden');
-        document.getElementById('tab-vault').className = 'px-3.5 py-1.5 text-xs sm:text-sm font-semibold rounded-lg bg-amber-400 text-slate-950 transition-all flex items-center gap-1.5';
-        loadVault();
+        btn.classList.add("wrong");
+        feedback.style.display = "block";
+        feedback.style.background = "rgba(239, 68, 68, 0.1)";
+        feedback.style.border = "1px solid var(--accent-ruby)";
+        feedback.style.color = "var(--text-main)";
+        feedback.innerHTML = `<strong>✗ Fuga de autoridad:</strong> ${opt.feedback}`;
       }
     }
+
+    function filterGym(cat, chip) {
+      document.querySelectorAll("#gimnasio .filter-chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      renderGym(cat);
+    }
+
+    // 5. BOVEDA
+    function renderVault(filter = "all") {
+      const container = document.getElementById("vaultContainer");
+      const vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
+      container.innerHTML = "";
+
+      if (vault.length === 0) {
+        container.innerHTML = `<p style="color:var(--text-dim); text-align:center; padding:2rem;">Aún no guardaste fórmulas calibradas en tu Bóveda.</p>`;
+        return;
+      }
+
+      const filtered = filter === "all" ? vault : vault.filter(v => v.category === filter);
+
+      filtered.forEach((item, i) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.style.marginBottom = "0.75rem";
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+            <span class="exercise-tag">${item.category}</span>
+            <span style="font-size:0.75rem; color:var(--text-dim);">${item.date}</span>
+          </div>
+          <p style="font-size:0.95rem; line-height:1.5;">${item.text}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterVault(cat, chip) {
+      document.querySelectorAll("#boveda .filter-chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      renderVault(cat);
+    }
+
+    // INICIALIZACIÓN
+    window.onload = () => {
+      checkAuth();
+      loadPresetExample();
+      renderGym();
+      renderVault();
+    };
   </script>
 </body>
 </html>
