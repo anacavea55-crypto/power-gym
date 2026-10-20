@@ -560,13 +560,13 @@
     <!-- 2. GIMNASIO DE PODER -->
     <section id="gimnasio" class="section-content">
       <h1 class="hero-title">Gimnasio de Poder</h1>
-      <p class="hero-subtitle">Entrená el reflejo automático para responder con jerarquía en situaciones de alta presión. Cada ejercicio cuenta con herramientas para copiar y escuchar la entonación ejecutiva.</p>
+      <p class="hero-subtitle">Entrená los 45 escenarios críticos para erradicar la subordinación y responder con jerarquía ejecutiva. Cada ejercicio te permite copiar la fórmula y escuchar la pronunciación.</p>
       
       <div class="filter-bar">
-        <button class="filter-chip active" onclick="filterGym('all', this)">Todos (15)</button>
-        <button class="filter-chip" onclick="filterGym('Manejo del Tiempo', this)">Manejo del Tiempo & Ritmo</button>
-        <button class="filter-chip" onclick="filterGym('Criterio Técnico', this)">Criterio Técnico & Validación</button>
-        <button class="filter-chip" onclick="filterGym('Límites & Decisión', this)">Límites & Toma de Decisiones</button>
+        <button class="filter-chip active" onclick="filterGym('all', this)">Todos (45)</button>
+        <button class="filter-chip" onclick="filterGym('Manejo del Tiempo', this)">Manejo del Tiempo & Ritmo (15)</button>
+        <button class="filter-chip" onclick="filterGym('Criterio Técnico', this)">Criterio Técnico & Validación (15)</button>
+        <button class="filter-chip" onclick="filterGym('Límites & Decisión', this)">Límites & Toma de Decisiones (15)</button>
       </div>
 
       <div id="gymContainer"></div>
@@ -575,13 +575,14 @@
     <!-- 3. BOVEDA -->
     <section id="boveda" class="section-content">
       <h1 class="hero-title">Bóveda de Recursos</h1>
-      <p class="hero-subtitle">Tus frases de rescate táctico y fórmulas calibradas guardadas para consultar en 10 segundos antes de una reunión decisiva.</p>
+      <p class="hero-subtitle">Tus fórmulas tácticas guardadas para repasar en 10 segundos antes de una reunión decisiva.</p>
       
       <div class="filter-bar">
         <button class="filter-chip active" onclick="filterVault('all', this)">Todos</button>
         <button class="filter-chip" onclick="filterVault('Manejo del Tiempo', this)">Manejo del Tiempo</button>
         <button class="filter-chip" onclick="filterVault('Criterio Técnico', this)">Criterio Técnico</button>
         <button class="filter-chip" onclick="filterVault('Límites & Decisión', this)">Límites & Decisión</button>
+        <button class="filter-chip" onclick="filterVault('Authority Frame', this)">Authority Frame</button>
       </div>
 
       <div id="vaultContainer"></div>
@@ -699,7 +700,7 @@
       }
     }
 
-    // ACCIONES GENERALES: COPIAR Y ESCUCHAR AUDIO
+    // UTILIDADES: COPIAR Y ESCUCHAR AUDIO
     function copyDirectText(rawText) {
       navigator.clipboard.writeText(rawText);
       alert("Fórmula copiada al portapapeles.");
@@ -734,7 +735,6 @@
 
     function saveSpecificToVault(elementId) {
       const text = document.getElementById(elementId).innerText.replace(/^"|"$/g, '');
-      const scenario = document.getElementById("scenarioSelect").value;
       let vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
       vault.push({ 
         text, 
@@ -746,26 +746,28 @@
       alert("Guardado en tu Bóveda de Recursos.");
     }
 
-    // 4. GIMNASIO DE PODER: LOS 15 ESCENARIOS TÁCTICOS
+    // 4. GIMNASIO DE PODER: LOS 45 ESCENARIOS COMPLETOS
     const GYM_EXERCISES = [
-      // BLOQUE 1: MANEJO DEL TIEMPO, TURNOS Y RITMO
+      // ==========================================
+      // BLOQUE 1: MANEJO DEL TIEMPO, TURNOS Y RITMO (1 a 15)
+      // ==========================================
       {
         category: "Manejo del Tiempo",
-        title: "1. Llegar un par de minutos tarde a una llamada",
+        title: "1. Demora al entrar a una videollamada",
         weak: "«Perdón a todos por la demora, se me complicó la reunión anterior...»",
-        prompt: "¿Cuál es la fórmula ejecutiva para no trasladar el estrés de tu agenda?",
+        prompt: "¿Cuál es la fórmula para no trasladar el desorden de tu agenda a la mesa?",
         phraseEn: "Thank you for waiting. Let's dive straight into the first agenda item.",
-        strategy: "No traslada el estrés de tu agenda a la mesa; enfoca al equipo en la acción inmediata.",
+        strategy: "No traslada estrés ni culpa a los asistentes; enfoca al equipo en la acción inmediata.",
         options: [
           { text: "Thank you for waiting. Let's dive straight into the first agenda item.", correct: true },
-          { text: "Sorry for being late everyone, my previous call was a complete disaster.", correct: false, feedback: "Justificarte con tu agenda desordenada reduce tu percepción de control." }
+          { text: "Sorry for being late everyone, my previous call was a complete mess.", correct: false, feedback: "Justificarte con tu agenda caótica reduce tu percepción de control." }
         ]
       },
       {
         category: "Manejo del Tiempo",
-        title: "2. La reunión se está desviando del tema principal",
+        title: "2. La reunión se está desviando del tema central",
         weak: "«Perdón que me meta, pero creo que nos fuimos de tema...»",
-        prompt: "¿Cómo modelar liderazgo para cuidar el tiempo del equipo?",
+        prompt: "¿Cómo modelar liderazgo para encauzar el tiempo de todos?",
         phraseEn: "To protect the team's time, I propose we steer back to the core objective of this session.",
         strategy: "Modela liderazgo de proyecto cuidando el recurso más valioso: el tiempo de todos.",
         options: [
@@ -775,7 +777,7 @@
       },
       {
         category: "Manejo del Tiempo",
-        title: "3. Necesitás que repitan un dato que no se escuchó bien",
+        title: "3. Audio entrecortado / Necesidad de repetir un dato",
         weak: "«Perdón, mala mía, ¿me repetís lo último que no presté atención?»",
         prompt: "¿Cómo pedir la repetición atribuyéndola a rigor técnico y no a distracción?",
         phraseEn: "The audio broke up on that last metric. Could you restate it to ensure the data is aligned?",
@@ -787,11 +789,11 @@
       },
       {
         category: "Manejo del Tiempo",
-        title: "4. Querés cerrar la reunión porque se cumplió la hora",
+        title: "4. Cierre puntual de la sesión cumplida la hora",
         weak: "«Perdón que tenga que cortar, pero me tengo que ir a otra llamada...»",
-        prompt: "¿Cómo respetar el marco temporal pactado con autoridad?",
+        prompt: "¿Cómo respetar el marco temporal pactado con autoridad ejecutiva?",
         phraseEn: "We have reached our scheduled time. Let's confirm action items and lock in next steps.",
-        strategy: "Respeta el marco temporal pactado sin necesidad de justificar compromisos posteriores.",
+        strategy: "Respeta el marco temporal pactado sin justificar compromisos posteriores.",
         options: [
           { text: "We have reached our scheduled time. Let's confirm action items and lock in next steps.", correct: true },
           { text: "Sorry guys, I have to jump to another call, so I must hang up now.", correct: false, feedback: "Pide disculpas por cumplir el horario previamente estipulado." }
@@ -799,35 +801,157 @@
       },
       {
         category: "Manejo del Tiempo",
-        title: "5. Tenés que retirarte antes de que finalice la sesión",
+        title: "5. Salida anticipada pautada en una reunión",
         weak: "«Mil disculpas con todos, me da vergüenza pero me tengo que desconectar...»",
         prompt: "¿Cómo comunicar tu salida anticipada con orden y sin pedir indulgencia?",
         phraseEn: "I have a hard stop at 11:00 for a prior commitment. I will leave my notes in the chat and review the minutes.",
-        strategy: "Comunica orden profesional y anticipación sin pedir disculpas por gestionar tu calendario.",
+        strategy: "Comunica orden profesional y anticipación sin pedir indulgencia.",
         options: [
           { text: "I have a hard stop at 11:00 for a prior commitment. I will leave my notes in the chat and review the minutes.", correct: true },
-          { text: "A thousand apologies, I feel so bad but I have to leave early.", correct: false, feedback: "Decir 'I feel so bad' introduce una carga de culpa innecesaria en el ámbito corporativo." }
+          { text: "A thousand apologies, I feel so bad but I have to leave early.", correct: false, feedback: "Decir 'I feel so bad' introduce una carga de culpa infantil en el ámbito corporativo." }
+        ]
+      },
+      {
+        category: "Manejo del Tiempo",
+        title: "6. Retomar el turno de la palabra tras ser interrumpido",
+        weak: "«Ah perdón, hablá vos primero, no pasa nada...»",
+        prompt: "¿Cómo recuperar el turno de palabra con firmeza y cortesía?",
+        phraseEn: "Allow me to conclude this point before opening the floor for feedback.",
+        strategy: "Frena la interrupción sin agresividad, completando la tesis antes de ceder el espacio.",
+        options: [
+          { text: "Allow me to conclude this point before opening the floor for feedback.", correct: true },
+          { text: "Sorry, you can speak first, my point was not that important.", correct: false, feedback: "Decir que tu punto no era importante invalida tu posición en la mesa." }
+        ]
+      },
+      {
+        category: "Manejo del Tiempo",
+        title: "7. Ajustar la agenda sobrecargada al inicio",
+        weak: "«Perdón, pero tenemos demasiados temas y dudo que lleguemos...»",
+        prompt: "¿Cómo priorizar formalmente los puntos críticos del día?",
+        phraseEn: "Given our 45-minute window, let's prioritize topics 1 and 3 to ensure actionable decisions today.",
+        strategy: "Toma el control operativo de la sesión estableciendo prioridades realistas de inmediato.",
+        options: [
+          { text: "Given our 45-minute window, let's prioritize topics 1 and 3 to ensure actionable decisions today.", correct: true },
+          { text: "Sorry, but this agenda is unrealistic and we will never finish in time.", correct: false, feedback: "La queja pasiva desordena la dinámica en lugar de proponer una reestructuración ejecutiva." }
+        ]
+      },
+      {
+        category: "Manejo del Tiempo",
+        title: "8. Acelerar una presentación que consume demasiado tiempo",
+        weak: "«Disculpá que te apure, pero se nos va la hora...»",
+        prompt: "¿Cómo invitar a la síntesis sin confrontar al expositor?",
+        phraseEn: "To ensure we reserve time for decision-making, let's jump straight to the strategic conclusions.",
+        strategy: "Enfoca la aceleración en el beneficio colectivo: llegar a los acuerdos y decisiones.",
+        options: [
+          { text: "To ensure we reserve time for decision-making, let's jump straight to the strategic conclusions.", correct: true },
+          { text: "Sorry to rush you, but you are taking way too long on these details.", correct: false, feedback: "Atacar el ritmo del colega genera fricción personal innecesaria." }
+        ]
+      },
+      {
+        category: "Manejo del Tiempo",
+        title: "9. Pedir una pausa técnica o receso necesario",
+        weak: "«Perdón, ¿podemos parar dos minutos? Me duele la cabeza...»",
+        prompt: "¿Cómo pausar una sesión larga con criterio de rendimiento?",
+        phraseEn: "Let's take a 5-minute technical recess to consolidate notes and resume with full focus.",
+        strategy: "Presenta el receso como una optimización del foco técnico del equipo y no como debilidad física.",
+        options: [
+          { text: "Let's take a 5-minute technical recess to consolidate notes and resume with full focus.", correct: true },
+          { text: "Sorry everyone, I'm exhausted and need a quick break if possible.", correct: false, feedback: "Expone vulnerabilidad personal en vez de enmarcar la pausa en la calidad del entregable." }
+        ]
+      },
+      {
+        category: "Manejo del Tiempo",
+        title: "10. Posponer un punto no urgente para la próxima sesión",
+        weak: "«Perdón, no llegamos a ver esto, mil disculpas...»",
+        prompt: "¿Cómo diferir un tema accesorio manteniendo el rigor de entrega?",
+        phraseEn: "We will table item 4 for Thursday's standup to dedicate adequate analysis to it.",
+        strategy: "Usa 'table' como decisión de gestión consciente para dar el análisis que el tema merece.",
+        options: [
+          { text: "We will table item 4 for Thursday's standup to dedicate adequate analysis to it.", correct: true },
+          { text: "Sorry, we failed to cover this because time ran out so fast.", correct: false, feedback: "Presentar el cierre como un fracaso transmite falta de previsión y control." }
+        ]
+      },
+      {
+        category: "Manejo del Tiempo",
+        title: "11. Solicitar la agenda previa antes de aceptar una reunión",
+        weak: "«Perdón que pregunte, ¿de qué se trata la reunión de mañana?»",
+        prompt: "¿Cómo exigir el objetivo de una convocatoria sin parecer evasivo?",
+        phraseEn: "To come fully prepared with the relevant data, could you share the target outcome for this session?",
+        strategy: "Posiciona tu solicitud en el valor que vas a aportar: venir preparado con datos concretos.",
+        options: [
+          { text: "To come fully prepared with the relevant data, could you share the target outcome for this session?", correct: true },
+          { text: "Sorry to ask, but what is this meeting even about? I have no context.", correct: false, feedback: "Suena reactivo y desinformado en vez de profesionalmente preventivo." }
+        ]
+      },
+      {
+        category: "Manejo del Tiempo",
+        title: "12. Detener conversaciones paralelas en la sala",
+        weak: "«Perdón, disculpen, no los quiero molestar pero no se escucha...»",
+        prompt: "¿Cómo unificar la atención de la sala con serenidad directiva?",
+        phraseEn: "Let's maintain a single conversation in the room so we capture all technical inputs.",
+        strategy: "Establece la regla del espacio con tono neutral y orientado a la captura técnica.",
+        options: [
+          { text: "Let's maintain a single conversation in the room so we capture all technical inputs.", correct: true },
+          { text: "Sorry, guys, could you please stop whispering? It's really distracting.", correct: false, feedback: "Pedir permiso para solicitar silencio denota falta de jerarquía sobre la sala." }
+        ]
+      },
+      {
+        category: "Manejo del Tiempo",
+        title: "13. Reagendar una llamada sin pedir perdón por tu agenda",
+        weak: "«Perdón, perdón, se me complicó la tarde, ¿podemos pasarla?»",
+        prompt: "¿Cómo proponer un cambio de horario con solvencia profesional?",
+        phraseEn: "Due to an unforeseen priority shift, I will reschedule our check-in. Does 3:00 PM tomorrow align with your calendar?",
+        strategy: "Aplica 'due to + sustantivo' con neutralidad y propone inmediatamente la ventana de solución.",
+        options: [
+          { text: "Due to an unforeseen priority shift, I will reschedule our check-in. Does 3:00 PM tomorrow align with your calendar?", correct: true },
+          { text: "Sorry for the inconvenience, my day became crazy and I can't make it.", correct: false, feedback: "Describir tu día como 'crazy' proyecta desborde y falta de estructura." }
+        ]
+      },
+      {
+        category: "Manejo del Tiempo",
+        title: "14. Finalizar preguntas cuando la hora de la sesión expira",
+        weak: "«Perdón, no hay más tiempo para preguntas, disculpen...»",
+        prompt: "¿Cómo canalizar dudas pendientes por escrito sin frustrar a la audiencia?",
+        phraseEn: "To honor our end time, please drop any remaining technical queries in the channel; I will address each by end of day.",
+        strategy: "Honra el tiempo colectivo y ofrece un canal formal de resolución asincrónica.",
+        options: [
+          { text: "To honor our end time, please drop any remaining technical queries in the channel; I will address each by end of day.", correct: true },
+          { text: "Sorry everyone, we have zero minutes left for questions so we have to stop.", correct: false, feedback: "Cierra de forma abrupta y reactiva sin dejar un camino de resolución." }
+        ]
+      },
+      {
+        category: "Manejo del Tiempo",
+        title: "15. Solicitar tiempo para revisar un documento antes de opinar",
+        weak: "«Perdón, no lo miré todavía, qué mal de mi parte...»",
+        prompt: "¿Cómo establecer tu proceso de revisión técnica con seriedad?",
+        phraseEn: "To provide a thorough technical review, I will examine the documentation and deliver my assessment by tomorrow morning.",
+        strategy: "Transforma la supuesta tardanza en una garantía de análisis exhaustivo y responsable.",
+        options: [
+          { text: "To provide a thorough technical review, I will examine the documentation and deliver my assessment by tomorrow morning.", correct: true },
+          { text: "Sorry, I haven't had time to look at it, I'm so behind on emails.", correct: false, feedback: "Admitir estar 'behind on emails' disminuye tu percepción de confiabilidad operativa." }
         ]
       },
 
-      // BLOQUE 2: CRITERIO TÉCNICO, OBJECIONES Y VALIDACIÓN
+      // ==========================================
+      // BLOQUE 2: CRITERIO TÉCNICO, OBJECIONES Y VALIDACIÓN (16 a 30)
+      // ==========================================
       {
         category: "Criterio Técnico",
-        title: "6. No sabés un dato específico en ese momento",
+        title: "16. No disponer de un dato específico en ese momento",
         weak: "«Perdón, no sé cómo se me pasó ese número, qué desastre...»",
-        prompt: "¿Cómo reemplazar la vacilación por rigor y compromiso de entrega?",
+        prompt: "¿Cómo reemplazar la vacilación por rigor metodológico?",
         phraseEn: "That specific metric is not consolidated here. I will verify it and follow up in writing today.",
         strategy: "Reemplaza la vergüenza por rigor metodológico y compromiso formal de entrega.",
         options: [
           { text: "That specific metric is not consolidated here. I will verify it and follow up in writing today.", correct: true },
-          { text: "I'm so sorry, I don't know how I missed that number, what a disaster.", correct: false, feedback: "Autodescalificarte frente a tu equipo erosiona tu autoridad técnica." }
+          { text: "I'm so sorry, I don't know how I missed that number, what a disaster.", correct: false, feedback: "Autodescalificarte ante el equipo dinamita tu autoridad técnica." }
         ]
       },
       {
         category: "Criterio Técnico",
-        title: "7. Detectás un error evidente en la presentación de otro",
+        title: "17. Detectar un error evidente en la presentación de otro",
         weak: "«Perdón si me equivoco, pero me parece que ese gráfico está mal...»",
-        prompt: "¿Cómo aportar el dato objetivo sin dudar de tu propio análisis ni atacar?",
+        prompt: "¿Cómo aportar el dato objetivo sin dudar de tu análisis?",
         phraseEn: "An observation on that metric: cross-referencing our system logs, the verified figure is this.",
         strategy: "No duda de su propio análisis; aporta el dato objetivo sin atacar personalmente al presentador.",
         options: [
@@ -837,23 +961,23 @@
       },
       {
         category: "Criterio Técnico",
-        title: "8. La propuesta del cliente o colega es inviable",
+        title: "18. Propuesta inviable por parte del cliente o colega",
         weak: "«Disculpame, pero me parece que lo que pedís es medio imposible...»",
-        prompt: "¿Cómo pasar de la queja emocional a un diagnóstico con solución adjunta?",
+        prompt: "¿Cómo pasar de la queja emocional a un diagnóstico con alternativa viable?",
         phraseEn: "With our current timeline and resources, that scope compromises quality. The viable alternative is this.",
-        strategy: "Pasa de la queja emocional a un diagnóstico técnico objetivo acompañado de una alternativa viable.",
+        strategy: "Pasa de la queja a un diagnóstico objetivo acompañado de una alternativa viable.",
         options: [
           { text: "With our current timeline and resources, that scope compromises quality. The viable alternative is this.", correct: true },
-          { text: "Excuse me, but what you are asking for is completely impossible to do.", correct: false, feedback: "Genera rechazo y confrontación sin brindar una alternativa constructiva." }
+          { text: "Excuse me, but what you are asking for is completely impossible to do.", correct: false, feedback: "Genera choque y rechazo sin brindar una vía técnica de salida." }
         ]
       },
       {
         category: "Criterio Técnico",
-        title: "9. El interlocutor no comprende tu explicación técnica",
-        weak: "«Perdón, me expliqué horrible, soy muy malo explicando esto...»",
+        title: "19. El interlocutor no comprende tu explicación técnica",
+        weak: "«Perdón, me expliqué horrible, soy malísimo explicando esto...»",
         prompt: "¿Cómo asumir la claridad pedagógica sin denigrar tu propia capacidad?",
         phraseEn: "Let's look at this workflow from another angle to ensure the operational impact is fully clear.",
-        strategy: "Asume la responsabilidad de la claridad pedagógica sin atacar la propia competencia profesional.",
+        strategy: "Asume la claridad pedagógica sin denigrar tu propia solvencia profesional.",
         options: [
           { text: "Let's look at this workflow from another angle to ensure the operational impact is fully clear.", correct: true },
           { text: "Sorry, I explained that terribly, I am so bad at explaining things in English.", correct: false, feedback: "Atacar tu capacidad de comunicación frente al cliente te posiciona en inferioridad." }
@@ -861,33 +985,155 @@
       },
       {
         category: "Criterio Técnico",
-        title: "10. Reclamar una tarea demorada que frena tu trabajo",
+        title: "20. Reclamar una tarea demorada que frena tu trabajo",
         weak: "«Perdón que sea tan pesado molestándote con esto de nuevo...»",
-        prompt: "¿Cómo establecer que el seguimiento es un deber operativo y no una molestia?",
+        prompt: "¿Cómo establecer que el seguimiento es un deber operativo de calidad?",
         phraseEn: "To keep our final delivery on schedule, I need that input. What time can I expect it today?",
-        strategy: "Establece que el seguimiento es un deber operativo de calidad, no una molestia interpersonal.",
+        strategy: "Establece que el seguimiento es un deber operativo, no una molestia interpersonal.",
         options: [
           { text: "To keep our final delivery on schedule, I need that input. What time can I expect it today?", correct: true },
-          { text: "Sorry to bother you again and be annoying, but do you have my file?", correct: false, feedback: "Definirte como 'pesado' o 'molestia' desvaloriza la importancia crítica de tu entregable." }
+          { text: "Sorry to bother you again and be annoying, but do you have my file?", correct: false, feedback: "Definirte como 'molestia' devalúa la importancia estratégica de tu labor." }
+        ]
+      },
+      {
+        category: "Criterio Técnico",
+        title: "21. Explicar un desvío o retraso por causas externas (Uso formal de 'Due to')",
+        weak: "«Sorry, we are late because of everything was very complicated with vendors...»",
+        prompt: "¿Cuál es la formulación gramatical y ejecutiva precisa para justificar la causa técnica?",
+        phraseEn: "The adjustment in delivery dates is due to unexpected lead-time shifts from our tier-1 vendors.",
+        strategy: "Utiliza 'due to' rigurosamente como adjetivo vinculado al sustantivo ('is due to shifts') con causa corporativa neutra.",
+        options: [
+          { text: "The adjustment in delivery dates is due to unexpected lead-time shifts from our tier-1 vendors.", correct: true },
+          { text: "Sorry we couldn't deliver because of the vendor didn't send anything on time.", correct: false, feedback: "Error gramatical común ('because of' seguido de cláusula completa en vez de sustantivo) y tono quejoso." }
+        ]
+      },
+      {
+        category: "Criterio Técnico",
+        title: "22. Justificar una decisión operativa (Uso formal de 'Because of')",
+        weak: "«We changed the server due to we had high traffic yesterday, sorry...»",
+        prompt: "¿Cómo usar 'because of' correctamente para conectar la acción con el motivo?",
+        phraseEn: "We migrated the infrastructure because of significant latency spikes observed during peak hours.",
+        strategy: "Aplica 'because of' seguido estrictamente de un sintagma nominal ('because of spikes'), sin disculpas.",
+        options: [
+          { text: "We migrated the infrastructure because of significant latency spikes observed during peak hours.", correct: true },
+          { text: "We changed the setup due to we saw problems, sorry for the sudden change.", correct: false, feedback: "Error gramatical ('due to we saw') y debilidad al disculparse por una decisión de seguridad." }
+        ]
+      },
+      {
+        category: "Criterio Técnico",
+        title: "23. Cuestionar un supuesto técnico no comprobado",
+        weak: "«Perdón, no sé si estoy diciendo una tontería, pero ¿probaron eso?»",
+        prompt: "¿Cómo solicitar validación empírica sin dudar de tu propia intuición?",
+        phraseEn: "Before committing resources to this hypothesis, what empirical data validates this assumption?",
+        strategy: "Exige rigor empírico y protege el capital del proyecto sin autodescalificarte.",
+        options: [
+          { text: "Before committing resources to this hypothesis, what empirical data validates this assumption?", correct: true },
+          { text: "Sorry if this is a stupid question, but are you sure that actually works?", correct: false, feedback: "Nunca comiences una intervención calificando tu pregunta como 'stupid'." }
+        ]
+      },
+      {
+        category: "Criterio Técnico",
+        title: "24. Diferenciar correlación de causalidad en una auditoría",
+        weak: "«Me parece que ese gráfico no prueba nada, perdón...»",
+        prompt: "¿Cómo señalar falta de rigor analítico con diplomacia ejecutiva?",
+        phraseEn: "While the data indicates a correlation, it does not demonstrate causality. We require secondary testing.",
+        strategy: "Aporta distinción técnica precisa elevando el estándar metodológico de la reunión.",
+        options: [
+          { text: "While the data indicates a correlation, it does not demonstrate causality. We require secondary testing.", correct: true },
+          { text: "Sorry, but your analysis makes no sense because correlation isn't cause.", correct: false, feedback: "Atacar el sentido común ajeno genera resistencia defensiva en lugar de acuerdos técnicos." }
+        ]
+      },
+      {
+        category: "Criterio Técnico",
+        title: "25. Recomendar el descarte de una tecnología obsoleta",
+        weak: "«Perdón pero ese sistema es viejísimo y no sirve más...»",
+        prompt: "¿Cómo sustentar una transición tecnológica con foco en riesgos de negocio?",
+        phraseEn: "Maintaining legacy systems introduces high technical debt. Migrating mitigates operational vulnerability.",
+        strategy: "Enfoca la recomendación en dos conceptos de alto estatus: deuda técnica y mitigación de riesgos.",
+        options: [
+          { text: "Maintaining legacy systems introduces high technical debt. Migrating mitigates operational vulnerability.", correct: true },
+          { text: "Sorry guys, but this software is totally obsolete and terrible to use.", correct: false, feedback: "Habla desde el disgusto personal en lugar del impacto financiero y operativo." }
+        ]
+      },
+      {
+        category: "Criterio Técnico",
+        title: "26. Solicitar documentación formal de una solicitud verbal",
+        weak: "«Disculpá que desconfíe, pero ¿me lo ponés por escrito?»",
+        prompt: "¿Cómo establecer trazabilidad técnica sin parecer burocrático?",
+        phraseEn: "To establish clear version control and auditability, please log this requirement in the ticketing system.",
+        strategy: "Enmarca el pedido en los estándares de control de versiones y auditoría de la empresa.",
+        options: [
+          { text: "To establish clear version control and auditability, please log this requirement in the ticketing system.", correct: true },
+          { text: "Sorry, I don't trust verbal requests, please write me an email.", correct: false, feedback: "Introducir desconfianza personal dinamita los vínculos de trabajo." }
+        ]
+      },
+      {
+        category: "Criterio Técnico",
+        title: "27. Corregir una mala interpretación de tu informe",
+        weak: "«Perdón, leyeron mal mis conclusiones, yo no quise decir eso...»",
+        prompt: "¿Cómo reenfocar la conclusión correcta con claridad incontestable?",
+        phraseEn: "To ensure accurate interpretation, the report highlights that risk occurs under condition A, not B.",
+        strategy: "Centra la aclaración en el texto y las condiciones objetivas, sin culpar al lector.",
+        options: [
+          { text: "To ensure accurate interpretation, the report highlights that risk occurs under condition A, not B.", correct: true },
+          { text: "Sorry, you completely misunderstood my conclusions in the email.", correct: false, feedback: "Confrontar directamente la capacidad lectora del otro cierra el diálogo constructivo." }
+        ]
+      },
+      {
+        category: "Criterio Técnico",
+        title: "28. Objetar una decisión apresurada tomada bajo presión",
+        weak: "«Perdón, me da miedo que nos equivoquemos por apurados...»",
+        prompt: "¿Cómo solicitar una pausa evaluativa ante riesgos críticos?",
+        phraseEn: "Deploying under current constraints introduces critical blind spots. I recommend a 24-hour validation window.",
+        strategy: "Sustituye el miedo subjetivo por el concepto técnico de 'puntos ciegos críticos'.",
+        options: [
+          { text: "Deploying under current constraints introduces critical blind spots. I recommend a 24-hour validation window.", correct: true },
+          { text: "Sorry, I'm scared we are making a huge mistake by rushing this.", correct: false, feedback: "Expresar 'miedo' debilita el liderazgo técnico en momentos de crisis." }
+        ]
+      },
+      {
+        category: "Criterio Técnico",
+        title: "29. Defender la adherencia estricta a protocolos de seguridad/calidad",
+        weak: "«Disculpen que sea tan estricto con las normas, pero es mi trabajo...»",
+        prompt: "¿Cómo sostener el cumplimiento normativo con orgullo profesional?",
+        phraseEn: "Compliance with this protocol is non-negotiable to protect our operational certification.",
+        strategy: "Establece el protocolo como un blindaje innegociable de la certificación de la empresa.",
+        options: [
+          { text: "Compliance with this protocol is non-negotiable to protect our operational certification.", correct: true },
+          { text: "Sorry for being the annoying rule follower, but I have to do my job.", correct: false, feedback: "Autodenominarse 'annoying rule follower' resta valor a la función de control de calidad." }
+        ]
+      },
+      {
+        category: "Criterio Técnico",
+        title: "30. Aceptar un error propio con madurez ejecutiva",
+        weak: "«Mil perdones, soy un desastre, no sé qué me pasó, qué vergüenza...»",
+        prompt: "¿Cómo reportar un error propio con accountability y foco en resolución?",
+        phraseEn: "I have identified the root cause of the discrepancy. Here is the corrective action plan implemented.",
+        strategy: "Erradica la autoflagelación: nombra la causa raíz e introduce el plan de acción correctivo de inmediato.",
+        options: [
+          { text: "I have identified the root cause of the discrepancy. Here is the corrective action plan implemented.", correct: true },
+          { text: "I am so sorry, I feel so terrible about this stupid mistake I made.", correct: false, feedback: "Centrarse en el sentimiento de vergüenza distrae de la resolución técnica que el negocio espera." }
         ]
       },
 
-      // BLOQUE 3: LÍMITES, NEGOCIACIÓN Y TOMA DE DECISIONES
+      // ==========================================
+      // BLOQUE 3: LÍMITES OPERATIVOS, NEGOCIACIÓN Y TOMA DE DECISIONES (31 a 45)
+      // ==========================================
       {
         category: "Límites & Decisión",
-        title: "11. Decir «no» a un pedido fuera de alcance (Scope creep)",
+        title: "31. Rechazar un pedido fuera de alcance (Scope creep)",
         weak: "«Perdón, me encantaría pero de verdad no llego con nada...»",
         prompt: "¿Cómo poner el costo de la decisión en el tomador de decisiones?",
         phraseEn: "Adding that deliverable requires adjusting the timeline or deprioritizing another task. Which do we trade off?",
-        strategy: "Pone el costo y la responsabilidad de la decisión en quien la pide, en lugar de asumir la culpa.",
+        strategy: "Pone el costo y la responsabilidad de la decisión en quien la pide en vez de asumir culpa personal.",
         options: [
           { text: "Adding that deliverable requires adjusting the timeline or deprioritizing another task. Which do we trade off?", correct: true },
-          { text: "Sorry, I would love to help but I have too much work and I can't.", correct: false, feedback: "Suena a queja de sobrecarga personal en lugar de un cálculo estratégico de capacidad." }
+          { text: "Sorry, I would love to help but I have too much work and I can't.", correct: false, feedback: "Suena a queja de sobrecarga personal en vez de un cálculo estratégico de capacidad." }
         ]
       },
       {
         category: "Límites & Decisión",
-        title: "12. Defender tus honorarios o presupuesto",
+        title: "32. Defender tus honorarios o presupuesto con firmeza",
         weak: "«Perdón que hable de números ahora, pero el costo sería este...»",
         prompt: "¿Cómo hablar de inversión con absoluta neutralidad financiera?",
         phraseEn: "The investment required to deliver this standard of execution is [Amount].",
@@ -899,7 +1145,7 @@
       },
       {
         category: "Límites & Decisión",
-        title: "13. Interrumpir a alguien que monopoliza la palabra",
+        title: "33. Interrumpir a alguien que monopoliza la palabra",
         weak: "«Disculpá que te corte, perdón, pero quería decir una cosa...»",
         prompt: "¿Cómo redireccionar la sala hacia la resolución sin pedir disculpas?",
         phraseEn: "Building on that last point, let's bring the focus to the decision we need to lock in today.",
@@ -911,7 +1157,7 @@
       },
       {
         category: "Límites & Decisión",
-        title: "14. Mantener tu postura ante la insistencia ajena",
+        title: "34. Mantener tu postura ante la insistencia ajena",
         weak: "«Perdón, de verdad no te enojes, pero sigo pensando lo mismo...»",
         prompt: "¿Cómo demostrar escucha empática manteniendo firmeza innegociable?",
         phraseEn: "I understand your perspective; however, I stand by this technical approach based on these two pillars.",
@@ -923,7 +1169,7 @@
       },
       {
         category: "Límites & Decisión",
-        title: "15. Pedir atención plena en la sala",
+        title: "35. Pedir atención plena en la sala al comenzar un punto clave",
         weak: "«Perdón si los aburro con esto, prometo que es cortito...»",
         prompt: "¿Cómo enmarcar tu tema como crítico y de alto valor antes de comenzar?",
         phraseEn: "This item directly impacts project viability; I require five minutes of full team focus.",
@@ -931,6 +1177,126 @@
         options: [
           { text: "This item directly impacts project viability; I require five minutes of full team focus.", correct: true },
           { text: "Sorry if this is boring guys, I promise I will be very quick.", correct: false, feedback: "Anunciar que tu presentación es aburrida condiciona negativamente la atención del equipo." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "36. Frenar un mensaje fuera de horario laboral",
+        weak: "«Perdón que no te respondí anoche, estaba cenando con mi familia...»",
+        prompt: "¿Cómo fijar la frontera de horario con naturalidad ejecutiva?",
+        phraseEn: "I am reviewing this now during operational hours. Here is the status update on the deliverable.",
+        strategy: "Normaliza la respuesta en horario operativo sin rendir cuentas de tu vida privada.",
+        options: [
+          { text: "I am reviewing this now during operational hours. Here is the status update on the deliverable.", correct: true },
+          { text: "Sorry for not replying last night, I was eating dinner with my family and missed it.", correct: false, feedback: "Disculparte por descansar debilita los límites que protegen tu energía profesional." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "37. Rechazar una rebaja de precio exigida por el cliente",
+        weak: "«Disculpe, pero si le bajo el precio me fundo...»",
+        prompt: "¿Cómo vincular el valor monetario al alcance del entregable?",
+        phraseEn: "To match that budget threshold, we can adjust the scope by removing modules B and C. Shall we explore that?",
+        strategy: "El precio no se negocia por caridad: si baja la inversión, baja el alcance con rigor comercial.",
+        options: [
+          { text: "To match that budget threshold, we can adjust the scope by removing modules B and C. Shall we explore that?", correct: true },
+          { text: "Sorry, but I cannot give you a discount because that would be unfair for my team.", correct: false, feedback: "Introducir nociones morales como 'unfair' desplaza la negociación de su eje comercial." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "38. Definir la propiedad de una decisión frente a un colega invasivo",
+        weak: "«Perdón pero me parece que este tema me tocaba decidirlo a mí...»",
+        prompt: "¿Cómo ratificar tu ámbito de responsabilidad con calma directiva?",
+        phraseEn: "I appreciate the input; as the lead on this architecture, I will make the final determination.",
+        strategy: "Agradece la opinión de tu par pero ratifica la potestad final que tu rol confiere.",
+        options: [
+          { text: "I appreciate the input; as the lead on this architecture, I will make the final determination.", correct: true },
+          { text: "Sorry, but this is my job not yours, so stop telling me what to do.", correct: false, feedback: "La confrontación territorial agresiva denota inseguridad de estatus." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "39. Poner fin a una negociación circular sin acuerdos",
+        weak: "«Perdón que insista, pero ya dimos mil vueltas sobre lo mismo...»",
+        prompt: "¿Cómo forzar una definición concreta cuando la charla se estanca?",
+        phraseEn: "We have mapped all considerations. To avoid project paralysis, let's select Option A or Option B now.",
+        strategy: "Identifica la parálisis y obliga a los decisores a votar entre las alternativas reales.",
+        options: [
+          { text: "We have mapped all considerations. To avoid project paralysis, let's select Option A or Option B now.", correct: true },
+          { text: "Sorry to repeat myself, but we are just going in circles and wasting time.", correct: false, feedback: "La queja de 'dar vueltas' no aporta el marco de cierre que desbloquea la reunión." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "40. Delegar una tarea sin disculparte por asignar trabajo",
+        weak: "«Perdón que te moleste con este trabajito, te juro que no es mucho...»",
+        prompt: "¿Cómo empoderar al colaborador al asignarle una responsabilidad?",
+        phraseEn: "I am assigning you the execution of this module based on your technical precision with past deliverables.",
+        strategy: "Asigna la tarea vinculándola a la excelencia demostrada del colaborador en vez de disculparte.",
+        options: [
+          { text: "I am assigning you the execution of this module based on your technical precision with past deliverables.", correct: true },
+          { text: "Sorry to burden you with extra work, I really hate having to ask you this.", correct: false, feedback: "Pedir perdón por delegar mina tu autoridad directiva frente al equipo." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "41. Rechazar una reunión innecesaria que puede ser un correo",
+        weak: "«Perdón que no acepte la llamada, pero estoy con mucho lío...»",
+        prompt: "¿Cómo proteger tu tiempo canalizando la consulta de forma asincrónica?",
+        phraseEn: "To optimize team bandwidth, please share the specific questions via email so I can respond asynchronously today.",
+        strategy: "Protege el ancho de banda del equipo proponiendo una resolución asincrónica eficiente.",
+        options: [
+          { text: "To optimize team bandwidth, please share the specific questions via email so I can respond asynchronously today.", correct: true },
+          { text: "Sorry, I can't meet because I have too many meetings already.", correct: false, feedback: "Quejarse de tener muchas reuniones suena a desborde en lugar de disciplina operativa." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "42. Frenar un feedback informal que no corresponde en ese momento",
+        weak: "«Perdón, no me digas esto acá adelante de todos, me pone mal...»",
+        prompt: "¿Cómo trasladar una conversación delicada a un ámbito 1 a 1?",
+        phraseEn: "Let's align on this operational feedback during our dedicated 1-on-1 session this afternoon.",
+        strategy: "Protege el encuadre profesional y traslada el intercambio a un espacio privado sin reactividad.",
+        options: [
+          { text: "Let's align on this operational feedback during our dedicated 1-on-1 session this afternoon.", correct: true },
+          { text: "Sorry, could you not criticize me in public? It's very uncomfortable.", correct: false, feedback: "Demuestra fragilidad emocional en público en lugar de gestionar el marco formal del feedback." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "43. Ratificar una fecha límite estricta que intentan mover",
+        weak: "«Disculpá que no te dé más días, no te enojes conmigo...»",
+        prompt: "¿Cómo sostener el plazo vinculándolo a compromisos aguas abajo?",
+        phraseEn: "The Friday deadline remains firm to uphold our downstream commitments with the testing team.",
+        strategy: "Despersonaliza la fecha límite conectándola a la cadena de valor y entregables de terceros.",
+        options: [
+          { text: "The Friday deadline remains firm to uphold our downstream commitments with the testing team.", correct: true },
+          { text: "Sorry, I would give you more time but my boss won't let me.", correct: false, feedback: "Trasladar la culpa a tu superior desmantela tu propia autoridad como líder." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "44. Decir que 'no' a una invitación social de la empresa sin inventar excusas",
+        weak: "«Mil disculpas, qué lástima, justo me surgió un tema personal...»",
+        prompt: "¿Cómo declinar un evento social con elegancia y sin dar explicaciones ficticias?",
+        phraseEn: "Thank you for the invitation. I will not be able to attend this evening, but I look forward to connecting tomorrow.",
+        strategy: "Agradece con calidez pero declina con sobriedad y sin justificaciones personales innecesarias.",
+        options: [
+          { text: "Thank you for the invitation. I will not be able to attend this evening, but I look forward to connecting tomorrow.", correct: true },
+          { text: "I'm so sorry, I feel awful about missing it, I had a family thing come up at the last minute.", correct: false, feedback: "Inventar justificaciones domésticas denota necesidad de aprobación en lugar de autonomía." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "45. Asumir el veto técnico final de un proyecto riesgoso",
+        weak: "«Perdón a todos los que trabajaron, pero me parece que no podemos salir en vivo...»",
+        prompt: "¿Cómo ejercer el veto directivo con máxima solvencia ejecutiva?",
+        phraseEn: "Based on our quality audit, I officially withhold release approval until security criteria are satisfied.",
+        strategy: "Ejerce la máxima responsabilidad técnica: el veto formal sustentado en la auditoría de calidad.",
+        options: [
+          { text: "Based on our quality audit, I officially withhold release approval until security criteria are satisfied.", correct: true },
+          { text: "Sorry to disappoint everyone after all your hard work, but we probably shouldn't launch.", correct: false, feedback: "Disculparse por proteger a la empresa de una falla catastrófica es una contradicción de liderazgo." }
         ]
       }
     ];
@@ -951,7 +1317,7 @@
           <div class="exercise-situation">${ex.title}</div>
           <div class="habit-comparison">
             <div class="habit-weak"><strong>⚠️ Hábito sumiso habitual:</strong> ${ex.weak}</div>
-            <div class="habit-prompt"><strong>🎯 Desafío:</strong> ${ex.prompt}</div>
+            <div class="habit-prompt"><strong>🎯 Desafío de postura:</strong> ${ex.prompt}</div>
           </div>
           <div class="options-grid">
             ${ex.options.map((opt, oIdx) => `
