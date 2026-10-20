@@ -22,7 +22,13 @@
       --font-sans: 'Plus Jakarta Sans', sans-serif;
       --font-serif: 'Playfair Display', serif;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       background-color: var(--bg-dark);
       color: var(--text-main);
@@ -32,6 +38,7 @@
       flex-direction: column;
       overflow-x: hidden;
     }
+
     header {
       background: rgba(10, 12, 16, 0.85);
       backdrop-filter: blur(12px);
@@ -44,11 +51,13 @@
       justify-content: space-between;
       align-items: center;
     }
+
     .logo-container {
       display: flex;
       align-items: center;
       gap: 0.75rem;
     }
+
     .logo-badge {
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
       color: #000;
@@ -58,12 +67,14 @@
       border-radius: 6px;
       letter-spacing: 0.5px;
     }
+
     .logo-text {
       font-family: var(--font-serif);
       font-size: 1.4rem;
       font-weight: 700;
       letter-spacing: -0.5px;
     }
+
     .nav-tabs {
       display: flex;
       gap: 0.5rem;
@@ -72,6 +83,7 @@
       border-radius: 10px;
       border: 1px solid var(--card-border);
     }
+
     .nav-tab {
       background: transparent;
       border: none;
@@ -84,10 +96,12 @@
       transition: all 0.2s ease;
       font-family: var(--font-sans);
     }
+
     .nav-tab.active {
       background: var(--card-border);
       color: var(--text-main);
     }
+
     .user-pill {
       display: flex;
       align-items: center;
@@ -99,7 +113,12 @@
       padding: 0.35rem 0.8rem;
       border-radius: 20px;
     }
-    .user-pill span { color: var(--accent-gold); font-weight: 600; }
+
+    .user-pill span {
+      color: var(--accent-gold);
+      font-weight: 600;
+    }
+
     .logout-btn {
       background: none;
       border: none;
@@ -108,6 +127,7 @@
       font-weight: bold;
       margin-left: 0.25rem;
     }
+
     main {
       flex: 1;
       max-width: 1100px;
@@ -115,10 +135,16 @@
       margin: 0 auto;
       padding: 2.5rem 1.5rem;
     }
-    .section-content { display: none; }
-    .section-content.active { display: block; }
-    
-    /* MODAL DE AUTENTICACION */
+
+    .section-content {
+      display: none;
+    }
+
+    .section-content.active {
+      display: block;
+    }
+
+    /* MODAL AUTENTICACION */
     .auth-overlay {
       position: fixed;
       inset: 0;
@@ -130,6 +156,7 @@
       justify-content: center;
       padding: 1.5rem;
     }
+
     .auth-card {
       background: var(--card-bg);
       border: 1px solid var(--accent-gold);
@@ -140,18 +167,21 @@
       text-align: center;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
     }
+
     .auth-card h2 {
       font-family: var(--font-serif);
       font-size: 1.8rem;
       margin-bottom: 0.75rem;
       color: var(--text-main);
     }
+
     .auth-card p {
       color: var(--text-muted);
       font-size: 0.9rem;
       line-height: 1.5;
       margin-bottom: 1.75rem;
     }
+
     .auth-input {
       width: 100%;
       background: #0a0d14;
@@ -164,7 +194,11 @@
       outline: none;
       transition: border 0.2s;
     }
-    .auth-input:focus { border-color: var(--accent-gold); }
+
+    .auth-input:focus {
+      border-color: var(--accent-gold);
+    }
+
     .auth-btn {
       width: 100%;
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
@@ -177,7 +211,11 @@
       font-size: 0.95rem;
       transition: opacity 0.2s;
     }
-    .auth-btn:hover { opacity: 0.92; }
+
+    .auth-btn:hover {
+      opacity: 0.92;
+    }
+
     .auth-error {
       color: var(--accent-ruby);
       font-size: 0.8rem;
@@ -185,12 +223,13 @@
       display: none;
     }
 
-    /* COMPONENTES GENERALES */
+    /* TITULOS & TARJETAS */
     .hero-title {
       font-family: var(--font-serif);
       font-size: 2.2rem;
       margin-bottom: 0.5rem;
     }
+
     .hero-subtitle {
       color: var(--text-muted);
       font-size: 1rem;
@@ -198,6 +237,7 @@
       max-width: 650px;
       line-height: 1.6;
     }
+
     .card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -206,31 +246,25 @@
       margin-bottom: 1.5rem;
     }
 
-    /* CONFIGURACION DE PERFIL EJECUTIVO */
+    /* BARRA DE PERSONALIZACIÓN DE ROL Y NIVEL */
     .profile-bar {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      gap: 1.25rem;
       background: #090c12;
       border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      padding: 1.25rem;
       margin-bottom: 1.5rem;
     }
+
     @media (max-width: 640px) {
-      .profile-bar { grid-template-columns: 1fr; }
+      .profile-bar {
+        grid-template-columns: 1fr;
+      }
     }
 
-    /* AUTHORITY FRAME */
-    .grid-editor {
-      display: grid;
-      grid-template-columns: 1fr 1.25fr;
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    @media (max-width: 860px) {
-      .grid-editor { grid-template-columns: 1fr; }
-    }
+    /* FORMULARIOS & SELECTORES */
     .input-label {
       display: block;
       font-size: 0.8rem;
@@ -240,6 +274,20 @@
       color: var(--text-muted);
       margin-bottom: 0.5rem;
     }
+
+    .grid-editor {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 860px) {
+      .grid-editor {
+        grid-template-columns: 1fr;
+      }
+    }
+
     textarea {
       width: 100%;
       background: #090c12;
@@ -253,7 +301,11 @@
       min-height: 180px;
       outline: none;
     }
-    textarea:focus { border-color: var(--accent-gold); }
+
+    textarea:focus {
+      border-color: var(--accent-gold);
+    }
+
     .select-dropdown {
       width: 100%;
       background: #090c12;
@@ -264,7 +316,11 @@
       font-size: 0.9rem;
       outline: none;
     }
-    .select-dropdown:focus { border-color: var(--accent-gold); }
+
+    .select-dropdown:focus {
+      border-color: var(--accent-gold);
+    }
+
     .calibrate-btn {
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
       color: #000;
@@ -279,14 +335,19 @@
       font-size: 0.95rem;
       margin-top: 1rem;
     }
-    .calibrate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* CONTENEDORES DE RESULTADO */
+    .calibrate-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* RESULTADOS AUTHORITY FRAME */
     .frame-results {
       display: flex;
       flex-direction: column;
       gap: 1rem;
     }
+
     .diagnostic-box {
       background: #141721;
       border: 1px solid #2a3449;
@@ -295,6 +356,7 @@
       font-size: 0.85rem;
       line-height: 1.45;
     }
+
     .diagnostic-title {
       font-weight: 700;
       color: var(--accent-gold);
@@ -306,6 +368,7 @@
       font-size: 0.75rem;
       letter-spacing: 0.5px;
     }
+
     .frame-card {
       background: #090c12;
       border: 1px solid var(--card-border);
@@ -315,11 +378,13 @@
       flex-direction: column;
       gap: 0.6rem;
     }
+
     .frame-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+
     .frame-title {
       font-size: 0.8rem;
       font-weight: 700;
@@ -327,6 +392,7 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
+
     .frame-tag {
       font-size: 0.7rem;
       color: var(--accent-gold);
@@ -336,17 +402,20 @@
       border-radius: 4px;
       font-weight: 600;
     }
+
     .frame-quote {
       font-size: 1rem;
       line-height: 1.5;
       color: #fff;
     }
+
     .frame-actions {
       display: flex;
       gap: 0.5rem;
       margin-top: 0.25rem;
       flex-wrap: wrap;
     }
+
     .action-btn {
       background: #161c28;
       border: 1px solid var(--card-border);
@@ -360,7 +429,12 @@
       gap: 0.35rem;
       transition: all 0.2s;
     }
-    .action-btn:hover { color: #fff; border-color: var(--accent-gold); }
+
+    .action-btn:hover {
+      color: #fff;
+      border-color: var(--accent-gold);
+    }
+
     .lesson-box {
       background: rgba(197, 160, 89, 0.05);
       border: 1px dashed rgba(197, 160, 89, 0.3);
@@ -370,6 +444,7 @@
       line-height: 1.45;
       color: var(--text-muted);
     }
+
     .lesson-title {
       color: var(--accent-gold);
       font-weight: 700;
@@ -379,13 +454,14 @@
       margin-bottom: 0.25rem;
     }
 
-    /* GIMNASIO & BOVEDA */
+    /* GIMNASIO DE PODER & BOVEDA */
     .filter-bar {
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap;
       margin-bottom: 1.5rem;
     }
+
     .filter-chip {
       background: #141a26;
       border: 1px solid var(--card-border);
@@ -396,12 +472,14 @@
       cursor: pointer;
       transition: all 0.2s;
     }
+
     .filter-chip.active {
       background: var(--accent-gold);
       color: #000;
       border-color: var(--accent-gold);
       font-weight: 700;
     }
+
     .exercise-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -409,6 +487,7 @@
       padding: 1.5rem;
       margin-bottom: 1.25rem;
     }
+
     .exercise-tag {
       font-size: 0.75rem;
       text-transform: uppercase;
@@ -418,12 +497,14 @@
       margin-bottom: 0.4rem;
       display: inline-block;
     }
+
     .exercise-situation {
       font-size: 0.95rem;
       color: var(--text-main);
       margin-bottom: 0.5rem;
       font-weight: 600;
     }
+
     .habit-comparison {
       background: #090c12;
       border: 1px solid var(--card-border);
@@ -433,17 +514,21 @@
       font-size: 0.85rem;
       line-height: 1.5;
     }
+
     .habit-weak {
       color: var(--accent-ruby);
       margin-bottom: 0.35rem;
     }
+
     .habit-prompt {
       color: var(--text-muted);
     }
+
     .options-grid {
       display: grid;
       gap: 0.6rem;
     }
+
     .option-btn {
       background: #0e121a;
       border: 1px solid var(--card-border);
@@ -456,10 +541,23 @@
       line-height: 1.4;
       transition: all 0.2s;
     }
-    .option-btn:hover { border-color: var(--text-muted); }
-    .option-btn.correct { background: rgba(16, 185, 129, 0.15); border-color: var(--accent-emerald); color: #fff; }
-    .option-btn.wrong { background: rgba(239, 68, 68, 0.15); border-color: var(--accent-ruby); color: #fff; }
-    
+
+    .option-btn:hover {
+      border-color: var(--text-muted);
+    }
+
+    .option-btn.correct {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: var(--accent-emerald);
+      color: #fff;
+    }
+
+    .option-btn.wrong {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: var(--accent-ruby);
+      color: #fff;
+    }
+
     .feedback-box {
       margin-top: 1rem;
       padding: 1rem;
@@ -468,6 +566,7 @@
       line-height: 1.5;
       display: none;
     }
+
     .solution-quote {
       font-size: 0.98rem;
       color: #fff;
@@ -686,7 +785,7 @@
       document.getElementById(tabId).classList.add("active");
     }
 
-    // PERSONALIZACION DE CONTEXTO (PERSISTENCIA)
+    // PERSONALIZACION DE CONTEXTO
     function saveProfileSettings() {
       const role = document.getElementById("userRoleSelect").value;
       const level = document.getElementById("userLevelSelect").value;
@@ -766,7 +865,7 @@
       }
     }
 
-    // UTILIDADES: COPIAR Y ESCUCHAR AUDIO
+    // UTILIDADES: COPIAR Y SÍNTESIS DE AUDIO
     function copyDirectText(rawText) {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(rawText).then(() => {
@@ -836,7 +935,7 @@
       alert("Guardado en tu Bóveda de Recursos.");
     }
 
-    // 4. GIMNASIO DE PODER: LOS 45 ESCENARIOS COMPLETOS
+    // 4. GIMNASIO DE PODER: LOS 45 ESCENARIOS TÁCTICOS
     const GYM_EXERCISES = [
       // BLOQUE 1: MANEJO DEL TIEMPO, TURNOS Y RITMO (1 a 15)
       {
@@ -1267,4 +1366,293 @@
         category: "Límites & Decisión",
         title: "36. Frenar un mensaje fuera de horario laboral",
         weak: "«Perdón que no te respondí anoche, estaba cenando con mi familia...»",
-        prompt: "¿Cómo fijar la frontera de
+        prompt: "¿Cómo fijar la frontera de horario con naturalidad ejecutiva?",
+        phraseEn: "I am reviewing this now during operational hours. Here is the status update on the deliverable.",
+        strategy: "Normaliza la respuesta en horario operativo sin rendir cuentas de tu vida privada.",
+        options: [
+          { text: "I am reviewing this now during operational hours. Here is the status update on the deliverable.", correct: true },
+          { text: "Sorry for not replying last night, I was eating dinner with my family and missed it.", correct: false, feedback: "Disculparte por descansar debilita los límites que protegen tu energía profesional." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "37. Rechazar una rebaja de precio exigida por el cliente",
+        weak: "«Disculpe, pero si le bajo el precio me fundo...»",
+        prompt: "¿Cómo vincular el valor monetario al alcance del entregable?",
+        phraseEn: "To match that budget threshold, we can adjust the scope by removing modules B and C. Shall we explore that?",
+        strategy: "El precio no se negocia por caridad: si baja la inversión, baja el alcance con rigor comercial.",
+        options: [
+          { text: "To match that budget threshold, we can adjust the scope by removing modules B and C. Shall we explore that?", correct: true },
+          { text: "Sorry, but I cannot give you a discount because that would be unfair for my team.", correct: false, feedback: "Introducir nociones morales como 'unfair' desplaza la negociación de su eje comercial." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "38. Definir la propiedad de una decisión frente a un colega invasivo",
+        weak: "«Perdón pero me parece que este tema me tocaba decidirlo a mí...»",
+        prompt: "¿Cómo ratificar tu ámbito de responsabilidad con calma directiva?",
+        phraseEn: "I appreciate the input; as the lead on this architecture, I will make the final determination.",
+        strategy: "Agradece la opinión de tu par pero ratifica la potestad final que tu rol confiere.",
+        options: [
+          { text: "I appreciate the input; as the lead on this architecture, I will make the final determination.", correct: true },
+          { text: "Sorry, but this is my job not yours, so stop telling me what to do.", correct: false, feedback: "La confrontación territorial agresiva denota inseguridad de estatus." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "39. Poner fin a una negociación circular sin acuerdos",
+        weak: "«Perdón que insista, pero ya dimos mil vueltas sobre lo mismo...»",
+        prompt: "¿Cómo forzar una definición concreta cuando la charla se estanca?",
+        phraseEn: "We have mapped all considerations. To avoid project paralysis, let's select Option A or Option B now.",
+        strategy: "Identifica la parálisis y obliga a los decisores a votar entre las alternativas reales.",
+        options: [
+          { text: "We have mapped all considerations. To avoid project paralysis, let's select Option A or Option B now.", correct: true },
+          { text: "Sorry to repeat myself, but we are just going in circles and wasting time.", correct: false, feedback: "La queja de 'dar vueltas' no aporta el marco de cierre que desbloquea la reunión." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "40. Delegar una tarea sin disculparte por asignar trabajo",
+        weak: "«Perdón que te moleste con este trabajito, te juro que no es mucho...»",
+        prompt: "¿Cómo empoderar al colaborador al asignarle una responsabilidad?",
+        phraseEn: "I am assigning you the execution of this module based on your technical precision with past deliverables.",
+        strategy: "Asigna la tarea vinculándola a la excelencia demostrada del colaborador en vez de disculparte.",
+        options: [
+          { text: "I am assigning you the execution of this module based on your technical precision with past deliverables.", correct: true },
+          { text: "Sorry to burden you with extra work, I really hate having to ask you this.", correct: false, feedback: "Pedir perdón por delegar mina tu autoridad directiva frente al equipo." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "41. Rechazar una reunión innecesaria que puede ser un correo",
+        weak: "«Perdón que no acepte la llamada, pero estoy con mucho lío...»",
+        prompt: "¿Cómo proteger tu tiempo canalizando la consulta de forma asincrónica?",
+        phraseEn: "To optimize team bandwidth, please share the specific questions via email so I can respond asynchronously today.",
+        strategy: "Protege el ancho de banda del equipo proponiendo una resolución asincrónica eficiente.",
+        options: [
+          { text: "To optimize team bandwidth, please share the specific questions via email so I can respond asynchronously today.", correct: true },
+          { text: "Sorry, I can't meet because I have too many meetings already.", correct: false, feedback: "Quejarse de tener muchas reuniones suena a desborde en lugar de disciplina operativa." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "42. Frenar un feedback informal que no corresponde en ese momento",
+        weak: "«Perdón, no me digas esto acá adelante de todos, me pone mal...»",
+        prompt: "¿Cómo trasladar una conversación delicada a un ámbito 1 a 1?",
+        phraseEn: "Let's align on this operational feedback during our dedicated 1-on-1 session this afternoon.",
+        strategy: "Protege el encuadre profesional y traslada el intercambio a un espacio privado sin reactividad.",
+        options: [
+          { text: "Let's align on this operational feedback during our dedicated 1-on-1 session this afternoon.", correct: true },
+          { text: "Sorry, could you not criticize me in public? It's very uncomfortable.", correct: false, feedback: "Demuestra fragilidad emocional en público en lugar de gestionar el marco formal del feedback." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "43. Ratificar una fecha límite estricta que intentan mover",
+        weak: "«Disculpá que no te dé más días, no te enojes conmigo...»",
+        prompt: "¿Cómo sostener el plazo vinculándolo a compromisos aguas abajo?",
+        phraseEn: "The Friday deadline remains firm to uphold our downstream commitments with the testing team.",
+        strategy: "Despersonaliza la fecha límite conectándola a la cadena de valor y entregables de terceros.",
+        options: [
+          { text: "The Friday deadline remains firm to uphold our downstream commitments with the testing team.", correct: true },
+          { text: "Sorry, I would give you more time but my boss won't let me.", correct: false, feedback: "Trasladar la culpa a tu superior desmantela tu propia autoridad como líder." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "44. Decir que 'no' a una invitación social de la empresa sin inventar excusas",
+        weak: "«Mil disculpas, qué lástima, justo me surgió un tema personal...»",
+        prompt: "¿Cómo declinar un evento social con elegancia y sin dar explicaciones ficticias?",
+        phraseEn: "Thank you for the invitation. I will not be able to attend this evening, but I look forward to connecting tomorrow.",
+        strategy: "Agradece con calidez pero declina con sobriedad y sin justificaciones personales innecesarias.",
+        options: [
+          { text: "Thank you for the invitation. I will not be able to attend this evening, but I look forward to connecting tomorrow.", correct: true },
+          { text: "I'm so sorry, I feel awful about missing it, I had a family thing come up at the last minute.", correct: false, feedback: "Inventar justificaciones domésticas denota necesidad de aprobación en lugar de autonomía." }
+        ]
+      },
+      {
+        category: "Límites & Decisión",
+        title: "45. Asumir el veto técnico final de un proyecto riesgoso",
+        weak: "«Perdón a todos los que trabajaron, pero me parece que no podemos salir en vivo...»",
+        prompt: "¿Cómo ejercer el veto directivo con máxima solvencia ejecutiva?",
+        phraseEn: "Based on our quality audit, I officially withhold release approval until security criteria are satisfied.",
+        strategy: "Ejerce la máxima responsabilidad técnica: el veto formal sustentado en la auditoría de calidad.",
+        options: [
+          { text: "Based on our quality audit, I officially withhold release approval until security criteria are satisfied.", correct: true },
+          { text: "Sorry to disappoint everyone after all your hard work, but we probably shouldn't launch.", correct: false, feedback: "Disculparse por proteger a la empresa de una falla catastrófica es una contradicción de liderazgo." }
+        ]
+      }
+    ];
+
+    let currentGymFilteredList = GYM_EXERCISES;
+
+    function renderGym(filter = "all") {
+      const container = document.getElementById("gymContainer");
+      container.innerHTML = "";
+      
+      currentGymFilteredList = filter === "all" ? GYM_EXERCISES : GYM_EXERCISES.filter(e => e.category === filter);
+
+      currentGymFilteredList.forEach((ex, idx) => {
+        const card = document.createElement("div");
+        card.className = "exercise-card";
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="exercise-tag">${ex.category}</span>
+          </div>
+          <div class="exercise-situation">${ex.title}</div>
+          <div class="habit-comparison">
+            <div class="habit-weak"><strong>⚠️ Hábito sumiso habitual:</strong> ${ex.weak}</div>
+            <div class="habit-prompt"><strong>🎯 Desafío de postura:</strong> ${ex.prompt}</div>
+          </div>
+          <div class="options-grid">
+            ${ex.options.map((opt, oIdx) => `
+              <button class="option-btn" onclick="checkAnswer(${idx}, ${oIdx}, this)">${opt.text}</button>
+            `).join("")}
+          </div>
+          <div id="feedback-${idx}" class="feedback-box"></div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function checkAnswer(exIdx, optIdx, btn) {
+      const ex = currentGymFilteredList[exIdx];
+      const opt = ex.options[optIdx];
+      const feedback = document.getElementById(`feedback-${exIdx}`);
+      const parent = btn.parentElement;
+
+      parent.querySelectorAll(".option-btn").forEach(b => {
+        b.classList.remove("correct", "wrong");
+        b.disabled = true;
+      });
+
+      if (opt.correct) {
+        btn.classList.add("correct");
+        feedback.style.display = "block";
+        feedback.style.background = "rgba(16, 185, 129, 0.1)";
+        feedback.style.border = "1px solid var(--accent-emerald)";
+        feedback.style.color = "var(--text-main)";
+        feedback.innerHTML = `
+          <div><strong>✓ Postura Impecable:</strong> ${ex.strategy}</div>
+          <div class="solution-quote">"${ex.phraseEn}"</div>
+          <div class="frame-actions">
+            <button class="action-btn" onclick="copyGymItem(${exIdx})">📋 Copiar Fórmula</button>
+            <button class="action-btn" onclick="speakGymItem(${exIdx})">🔊 Escuchar Pronunciación</button>
+            <button class="action-btn" onclick="saveGymItem(${exIdx})">💾 Guardar en Bóveda</button>
+          </div>
+        `;
+      } else {
+        btn.classList.add("wrong");
+        feedback.style.display = "block";
+        feedback.style.background = "rgba(239, 68, 68, 0.1)";
+        feedback.style.border = "1px solid var(--accent-ruby)";
+        feedback.style.color = "var(--text-main)";
+        feedback.innerHTML = `<strong>✗ Fuga de Autoridad:</strong> ${opt.feedback}`;
+      }
+    }
+
+    function copyGymItem(idx) {
+      const ex = currentGymFilteredList[idx];
+      if (ex && ex.phraseEn) {
+        copyDirectText(ex.phraseEn);
+      }
+    }
+
+    function speakGymItem(idx) {
+      const ex = currentGymFilteredList[idx];
+      if (ex && ex.phraseEn) {
+        speakDirectText(ex.phraseEn);
+      }
+    }
+
+    function saveGymItem(idx) {
+      const ex = currentGymFilteredList[idx];
+      if (ex && ex.phraseEn) {
+        let vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
+        vault.push({ 
+          text: ex.phraseEn, 
+          category: ex.category, 
+          date: new Date().toLocaleDateString() 
+        });
+        localStorage.setItem("pitchflow_vault", JSON.stringify(vault));
+        renderVault();
+        alert("Fórmula guardada en tu Bóveda de Recursos.");
+      }
+    }
+
+    function filterGym(cat, chip) {
+      document.querySelectorAll("#gimnasio .filter-chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      renderGym(cat);
+    }
+
+    // 5. BOVEDA
+    let currentVaultFilteredList = [];
+
+    function renderVault(filter = "all") {
+      const container = document.getElementById("vaultContainer");
+      const vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
+      container.innerHTML = "";
+
+      if (vault.length === 0) {
+        container.innerHTML = `<p style="color:var(--text-dim); text-align:center; padding:2rem;">Aún no guardaste fórmulas calibradas en tu Bóveda. Entrená en el Gimnasio de Poder o usá Authority Frame para guardar tus favoritas.</p>`;
+        return;
+      }
+
+      currentVaultFilteredList = filter === "all" ? vault : vault.filter(v => v.category === filter);
+
+      currentVaultFilteredList.forEach((item, vIdx) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.style.marginBottom = "0.75rem";
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; align-items:center;">
+            <span class="exercise-tag">${item.category}</span>
+            <span style="font-size:0.75rem; color:var(--text-dim);">${item.date}</span>
+          </div>
+          <p style="font-size:1rem; line-height:1.5; color:#fff; margin-bottom:0.75rem;">"${item.text}"</p>
+          <div class="frame-actions">
+            <button class="action-btn" onclick="copyVaultItem(${vIdx})">📋 Copiar</button>
+            <button class="action-btn" onclick="speakVaultItem(${vIdx})">🔊 Escuchar</button>
+            <button class="action-btn" style="color:var(--accent-ruby);" onclick="deleteVaultItem(${vIdx})">🗑️ Eliminar</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function copyVaultItem(idx) {
+      const item = currentVaultFilteredList[idx];
+      if (item && item.text) copyDirectText(item.text);
+    }
+
+    function speakVaultItem(idx) {
+      const item = currentVaultFilteredList[idx];
+      if (item && item.text) speakDirectText(item.text);
+    }
+
+    function deleteVaultItem(idx) {
+      const itemToDelete = currentVaultFilteredList[idx];
+      let vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
+      vault = vault.filter(v => !(v.text === itemToDelete.text && v.date === itemToDelete.date));
+      localStorage.setItem("pitchflow_vault", JSON.stringify(vault));
+      renderVault();
+    }
+
+    function filterVault(cat, chip) {
+      document.querySelectorAll("#boveda .filter-chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      renderVault(cat);
+    }
+
+    // INICIALIZACIÓN
+    window.onload = () => {
+      checkAuth();
+      loadProfileSettings();
+      loadPresetExample();
+      renderGym();
+      renderVault();
+    };
+  </script>
+</body>
+</html>
