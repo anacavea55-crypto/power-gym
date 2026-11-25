@@ -46,6 +46,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
     }
 
     .logo-container {
@@ -78,6 +80,7 @@
       padding: 0.3rem;
       border-radius: 10px;
       border: 1px solid var(--card-border);
+      flex-wrap: wrap;
     }
 
     .nav-tab {
@@ -96,6 +99,16 @@
     .nav-tab.active {
       background: var(--card-border);
       color: var(--text-main);
+    }
+
+    .nav-tab.admin-tab {
+      border: 1px solid rgba(197, 160, 89, 0.45);
+      color: var(--accent-gold-light);
+    }
+
+    .nav-tab.admin-tab.active {
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light));
+      color: #000;
     }
 
     .user-pill {
@@ -400,6 +413,7 @@
       align-items: center;
       gap: 0.35rem;
       transition: all 0.2s;
+      text-decoration: none;
     }
 
     .action-btn:hover { color: #fff; border-color: var(--accent-gold); }
@@ -535,6 +549,103 @@
       border-left: 3px solid var(--accent-gold);
       border-radius: 4px;
     }
+
+    /* TABLERO DE AUDITORIA INSTITUCIONAL */
+    .audit-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .stat-box {
+      background: #090c12;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-value {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+    }
+
+    .student-audit-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .student-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .student-email {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .student-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-right: 0.4rem;
+    }
+
+    .badge-emerald {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    .badge-ruby {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--accent-ruby);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    .badge-gold {
+      background: rgba(197, 160, 89, 0.15);
+      color: var(--accent-gold);
+      border: 1px solid rgba(197, 160, 89, 0.35);
+    }
+
+    .audit-log-item {
+      background: #090c12;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
   </style>
 </head>
 <body>
@@ -557,9 +668,10 @@
       <div class="logo-text">PitchFlow</div>
     </div>
     <div class="nav-tabs">
-      <button class="nav-tab active" onclick="switchTab('authority-frame')">Authority Frame</button>
-      <button class="nav-tab" onclick="switchTab('gimnasio')">Gimnasio de Poder</button>
-      <button class="nav-tab" onclick="switchTab('boveda')">Bóveda</button>
+      <button class="nav-tab active" onclick="switchTab('authority-frame', this)">Authority Frame</button>
+      <button class="nav-tab" onclick="switchTab('gimnasio', this)">Gimnasio de Poder</button>
+      <button class="nav-tab" onclick="switchTab('boveda', this)">Bóveda</button>
+      <button class="nav-tab admin-tab" id="adminAuditTab" style="display:none;" onclick="switchTab('auditoria', this)">📊 Auditoría</button>
     </div>
     <div class="user-pill" id="userPill">
       <span id="userEmailDisplay">...</span>
@@ -683,10 +795,51 @@
 
       <div id="vaultContainer"></div>
     </section>
+
+    <!-- 4. TABLERO DE AUDITORIA INSTITUCIONAL (SOLO ADMINISTRADORAS) -->
+    <section id="auditoria" class="section-content">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem;">
+        <div>
+          <h1 class="hero-title">Tablero de Auditoría Institucional</h1>
+          <p class="hero-subtitle" style="margin-bottom:0;">Supervisión ejecutiva en tiempo real del avance, calibraciones y puntos débiles de tus alumnos en TalkFlow Academy.</p>
+        </div>
+        <button class="calibrate-btn" style="margin-top:0;" onclick="loadAuditDashboard()">🔄 Actualizar Datos</button>
+      </div>
+
+      <div class="audit-summary-grid" id="auditSummaryGrid"></div>
+      <div id="auditStudentsContainer">
+        <p style="color:var(--text-muted);">Cargando reportes de alumnos...</p>
+      </div>
+    </section>
   </main>
 
   <script>
     const WORKER_ENDPOINT = "https://pitchflow-api.anacavea55.workers.dev";
+    const ADMIN_LIST = ["anacavea55@gmail.com", "talkflow@anavea.online"];
+
+    // TELEMETRÍA SILENCIOSA HACIA CLOUDFLARE KV
+    async function sendTelemetry(payload) {
+      const email = localStorage.getItem("pitchflow_user");
+      if (!email) return;
+      const role = localStorage.getItem("pitchflow_user_role") || "";
+      const level = localStorage.getItem("pitchflow_user_level") || "";
+
+      try {
+        await fetch(WORKER_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "log_event",
+            email,
+            role,
+            level,
+            ...payload
+          })
+        });
+      } catch (e) {
+        // Silencioso para no interrumpir la práctica del alumno
+      }
+    }
 
     // 1. AUTENTICACIÓN
     function checkAuth() {
@@ -694,8 +847,11 @@
       if (email) {
         document.getElementById("authOverlay").style.display = "none";
         document.getElementById("userEmailDisplay").innerText = email;
+        const isAdmin = ADMIN_LIST.includes(email.toLowerCase()) || localStorage.getItem("pitchflow_is_admin") === "true";
+        document.getElementById("adminAuditTab").style.display = isAdmin ? "inline-block" : "none";
       } else {
         document.getElementById("authOverlay").style.display = "flex";
+        document.getElementById("adminAuditTab").style.display = "none";
       }
     }
 
@@ -706,19 +862,25 @@
 
       if (!emailInput) return;
 
+      const role = localStorage.getItem("pitchflow_user_role") || document.getElementById("userRoleSelect").value;
+      const level = localStorage.getItem("pitchflow_user_level") || document.getElementById("userLevelSelect").value;
+
       try {
         const res = await fetch(WORKER_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ 
             action: "verify_member", 
-            email: emailInput 
+            email: emailInput,
+            role,
+            level
           })
         });
         const data = await res.json();
 
         if (data.authorized || data.isAllowed) {
           localStorage.setItem("pitchflow_user", emailInput);
+          localStorage.setItem("pitchflow_is_admin", data.isAdmin ? "true" : "false");
           checkAuth();
         } else {
           errorMsg.style.display = "block";
@@ -731,19 +893,24 @@
 
     function logout() {
       localStorage.removeItem("pitchflow_user");
+      localStorage.removeItem("pitchflow_is_admin");
       checkAuth();
     }
 
     // 2. NAVEGACIÓN
-    function switchTab(tabId) {
+    function switchTab(tabId, btnEl) {
       document.querySelectorAll(".nav-tab").forEach(t => t.classList.remove("active"));
       document.querySelectorAll(".section-content").forEach(s => s.classList.remove("active"));
-      event.target.classList.add("active");
+      if (btnEl) btnEl.classList.add("active");
       document.getElementById(tabId).classList.add("active");
+
+      if (tabId === "auditoria") {
+        loadAuditDashboard();
+      }
     }
 
     // PERSONALIZACION DE CONTEXTO
-    function saveProfileSettings() {
+    function saveProfileSettings(syncRemote = true) {
       const role = document.getElementById("userRoleSelect").value;
       const level = document.getElementById("userLevelSelect").value;
       localStorage.setItem("pitchflow_user_role", role);
@@ -754,6 +921,10 @@
         const shortRole = role.split("/")[0].trim();
         tag.innerText = shortRole + " (" + level.substring(0, 2) + ")";
       }
+
+      if (syncRemote) {
+        sendTelemetry({ eventType: "profile_update" });
+      }
     }
 
     function loadProfileSettings() {
@@ -761,7 +932,7 @@
       const savedLevel = localStorage.getItem("pitchflow_user_level");
       if (savedRole) document.getElementById("userRoleSelect").value = savedRole;
       if (savedLevel) document.getElementById("userLevelSelect").value = savedLevel;
-      saveProfileSettings();
+      saveProfileSettings(false);
     }
 
     // 3. AUTHORITY FRAME
@@ -800,6 +971,7 @@
             text: text, 
             scenario: scenario,
             role: userRole,
+            level: userLevel,
             english_level: userLevel
           })
         });
@@ -881,6 +1053,7 @@
 
     function saveSpecificToVault(elementId) {
       const text = document.getElementById(elementId).innerText.replace(/^"|"$/g, '');
+      const scenario = document.getElementById("scenarioSelect").value;
       let vault = JSON.parse(localStorage.getItem("pitchflow_vault") || "[]");
       vault.push({ 
         text, 
@@ -889,10 +1062,15 @@
       });
       localStorage.setItem("pitchflow_vault", JSON.stringify(vault));
       renderVault();
+      sendTelemetry({
+        eventType: "save_vault",
+        phrase: text,
+        context: `Authority Frame (${scenario})`
+      });
       alert("Guardado en tu Bóveda de Recursos.");
     }
 
-    // 4. GIMNASIO DE PODER: 45 ESCENARIOS TÁCTICOS (3 OPCIONES DESAFIANTES SIN 'SORRY')
+    // 4. GIMNASIO DE PODER: 45 ESCENARIOS TÁCTICOS
     const GYM_EXERCISES = [
       // BLOQUE 1: MANEJO DEL TIEMPO, TURNOS Y RITMO (1 a 15)
       {
@@ -1488,7 +1666,6 @@
 
     let currentGymFilteredList = GYM_EXERCISES;
 
-    // ALGORITMO DE SHUFFLE (Para que la opción correcta nunca esté fija en el mismo lugar)
     function shuffleArray(array) {
       const arr = [...array];
       for (let i = arr.length - 1; i > 0; i--) {
@@ -1505,7 +1682,6 @@
       currentGymFilteredList = filter === "all" ? GYM_EXERCISES : GYM_EXERCISES.filter(e => e.category === filter);
 
       currentGymFilteredList.forEach((ex, idx) => {
-        // Mezclamos las 3 opciones para cada ejercicio en pantalla
         const shuffledOptions = shuffleArray(ex.options);
 
         const card = document.createElement("div");
@@ -1538,6 +1714,7 @@
     function checkAnswer(exIdx, btn) {
       const ex = currentGymFilteredList[exIdx];
       const isCorrect = btn.getAttribute("data-correct") === "true";
+      const chosenText = btn.innerText.trim();
       const feedbackText = decodeURIComponent(btn.getAttribute("data-feedback") || "");
       const feedback = document.getElementById(`feedback-${exIdx}`);
       const parent = btn.parentElement;
@@ -1547,6 +1724,15 @@
         if (b.getAttribute("data-correct") === "true") {
           b.classList.add("correct");
         }
+      });
+
+      // Enviar resultado silenciosamente al Tablero de Auditoría
+      sendTelemetry({
+        eventType: "gym_answer",
+        area: ex.category,
+        prompt: ex.title,
+        chosen: chosenText,
+        isCorrect
       });
 
       if (isCorrect) {
@@ -1602,6 +1788,11 @@
         });
         localStorage.setItem("pitchflow_vault", JSON.stringify(vault));
         renderVault();
+        sendTelemetry({
+          eventType: "save_vault",
+          phrase: ex.phraseEn,
+          context: `Gimnasio (${ex.category})`
+        });
         alert("Fórmula guardada en tu Bóveda de Recursos.");
       }
     }
@@ -1669,6 +1860,158 @@
       document.querySelectorAll("#boveda .filter-chip").forEach(c => c.classList.remove("active"));
       chip.classList.add("active");
       renderVault(cat);
+    }
+
+    // 6. TABLERO DE AUDITORIA INSTITUCIONAL (SOLO ADMINISTRADORAS)
+    let cachedAuditStudents = [];
+
+    async function loadAuditDashboard() {
+      const email = localStorage.getItem("pitchflow_user");
+      const container = document.getElementById("auditStudentsContainer");
+      const summaryGrid = document.getElementById("auditSummaryGrid");
+
+      container.innerHTML = `<p style="color:var(--text-muted);">Consultando actividad en Cloudflare KV...</p>`;
+
+      try {
+        const res = await fetch(WORKER_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "get_audit_report", email })
+        });
+        const data = await res.json();
+
+        if (data.error) {
+          container.innerHTML = `<p style="color:var(--accent-ruby);">Error: ${data.error}</p>`;
+          return;
+        }
+
+        const students = data.students || [];
+        cachedAuditStudents = students;
+
+        const totalCalibrations = students.reduce((acc, s) => acc + (s.calibrations?.length || 0), 0);
+        const totalGymCorrect = students.reduce((acc, s) => acc + (s.gymStats?.correct || 0), 0);
+        const totalGymWrong = students.reduce((acc, s) => acc + (s.gymStats?.wrong || 0), 0);
+
+        summaryGrid.innerHTML = `
+          <div class="stat-box">
+            <div class="stat-label">Alumnos Activos</div>
+            <div class="stat-value">${students.length}</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Calibraciones IA</div>
+            <div class="stat-value">${totalCalibrations}</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Aciertos Gimnasio</div>
+            <div class="stat-value" style="color:var(--accent-emerald);">${totalGymCorrect}</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Trampas Detectadas</div>
+            <div class="stat-value" style="color:var(--accent-ruby);">${totalGymWrong}</div>
+          </div>
+        `;
+
+        if (students.length === 0) {
+          container.innerHTML = `<div class="card"><p style="color:var(--text-muted);">Todavía no hay actividad registrada desde que se activó la auditoría. Apenas un alumno ingrese, calibre una frase o responda un ejercicio del Gimnasio, aparecerá su ficha completa aquí.</p></div>`;
+          return;
+        }
+
+        container.innerHTML = students.map((st, sIdx) => {
+          const correct = st.gymStats?.correct || 0;
+          const wrong = st.gymStats?.wrong || 0;
+          const totalAttempts = correct + wrong;
+          const accuracy = totalAttempts > 0 ? Math.round((correct / totalAttempts) * 100) : null;
+
+          // Identificar bloque con mayor cantidad de errores
+          const weakAreas = st.gymStats?.weakAreas || {};
+          const topWeakEntry = Object.entries(weakAreas).sort((a, b) => b[1] - a[1])[0];
+          const weakSummary = topWeakEntry ? `${topWeakEntry[0]} (${topWeakEntry[1]} errores)` : "Sin errores registrados";
+
+          const lastDate = st.lastActive ? new Date(st.lastActive).toLocaleString("es-AR") : "Sin registro";
+          const calibrations = st.calibrations || [];
+          const vault = st.vaultPhrases || [];
+          const gymHistory = st.gymStats?.history || [];
+
+          const mailSubject = encodeURIComponent("Diagnóstico TalkFlow Academy — Tu avance en PitchFlow");
+          const mailBody = encodeURIComponent(`Hola,\n\nEstuve auditando tu entrenamiento en PitchFlow.\n- Precisión en Gimnasio: ${accuracy !== null ? accuracy + "%" : "En progreso"}\n- Área prioritaria de ajuste: ${weakSummary}\n\nTe comparto mis recomendaciones para tu próxima reunión:\n\nSaludos,\nAna Veá — TalkFlow Academy`);
+
+          return `
+            <div class="student-audit-card">
+              <div class="student-header">
+                <div>
+                  <div class="student-email">${st.email}</div>
+                  <div class="student-meta">
+                    <strong>Rol:</strong> ${st.role || "No definido"} &nbsp;|&nbsp;
+                    <strong>Nivel:</strong> ${st.level ? st.level.substring(0, 12) : "No definido"} &nbsp;|&nbsp;
+                    <strong>Última actividad:</strong> ${lastDate}
+                  </div>
+                  <div style="margin-top:0.65rem;">
+                    <span class="badge-pill badge-emerald">✓ ${correct} aciertos</span>
+                    <span class="badge-pill badge-ruby">✗ ${wrong} errores (${accuracy !== null ? accuracy + "% precisión" : "sin intentos"})</span>
+                    <span class="badge-pill badge-gold">🎯 Foco a reforzar: ${weakSummary}</span>
+                  </div>
+                </div>
+                <div class="frame-actions">
+                  <a class="action-btn" href="mailto:${st.email}?subject=${mailSubject}&body=${mailBody}">✉️ Enviar Diagnóstico por Mail</a>
+                  <button class="action-btn" onclick="copyStudentDiagnosis(${sIdx})">📋 Copiar Resumen para WhatsApp</button>
+                </div>
+              </div>
+
+              ${calibrations.length > 0 ? `
+                <div style="margin-bottom:1rem;">
+                  <div class="input-label" style="color:var(--accent-gold);">Últimas Frases Calibradas (Authority Frame — ${calibrations.length})</div>
+                  ${calibrations.slice(0, 5).map(c => `
+                    <div class="audit-log-item">
+                      <div style="font-size:0.75rem; color:var(--text-dim); margin-bottom:0.25rem;">${new Date(c.date).toLocaleDateString("es-AR")} · ${c.scenario}</div>
+                      <div style="color:var(--text-muted);"><strong>Original:</strong> "${c.original}"</div>
+                      <div style="color:#fff; margin-top:0.2rem;"><strong>Calibrada:</strong> "${c.calibrated}"</div>
+                      <div style="color:var(--accent-ruby); font-size:0.78rem; margin-top:0.2rem;">Fugas: ${c.leaks || "-"}</div>
+                    </div>
+                  `).join("")}
+                </div>
+              ` : ""}
+
+              ${gymHistory.length > 0 ? `
+                <div style="margin-bottom:1rem;">
+                  <div class="input-label" style="color:var(--accent-gold);">Últimos Ejercicios del Gimnasio de Poder (${gymHistory.length})</div>
+                  ${gymHistory.slice(0, 5).map(g => `
+                    <div class="audit-log-item" style="border-left: 3px solid ${g.isCorrect ? "var(--accent-emerald)" : "var(--accent-ruby)"};">
+                      <div style="font-size:0.75rem; color:var(--text-dim);">${g.isCorrect ? "✓ ACERTÓ" : "✗ ERROR"} · ${g.area} · ${g.prompt}</div>
+                      <div style="color:#fff; margin-top:0.2rem;">Eligió: "${g.chosen}"</div>
+                    </div>
+                  `).join("")}
+                </div>
+              ` : ""}
+
+              ${vault.length > 0 ? `
+                <div>
+                  <div class="input-label" style="color:var(--accent-gold);">Frases Guardadas en su Bóveda (${vault.length})</div>
+                  ${vault.slice(0, 5).map(v => `
+                    <div class="audit-log-item">
+                      <span style="color:var(--accent-gold); font-weight:700;">[${v.context || "Bóveda"}]</span> "${v.phrase}"
+                    </div>
+                  `).join("")}
+                </div>
+              ` : ""}
+            </div>
+          `;
+        }).join("");
+      } catch (err) {
+        container.innerHTML = `<p style="color:var(--accent-ruby);">No se pudo conectar con el servidor de auditoría.</p>`;
+      }
+    }
+
+    function copyStudentDiagnosis(sIdx) {
+      const st = cachedAuditStudents[sIdx];
+      if (!st) return;
+      const correct = st.gymStats?.correct || 0;
+      const wrong = st.gymStats?.wrong || 0;
+      const weakAreas = st.gymStats?.weakAreas || {};
+      const topWeakEntry = Object.entries(weakAreas).sort((a, b) => b[1] - a[1])[0];
+      const weakSummary = topWeakEntry ? `${topWeakEntry[0]} (${topWeakEntry[1]} errores)` : "Sin errores detectados";
+
+      const text = `📊 Auditoría PitchFlow — ${st.email}\n• Rol / Nivel: ${st.role || "No definido"} | ${st.level ? st.level.substring(0, 12) : "No definido"}\n• Gimnasio de Poder: ${correct} aciertos / ${wrong} errores\n• Bloque a reforzar: ${weakSummary}\n• Frases calibradas en Authority Frame: ${(st.calibrations || []).length}`;
+      copyDirectText(text);
     }
 
     // INICIALIZACIÓN
